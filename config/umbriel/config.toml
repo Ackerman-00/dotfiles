@@ -1,0 +1,12 @@
+# Config
+
+[include]
+files = ["env.conf", "core.conf", "binds.conf", "rules.conf"]
+
+[general]
+mod_key = "Super"
+autostart = ["noctalia"]
+xwayland = true
+show_cheatsheet = false
+focus_on_activate = false
+honor_restored_maximize = false

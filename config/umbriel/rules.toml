@@ -1,0 +1,141 @@
+# Rules
+
+# Gaming
+# [[window_rule]]
+# match.content_type = "game"
+# vrr = "disabled"
+# tearing = true
+# hdr = "off"
+# For Proton/Wine fullscreen: match.xdg_tag = "^proton-game$" + default_fullscreen = true
+
+# Global blur
+[[window_rule]]
+blur = true
+blur_optimized = false
+blur_popups = true
+blur_ignore_alpha = 0.05
+
+[[window_rule]]
+opacity = 0.80
+
+# Games
+[[window_rule]]
+match.app_id     = "steam_app.*|ffxiv.*"
+default_floating = true
+opacity          = 1.0
+blur             = false
+blur_popups      = false
+
+[[window_rule]]
+match.xdg_tag    = "proton-game"
+default_floating = true
+opacity          = 1.0
+blur             = false
+blur_popups      = false
+
+[[window_rule]]
+match.content_type = "game"
+default_floating   = true
+opacity            = 1.0
+blur               = false
+blur_popups        = false
+
+[[window_rule]]
+match.content_type = "video"
+blur = false
+opacity = 1.0
+
+[[window_rule]]
+match.content_type = "photo"
+blur = false
+opacity = 1.0
+
+# App opacity
+[[window_rule]]
+match.app_id = "^(Alacritty|kitty|ghostty|foot)$"
+opacity = 0.9
+
+[[window_rule]]
+match.app_id = "[Vv]esktop|[Dd]iscord|brave-browser|chromium|helium"
+opacity = 0.93
+
+# Focus
+[[window_rule]]
+match.app_id = "^org.mozilla.firefox$|[Ff]irefox"
+blur = false
+opacity = 1.0
+focus_on_activate = true
+
+[[window_rule]]
+match.app_id = "^[Zz]en"
+blur = false
+opacity = 1.0
+focus_on_activate = true
+
+# Helium / Brave / Chromium — open-ended to catch distro variants
+# (helium-dev, brave-browser-beta, Brave, etc.)
+[[window_rule]]
+match.app_id = "^([Hh]elium|[Bb]rave|[Cc]hromium)"
+focus_on_activate = true
+
+# Nautilus stable
+[[window_rule]]
+match.app_id = "org.gnome.Nautilus|org.gnome.Settings|org.gnome.Loupe"
+blur = true
+blur_optimized = true
+blur_popups = false
+blur_ignore_alpha = 0.2
+opacity = 0.90
+
+# Floating
+[[window_rule]]
+match.app_id = "blender"
+default_floating = false
+
+[[window_rule]]
+match.app_id = "org.gnome.Loupe"
+default_floating = true
+
+[[window_rule]]
+match.app_id = "[Kk]vantum|qt5ct|qt6ct|nwg-look|org.kde.ark|pavucontrol|blueman|[Ll]oupe|mpv|[Qq]bittorrent|org.gnome.TextEditor|gnome-text-editor"
+default_floating = true
+
+# Kvantum sets no app_id (empty string) — match by title instead
+[[window_rule]]
+match.title = "[Kk]vantum"
+default_floating = true
+
+[[window_rule]]
+match.app_id = "[Qq]bittorrent"
+default_size = [880, 500]
+
+[[window_rule]]
+match.title = "^Open$|^Save As$|^Choose Files$|^File Operation Progress$"
+default_floating = true
+
+[[window_rule]]
+match.app_id = "^dev.noctalia.UmbrielSharePicker$"
+default_floating = false
+default_size = [800, 600]
+
+[[window_rule]]
+match.app_id = "^dev.noctalia.Noctalia$"
+default_floating = false
+default_size = [1020, 900]
+blur = true
+blur_popups = false
+opacity = 1.0
+
+# Layer rules
+[[layer_rule]]
+match.namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd|desktop-widget-[^\"]*)$"
+blur = true
+blur_ignore_alpha = 0.5
+blur_optimized = false
+blur_popups = true
+
+# Security
+# [[security_context_rule]]
+# match.sandbox_engine = 'org\.flatpak'
+# match.app_id = 'org\.example\.ClipboardManager'
+# allow_globals = ["ext_data_control_manager_v1", "zwlr_data_control_manager_v1"]
