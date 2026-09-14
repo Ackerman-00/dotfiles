@@ -1,7 +1,5 @@
 # Dotfiles
 
-Personal configs.
-
 | Component | Path |
 |---|---|
 | [MangoWM](config/mango/README.md) | `config/mango/` |
