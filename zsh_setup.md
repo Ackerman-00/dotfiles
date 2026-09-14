@@ -1,4 +1,4 @@
-# Zsh Setup — Umbriel
+# Zsh Setup
 
 > Prerequisites: `zsh`, `git`, `curl`, `fzf`, `eza`, `starship`, `fastfetch`, `ImageMagick` installed.
 
