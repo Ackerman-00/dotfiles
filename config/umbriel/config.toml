@@ -1,7 +1,7 @@
 # Config
 
 [include]
-files = ["env.conf", "core.conf", "binds.conf", "rules.conf"]
+files = ["env.toml", "core.toml", "binds.toml", "rules.toml"]
 
 [general]
 mod_key = "Super"
