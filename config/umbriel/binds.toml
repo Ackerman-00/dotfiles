@@ -75,7 +75,7 @@
 "Mod+R" = "window-cycle-width"
 "Mod+Ctrl+R" = "window-toggle-maximize-to-edges"
 "Mod+F" = "window-toggle-maximize"
-"Mod+E" = "spawn:thunar"
+"Mod+E" = "spawn:pcmanfm-qt"
 "Mod+N" = "workspace-set-layout:toggle"
 "Mod+O" = "overview-toggle"
 "Mod+Minus" = "window-modify-width:-0.1"
