@@ -157,7 +157,9 @@ vec4 animation(vec2 uv) {
     float amount = umbriel_direction > 0.0
         ? umbriel_clamped_progress : 1.0 - umbriel_clamped_progress;
 
-    int pick = int(floor(umbriel_random_seed.x * 5.0));
+    float rnd = fract(sin(dot(umbriel_random_seed.xy, vec2(12.9898, 78.233)) + dot(umbriel_random_seed.zw, vec2(34.56, 19.19))) * 43758.5453);
+    rnd = fract(rnd + fract(umbriel_size.x * 0.0031 + umbriel_size.y * 0.0073));
+    int pick = int(floor(rnd * 5.0));
     if (pick == 0) {
         return fx_life(uv);
     } else if (pick == 1) {

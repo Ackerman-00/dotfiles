@@ -1,8 +1,8 @@
 // lottery.glsl — a random open animation every time.
 // umbriel_random_seed.x picks one of seven effects per transition:
 //   0 = holes, 1 = bloom, 2 = watr, 3 = reveal (wipe),
-//   4 = poof (breathe), 5 = cat-map (toral stir), 6 = spiral (swirl).
-// Left out: glitchbit (headache), blinds/squash (rejected),
+//   4 = poof (breathe), 5 = spiral (swirl), 6 = settle (gentle overshoot).
+// Left out: glitchbit/cat-map (headache), blinds/squash (rejected),
 // halftone (ends transparent = blink), dissipate (blackout on dark backdrop),
 // bijection-flow (retired).
 // Shared fade-in and clean resolve envelope so endpoints never pop.
@@ -117,17 +117,11 @@ vec4 fx_poof(vec2 uv, float p) {
     return umbriel_sample((uv - 0.5) / scale + 0.5);
 }
 
-// --- effect 5: cat-map (Arnold toral stir, by samiser) ---
-const int CAT_MAX = 12;
-
-vec4 fx_cat(vec2 uv, float p) {
-    float k = floor(float(CAT_MAX) * sin(3.14159265 * p));
-    float a = 1.0, b = 0.0;
-    for (int i = 0; i < 2 * CAT_MAX; i++) {
-        if (float(i) < 2.0 * k) { float t = a + b; b = a; a = t; }
-    }
-    vec2 q = fract(vec2(a * uv.x + b * uv.y, b * uv.x + (a - b) * uv.y));
-    return umbriel_sample(q);
+// --- effect 5: settle (gentle overshoot, replaces glitch cat-map) ---
+vec4 fx_settle(vec2 uv, float p) {
+    float pulse = sin(3.14159265 * p);
+    float scale = 1.0 + 0.025 * pulse;
+    return umbriel_sample((uv - 0.5) / scale + 0.5);
 }
 
 // --- effect 6: spiral (swirl reveal + CA + rim) ---
@@ -175,7 +169,11 @@ vec4 animation(vec2 uv) {
     float amount = umbriel_direction > 0.0
         ? umbriel_clamped_progress : 1.0 - umbriel_clamped_progress;
 
-    int pick = int(floor(umbriel_random_seed.x * 7.0));
+    // Hash all 4 seed channels + window size to avoid streaks when seed.x alone clusters.
+    // Docs: umbriel_random_seed is 4x [0,1) stable per transition, refreshed next transition.
+    float rnd = fract(sin(dot(umbriel_random_seed.xy, vec2(12.9898, 78.233)) + dot(umbriel_random_seed.zw, vec2(34.56, 19.19))) * 43758.5453);
+    rnd = fract(rnd + fract(umbriel_size.x * 0.0031 + umbriel_size.y * 0.0073));
+    int pick = int(floor(rnd * 7.0));
     vec4 fx;
     if (pick == 0) {
         fx = fx_holes(uv, amount);
@@ -188,9 +186,9 @@ vec4 animation(vec2 uv) {
     } else if (pick == 4) {
         fx = fx_poof(uv, p);
     } else if (pick == 5) {
-        fx = fx_cat(uv, p);
-    } else {
         fx = fx_spiral(uv);
+    } else {
+        fx = fx_settle(uv, p);
     }
 
     float enter = smoothstep(0.0, 0.08, p);

@@ -33,8 +33,17 @@
 "Mod+Shift+Ctrl+Down" = "column-move-to-output-down"
 "Mod+Shift+Ctrl+Up" = "column-move-to-output-up"
 "Mod+Shift+Ctrl+Right" = "column-move-to-output-right"
-"Mod+WheelUp" = { action = "workspace-previous", cooldown_ms = 150 }
-"Mod+WheelDown" = { action = "workspace-next", cooldown_ms = 150 }
+# Scrolling layout: Super (Mod) + scroll moves between windows
+# mod_key = Super per config.toml:7, so Mod == Super physically.
+# window-focus-left/right moves between columns in scrolling (left/right on horizontal strip).
+# Previously this was workspace-previous/next - moved to Alt+Wheel to avoid duplicate chord clash.
+"Mod+WheelUp" = { action = "window-focus-left", cooldown_ms = 150 }
+"Mod+WheelDown" = { action = "window-focus-right", cooldown_ms = 150 }
+"Mod+WheelLeft" = { action = "window-focus-left", cooldown_ms = 150 }
+"Mod+WheelRight" = { action = "window-focus-right", cooldown_ms = 150 }
+# Alt+Wheel keeps workspace navigation (was Mod+Wheel before)
+"Alt+WheelUp" = { action = "workspace-previous", cooldown_ms = 150 }
+"Alt+WheelDown" = { action = "workspace-next", cooldown_ms = 150 }
 "Mod+Ctrl+WheelUp" = { action = "window-move-to-workspace-previous", cooldown_ms = 150 }
 "Mod+Ctrl+WheelDown" = { action = "window-move-to-workspace-next", cooldown_ms = 150 }
 "Mod+Shift+WheelUp" = { action = "column-move-left", cooldown_ms = 150 }
@@ -66,7 +75,7 @@
 "Mod+R" = "window-cycle-width"
 "Mod+Ctrl+R" = "window-toggle-maximize-to-edges"
 "Mod+F" = "window-toggle-maximize"
-"Mod+E" = "spawn:nautilus"
+"Mod+E" = "spawn:thunar"
 "Mod+N" = "workspace-set-layout:toggle"
 "Mod+O" = "overview-toggle"
 "Mod+Minus" = "window-modify-width:-0.1"
