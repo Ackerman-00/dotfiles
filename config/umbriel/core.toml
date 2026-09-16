@@ -192,8 +192,8 @@ window_drag_toggle = "none"
 layout = "us"
 variant = ""
 options = ""
-repeat_rate = 30
-repeat_delay = 300
+repeat_rate = 45
+repeat_delay = 250
 numlock_toggle = true
 track_layout = "global"
 
@@ -225,8 +225,8 @@ theme = "Bibata-Modern-Classic"
 size = 24
 hardware_cursor = true
 follows_focus = false
-hide_when_typing = true
-hide_timeout_ms = 3000
+hide_when_typing = false
+hide_timeout_ms = 0
 
 [input.focus]
 follows_mouse = false
