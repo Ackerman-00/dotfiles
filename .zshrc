@@ -53,3 +53,5 @@ fi
 eval "$(starship init zsh)"
 
 # --- ZSH CONFIGURATION END ---
+
+

@@ -148,10 +148,9 @@ top = 0
 bottom = 0
 
 [layout.scrolling]
-default_width_fraction = 0.66667
+default_extent_fraction = 0.66667
 center_underfull_strip = false
 center_focused = "never"
-# direction = "horizontal"
 
 [layout.dwindle]
 # preserve_split = false
@@ -167,7 +166,7 @@ new_on_top = true
 # output = "Samsung Electric Company S19C170 HYCFB02483"
 # layout.gap = 0
 # layout.struts.top = 24
-# layout.scrolling.default_width_fraction = 0.667
+# layout.scrolling.default_extent_fraction = 0.667
 
 # Output - mode matches advertised preferred 1366x768@59.79 (umbriel outputs)
 [output."Samsung Electric Company S19C170 HYCFB02483"]
