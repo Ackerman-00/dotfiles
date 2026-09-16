@@ -1,4 +1,3 @@
-
 [lockscreen]
 blur_intensity = 0.4499999899417162
 
@@ -51,16 +50,14 @@ widget_order = [
     placement_height = 768.0
     placement_width = 1366.0
     rotation = -0.27045175433158875
-    type = "label"
+    type = "calendar"
 
         [lockscreen_widgets.widget."lockscreen-widget-000000000000000c".settings]
         background = false
         background_color = "on_secondary"
         background_opacity = 0.3
-        shadow = false
         show_events = false
         show_week_numbers = false
-        title = " "
 
     [lockscreen_widgets.widget."lockscreen-widget-000000000000001b"]
     box_height = 40.0
@@ -121,7 +118,7 @@ widget_order = [
     placement_height = 768.0
     placement_width = 1366.0
     rotation = 0.5235987901687622
-    type = "label"
+    type = "media_player"
 
         [lockscreen_widgets.widget."lockscreen-widget-000000000000000e".settings]
         background = false
@@ -129,7 +126,6 @@ widget_order = [
         background_radius = 10
         hide_when_no_media = true
         shadow = false
-        title = " "
 
     [lockscreen_widgets.widget."lockscreen-widget-0000000000000009"]
     box_height = 374.94
@@ -170,7 +166,6 @@ widget_order = [
         font_family = "Google Sans Flex"
         format = "{:%H:%M}\n"
         shadow = false
-        title = ""
 
     [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
     box_height = 120.0
@@ -217,8 +212,6 @@ widget_order = [
         background_radius = 0
         image_path = ""
         opacity = 1.0
-        shadow = false
-        title = ""
 
     [lockscreen_widgets.widget."lockscreen-widget-0000000000000003"]
     box_height = 32.0
@@ -287,7 +280,7 @@ widget_order = [
     placement_height = 768.0
     placement_width = 1366.0
     rotation = 0.0
-    type = "label"
+    type = "weather"
 
         [lockscreen_widgets.widget."lockscreen-widget-000000000000000d".settings]
         background = false
@@ -296,7 +289,6 @@ widget_order = [
         forecast_days = 2
         shadow = false
         show_forecast = true
-        title = " "
 
     [lockscreen_widgets.widget."lockscreen-widget-000000000000000f"]
     box_height = 152.0
@@ -326,7 +318,7 @@ widget_order = [
     placement_height = 768.0
     placement_width = 1366.0
     rotation = 0.5235987901687622
-    type = "label"
+    type = "sysmon"
 
         [lockscreen_widgets.widget."lockscreen-widget-0000000000000011".settings]
         background = false
@@ -338,7 +330,6 @@ widget_order = [
         shadow = false
         stat = "cpu_usage"
         stat2 = "cpu_temp"
-        title = " "
 
     [lockscreen_widgets.widget."lockscreen-widget-0000000000000012"]
     box_height = 64.0
@@ -402,7 +393,7 @@ widget_order = [
     placement_height = 768.0
     placement_width = 1366.0
     rotation = 0.5235987901687622
-    type = "label"
+    type = "audio_visualizer"
 
         [lockscreen_widgets.widget."lockscreen-widget-0000000000000015".settings]
         background = false
@@ -416,7 +407,6 @@ widget_order = [
         mirrored = true
         reversed = true
         show_when_idle = false
-        title = " "
 
     [lockscreen_widgets.widget."lockscreen-widget-0000000000000016"]
     box_height = 112.0
@@ -454,11 +444,8 @@ widget_order = [
         [lockscreen_widgets.widget."lockscreen-widget-0000000000000017".settings]
         background = false
         color = "surface"
-        display = "gauge"
         font_family = "JetBrainsMono NF ExtraLight"
         shadow = false
-        stat = "cpu_temp"
-        stat2 = "cpu_temp"
         title = "L   O   C   K   E   D"
 
     [lockscreen_widgets.widget."lockscreen-widget-0000000000000018"]
@@ -475,12 +462,8 @@ widget_order = [
         [lockscreen_widgets.widget."lockscreen-widget-0000000000000018".settings]
         background = true
         color = "secondary"
-        display = "gauge"
         glyph = "noctalia"
         label = " Noctalia v5"
-        shadow = false
-        stat = "ram_pct"
-        stat2 = "cpu_temp"
         variant = "ghost"
 
     [lockscreen_widgets.widget."lockscreen-widget-0000000000000019"]
@@ -515,14 +498,10 @@ widget_order = [
 
         [lockscreen_widgets.widget."lockscreen-widget-000000000000001a".settings]
         background = true
-        background_color = "on_surface_variant"
-        background_padding = 0
-        background_radius = 0
         color = "on_secondary"
         glyph = "lock-filled"
         hover_background = "hover"
         label = " Device is Locked"
-        title = ""
         variant = "destructive"
 
     [lockscreen_widgets.widget."lockscreen-widget-000000000000001d"]
