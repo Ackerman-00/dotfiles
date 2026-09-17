@@ -62,7 +62,8 @@ opacity = 0.93
 # Focus
 [[window_rule]]
 match.app_id = "^org.mozilla.firefox$|[Ff]irefox"
-blur = false
+blur = true
+blur_popups = true
 opacity = 1.0
 focus_on_activate = true
 
@@ -125,6 +126,13 @@ default_floating_size_px = { width = 1020, height = 900 }
 blur = true
 blur_popups = false
 opacity = 1.0
+
+# Laptop scratchpad: auto-store, restore to laptop panel
+# Launch with: kitty --class scratchpad-terminal
+[[window_rule]]
+match.app_id = "^scratchpad-terminal$"
+default_scratchpad = "default"
+default_output = "Samsung Electric Company S19C170 HYCFB02483"
 
 # Layer rules
 [[layer_rule]]

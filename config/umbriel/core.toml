@@ -56,11 +56,11 @@ duration_ms = 250
 curve = "easeout"
 
 [animation.scratchpad]
-enabled = false
+enabled = true
 duration_ms = 250
 curve = "easeout"
 dim = 0.5
-blur = false
+blur = true
 scale = 0.0
 maximize = false
 fullscreen = false
@@ -139,7 +139,7 @@ action = "spawn:notify-send 'Bottom right'"
 [layout]
 mode = "scrolling"
 gap = 5
-width_presets = [0.33333, 0.5, 0.66667, 1.0]
+extent_presets = [0.33333, 0.5, 0.66667, 1.0]
 
 [layout.struts]
 left = 0
