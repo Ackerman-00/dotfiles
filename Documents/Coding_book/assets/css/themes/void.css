@@ -1,0 +1,153 @@
+/* ============================================================
+   VOID — Grok true-black terminal
+   #000000 canvas, #16181C/#1E2126 surfaces, #E7E9EA text,
+   #71767B secondary, #1D9BF0 link blue only. No shadows,
+   surface-value elevation. Inter-like system font.
+   Token contract: see assets/css/themes.css.
+   ============================================================ */
+[data-theme="void"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#000000; --bg-soft:#0A0A0A; --card:#16181C;
+  --ink:#E7E9EA; --ink-soft:#C8CDD2; --muted:#7d8286;
+  --line:#1E2126; --line-strong:#2F3336;
+  --terracotta:#1D9BF0; --terracotta-deep:#1A8CD8;
+  --violet:#1D9BF0; --violet-soft:#0F1F2E;
+  --teal:#1D9BF0; --teal-soft:#0F1F2E;
+  --gold:#71767B; --danger:#F4212E; --success:#00BA7C;
+  --accent-active:#1D9BF0;
+  --cursor-glow:#1D9BF0;
+  --grad-hero:linear-gradient(100deg,#16181C 0%,#1E2126 50%,#1D9BF0 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#16181C 0%,#1E2126 50%,#1D9BF0 100%);
+  --grad-soft:linear-gradient(120deg,#000000 0%,#0A0A0A 100%);
+  --grad-t1:linear-gradient(90deg,#1D9BF0,#0F1F2E);
+  --grad-t2:linear-gradient(90deg,#71767B,#4D5156);
+  --grad-bar:linear-gradient(180deg,#1D9BF0,#1A8CD8);
+  --grad-bar-alt:linear-gradient(180deg,#2F3336,#1E2126);
+  --aurora-1:rgba(29,155,240,.06); --aurora-2:rgba(113,118,123,.04);
+  --aurora-3:rgba(29,155,240,.04); --aurora-4:rgba(113,118,123,.03);
+  --conic-a:rgba(29,155,240,.06); --conic-b:rgba(113,118,123,.04);
+  --conic-c:rgba(29,155,240,.04); --conic-d:rgba(113,118,123,.03);
+  --blob-op:.10;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(29,155,240,.08),transparent 68%);
+  --halo:transparent;
+  --selection:#1D9BF022;
+  --badge-glow:color-mix(in srgb,#1D9BF0 35%,transparent);
+  --ambient-extra:none;
+  --drift-dur:32s; --spin-dur:160s;
+  --glow-1:#16181C; --glow-2:#1E2126; --glow-3:#1D9BF0;
+  --glow-speed:7s; --pulse-speed:4s;
+  --glass-tint:rgba(29,155,240,.04);
+}
+[data-theme="void"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#FFFFFF; --bg-soft:#F7F9F9; --card:#FFFFFF;
+  --ink:#0F1419; --ink-soft:#536471; --muted:#71767B;
+  --line:#EFF3F4; --line-strong:#D8DCE0;
+  --terracotta:#1D9BF0; --terracotta-deep:#1A8CD8;
+  --violet:#1D9BF0; --violet-soft:#E8F5FE;
+  --teal:#1D9BF0; --teal-soft:#E8F5FE;
+  --gold:#8A8A8A; --danger:#F4212E; --success:#00BA7C;
+  --accent-active:#1D9BF0;
+  --cursor-glow:#1D9BF0;
+  --grad-hero:linear-gradient(100deg,#1D9BF0 0%,#536471 50%,#0F1419 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#1D9BF0 0%,#536471 50%,#0F1419 100%);
+  --grad-soft:linear-gradient(120deg,#F7F9F9 0%,#FFFFFF 100%);
+  --grad-t1:linear-gradient(90deg,#1D9BF0,#8A8A8A);
+  --grad-t2:linear-gradient(90deg,#0F1419,#536471);
+  --grad-bar:linear-gradient(180deg,#1D9BF0,#1A8CD8);
+  --grad-bar-alt:linear-gradient(180deg,#EFF3F4,#D8DCE0);
+  --aurora-1:rgba(29,155,240,.05); --aurora-2:rgba(15,20,25,.04);
+  --aurora-3:rgba(29,155,240,.04); --aurora-4:rgba(15,20,25,.03);
+  --conic-a:rgba(29,155,240,.05); --conic-b:rgba(15,20,25,.04);
+  --conic-c:rgba(29,155,240,.03); --conic-d:rgba(15,20,25,.03);
+  --blob-op:.05;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(29,155,240,.06),transparent 68%);
+  --halo:transparent;
+  --selection:#1D9BF022;
+  --badge-glow:color-mix(in srgb,#1D9BF0 30%,transparent);
+  --ambient-extra:none;
+  --drift-dur:32s; --spin-dur:160s;
+  --glow-1:#EFF3F4; --glow-2:#1D9BF0; --glow-3:#536471;
+  --glow-speed:7s; --pulse-speed:4s;
+  --glass-tint:rgba(29,155,240,.03);
+}
+
+/* ── Grok system font — Inter with slashed zero ── */
+html[data-theme="void"]{
+  --sans:Inter,'Inter var',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';
+  font-feature-settings:'zero' 1;
+}
+
+/* ════════════════════════════════════════════════════════════
+   VOID AMBIENT — true black, almost nothing
+   Pure #000 canvas, 1pt hairline elevation, no blur.
+   Static, flat, transcript-like. The void IS the design.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="void"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(29,155,240,.04) 0%,transparent 22%),
+    linear-gradient(180deg,rgba(22,24,28,.06) 0%,transparent 14%);
+}
+[data-theme="void"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(29,155,240,.03) 0%,transparent 26%),
+    linear-gradient(180deg,rgba(15,20,25,.02) 0%,transparent 16%);
+}
+/* subtle orbs — barely there, monochrome */
+[data-theme="void"][data-mode] .blob.b1{background:radial-gradient(circle,rgba(29,155,240,.06) 0%,transparent 70%)}
+[data-theme="void"][data-mode] .blob.b3{background:radial-gradient(circle,rgba(113,118,123,.05) 0%,transparent 70%)}
+[data-theme="void"][data-mode] .blob.b2,
+[data-theme="void"][data-mode] .blob.b4{opacity:0}
+
+/* ── VOID HERO: monochrome + single blue accent ── */
+[data-theme="void"][data-mode="dark"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(22,24,28,.9) 0%,rgba(29,155,240,.14) 100%);
+  opacity:.5;
+}
+[data-theme="void"][data-mode="light"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(239,243,244,.8) 0%,rgba(29,155,240,.10) 100%);
+  opacity:.4;
+}
+/* hairline borders, not shadows — Grok elevation */
+[data-theme="void"][data-mode] .hero-panel,
+[data-theme="void"][data-mode] .widget,
+[data-theme="void"][data-mode] .quiz-card,
+[data-theme="void"][data-mode] .track-card{
+  border:1px solid var(--line-strong);
+  box-shadow:none;
+}
+[data-theme="void"][data-mode] .hero-panel:hover,
+[data-theme="void"][data-mode] .widget:hover{
+  border-color:color-mix(in srgb,#1D9BF0 25%,var(--line-strong));
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH + Display-P3
+   ════════════════════════════════════════════════════════════ */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="void"][data-mode="dark"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(29,155,240,.04) 0%,transparent 22%),
+    linear-gradient(180deg in oklch,rgba(22,24,28,.06) 0%,transparent 14%)}
+  [data-theme="void"][data-mode="light"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(29,155,240,.03) 0%,transparent 26%),
+    linear-gradient(180deg in oklch,rgba(15,20,25,.02) 0%,transparent 16%)}
+  [data-theme="void"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,rgba(29,155,240,.06) 0%,transparent 70%)}
+  [data-theme="void"][data-mode="dark"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(22,24,28,.9) 0%,rgba(29,155,240,.14) 100%)}
+  [data-theme="void"][data-mode="light"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(239,243,244,.8) 0%,rgba(29,155,240,.10) 100%)}
+}
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="void"][data-mode="dark"] .ambient::before{background:
+      linear-gradient(180deg in oklch,color(display-p3 0.114 0.607 0.941) / .04 0%,transparent 22%),
+      linear-gradient(180deg in oklch,color(display-p3 0.086 0.094 0.110) / .06 0%,transparent 14%)}
+  }
+}
+
+/* ── VOID MOTION — near-static, transcript (compositor-only) ── */
+[data-theme="void"][data-mode] .ambient::before{
+  animation:vdBreathe 32s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes vdBreathe{from{opacity:1}to{opacity:.94}}

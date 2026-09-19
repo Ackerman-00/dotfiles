@@ -1,0 +1,146 @@
+/* ============================================================
+   EMBER — the brand default (Learn to Code from Zero)
+   warm terracotta → rose → violet, cream-paper light mode and
+   espresso dark. Token contract: see assets/css/themes.css.
+============================================================ */
+[data-theme="ember"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#f4f0e7; --bg-soft:#faf7f0; --card:#fffdf8;
+  --ink:#26221b; --ink-soft:#4b453a; --muted:#787265;
+  --line:#e9e2d4; --line-strong:#d8cfbb;
+  --terracotta:#c96a4a; --terracotta-deep:#a94f32;
+  --violet:#6b51d9; --violet-soft:#efeaff;
+  --teal:#0e8f83; --teal-soft:#e1f5f2;
+  --gold:#a67c28; --danger:#cf3d3d; --success:#2b9559;
+  --accent-active:#a94f32;
+  --cursor-glow:#c96a4a;
+  --grad-hero:linear-gradient(100deg,#c96a4a 0%,#b0558a 45%,#6b51d9 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#c96a4a 0%,#b0558a 45%,#6b51d9 100%);
+  --grad-soft:linear-gradient(120deg,#f9ece2 0%,#f0ebfc 100%);
+  --grad-t1:linear-gradient(90deg,#c96a4a,#b0558a);
+  --grad-t2:linear-gradient(90deg,#6b51d9,#7c5cff);
+  --grad-bar:linear-gradient(180deg,#6b51d9,#5840b8);
+  --grad-bar-alt:linear-gradient(180deg,#d98d5f,#c96a4a);
+  --aurora-1:rgba(243,198,168,.55); --aurora-2:rgba(207,195,255,.5);
+  --aurora-3:rgba(191,232,226,.5); --aurora-4:rgba(190,160,240,.42);
+  --conic-a:rgba(192,96,154,.10); --conic-b:rgba(143,117,255,.12);
+  --conic-c:rgba(53,184,171,.08); --conic-d:rgba(224,138,100,.11);
+  --blob-op:.75;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.10),transparent 70%);
+  --halo:transparent;
+  --selection:#d9775733;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 45%,transparent);
+  --ambient-extra:none;
+  --drift-dur:22s; --spin-dur:110s;
+  --glow-1:#c96a4a; --glow-2:#b0558a; --glow-3:#6b51d9;
+  --glow-speed:4s; --pulse-speed:3s;
+  --glass-tint:rgba(201,106,74,.06);
+}
+[data-theme="ember"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#171512; --bg-soft:#1c1a15; --card:#211e19;
+  --ink:#ece6da; --ink-soft:#b6aea0; --muted:#8f8879;
+  --line:#2d2820; --line-strong:#3d362b;
+  --terracotta:#e08a64; --terracotta-deep:#ef9e78;
+  --violet:#8f75ff; --violet-soft:#241f3d;
+  --teal:#35b8ab; --teal-soft:#0e2c29;
+  --gold:#d4a53f; --danger:#e05f5f; --success:#3daa6c;
+  --accent-active:#f0a38a;
+  --cursor-glow:#e08a64;
+  --grad-hero:linear-gradient(100deg,#e08a64 0%,#c0609a 45%,#8f75ff 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#e08a64 0%,#c0609a 45%,#8f75ff 100%);
+  --grad-soft:linear-gradient(120deg,#2a2118 0%,#221e33 100%);
+  --grad-t1:linear-gradient(90deg,#e08a64,#d97757);
+  --grad-t2:linear-gradient(90deg,#8f75ff,#7c5cff);
+  --grad-bar:linear-gradient(180deg,#8f75ff,#6b4de0);
+  --grad-bar-alt:linear-gradient(180deg,#ffb86b,#e08a64);
+  --aurora-1:rgba(243,198,168,.55); --aurora-2:rgba(207,195,255,.5);
+  --aurora-3:rgba(191,232,226,.5); --aurora-4:rgba(120,74,203,.42);
+  --conic-a:rgba(192,96,154,.18); --conic-b:rgba(143,117,255,.22);
+  --conic-c:rgba(53,184,171,.15); --conic-d:rgba(224,138,100,.20);
+  --blob-op:.24;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(143,117,255,.16),transparent 70%);
+  --halo:radial-gradient(50% 46% at 50% 40%,rgba(143,117,255,.16),transparent 72%);
+  --selection:#e08a6433;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 45%,transparent);
+  --ambient-extra:none;
+  --drift-dur:22s; --spin-dur:110s;
+  --glow-1:#e08a64; --glow-2:#c0609a; --glow-3:#8f75ff;
+  --glow-speed:4s; --pulse-speed:3s;
+  --glass-tint:rgba(224,138,100,.08);
+}
+
+/* ════════════════════════════════════════════════════════════
+   EMBER AMBIENT — campfire warmth pooling from the bottom
+   Warm terracotta glow rises like firelight from a hearth.
+   Static — no animation, the warmth is constant.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="ember"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;inset:-10%;
+  background:
+    radial-gradient(80% 55% at 50% 115%,rgba(201,106,74,.12) 0%,transparent 60%),
+    radial-gradient(55% 45% at 18% 108%,rgba(224,138,100,.08) 0%,transparent 60%);
+  filter:blur(50px);
+}
+[data-theme="ember"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;inset:-10%;
+  background:
+    radial-gradient(80% 55% at 50% 115%,rgba(224,138,100,.16) 0%,transparent 60%),
+    radial-gradient(55% 45% at 18% 108%,rgba(201,106,74,.12) 0%,transparent 60%);
+  filter:blur(50px);
+}
+/* ember orbs: warm terracotta + soft violet, still */
+[data-theme="ember"][data-mode] .blob.b1{background:radial-gradient(circle,rgba(243,198,168,.5) 0%,transparent 68%)}
+[data-theme="ember"][data-mode="dark"] .blob.b3{background:radial-gradient(circle,rgba(143,117,255,.35) 0%,transparent 68%)}
+[data-theme="ember"][data-mode="light"] .blob.b3{background:radial-gradient(circle,rgba(107,81,217,.32) 0%,transparent 68%)}
+[data-theme="ember"][data-mode] .blob.b2,
+[data-theme="ember"][data-mode] .blob.b4{opacity:0}
+
+/* ── EMBER HERO: warm terracotta→rose→violet rim ── */
+[data-theme="ember"][data-mode] .hero-panel::before{
+  background:linear-gradient(120deg,var(--terracotta) 0%,#b0558a 40%,var(--violet) 100%);
+  opacity:.8;
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   The sRGB rgba() stops above remain the universal baseline; these
+   guarded blocks upgrade the SAME gradients where the browser
+   supports the syntax, and fall back silently everywhere else.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── OKLCH interpolation: same stops, perceptually-uniform hue ── */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="ember"][data-mode="dark"] .ambient::before{background:
+    radial-gradient(80% 55% at 50% 115% in oklch,rgba(224,138,100,.16) 0%,transparent 60%),
+    radial-gradient(55% 45% at 18% 108% in oklch,rgba(201,106,74,.12) 0%,transparent 60%)}
+  [data-theme="ember"][data-mode="light"] .ambient::before{background:
+    radial-gradient(80% 55% at 50% 115% in oklch,rgba(201,106,74,.12) 0%,transparent 60%),
+    radial-gradient(55% 45% at 18% 108% in oklch,rgba(224,138,100,.08) 0%,transparent 60%)}
+  [data-theme="ember"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,rgba(243,198,168,.5) 0%,transparent 68%)}
+  [data-theme="ember"][data-mode="dark"] .blob.b3{background:radial-gradient(circle in oklch,rgba(143,117,255,.35) 0%,transparent 68%)}
+  [data-theme="ember"][data-mode="light"] .blob.b3{background:radial-gradient(circle in oklch,rgba(107,81,217,.32) 0%,transparent 68%)}
+  [data-theme="ember"][data-mode] .hero-panel::before{background:linear-gradient(120deg in oklch,var(--terracotta) 0%,#b0558a 40%,var(--violet) 100%)}
+}
+
+/* ── Display-P3 stops: wider-gamut, richer colors on capable screens ── */
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="ember"][data-mode="dark"] .ambient::before{background:
+      radial-gradient(80% 55% at 50% 115% in oklch,color(display-p3 0.934 0.521 0.358) / .16 0%,transparent 60%),
+      radial-gradient(55% 45% at 18% 108% in oklch,color(display-p3 0.845 0.390 0.254) / .12 0%,transparent 60%)}
+    [data-theme="ember"][data-mode="light"] .ambient::before{background:
+      radial-gradient(80% 55% at 50% 115% in oklch,color(display-p3 0.845 0.390 0.254) / .12 0%,transparent 60%),
+      radial-gradient(55% 45% at 18% 108% in oklch,color(display-p3 0.934 0.521 0.358) / .08 0%,transparent 60%)}
+    [data-theme="ember"][data-mode="dark"] .hero-panel::before{background:linear-gradient(120deg in oklch,color(display-p3 0.934 0.521 0.358) 0%,color(display-p3 0.743 0.306 0.550) 40%,color(display-p3 0.581 0.454 1.000) 100%)}
+    [data-theme="ember"][data-mode="light"] .hero-panel::before{background:linear-gradient(120deg in oklch,color(display-p3 0.845 0.390 0.254) 0%,color(display-p3 0.743 0.306 0.550) 40%,color(display-p3 0.439 0.312 0.882) 100%)}
+  }
+}
+
+/* ── EMBER MOTION — firelight breathe (very slow, compositor-only,
+   killed by base.css reduced-motion + low-perf ambient rules) ── */
+[data-theme="ember"][data-mode] .ambient::before{
+  animation:emBreathe 24s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes emBreathe{from{opacity:1}to{opacity:.85}}

@@ -1,0 +1,162 @@
+/* ============================================================
+   GRUVBOX — warm retro
+   amber, burnt orange and sage on cocoa — the 1970s terminal,
+   but premium. Light ("gruvbox light") and dark flavors.
+   Token contract: see assets/css/themes.css.
+============================================================ */
+[data-theme="gruvbox"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#fbf1c7; --bg-soft:#fdf6e3; --card:#f9f5d7;
+  --ink:#3c3836; --ink-soft:#665c54; --muted:#786c61;
+  --line:#e5dcc0; --line-strong:#d0c49f;
+  --terracotta:#cc241d; --terracotta-deep:#9d0006;
+  --violet:#b16286; --violet-soft:#f4e8ee;
+  --teal:#689d6a; --teal-soft:#e6efe3;
+  --gold:#d79921; --danger:#cc241d; --success:#98971a;
+  --accent-active:#9d0006;
+  --cursor-glow:#cc241d;
+  --grad-hero:linear-gradient(100deg,#cc241d 0%,#b16286 45%,#689d6a 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#cc241d 0%,#b16286 45%,#689d6a 100%);
+  --grad-soft:linear-gradient(120deg,#fbf3dc 0%,#f0eee0 100%);
+  --grad-t1:linear-gradient(90deg,#cc241d,#d79921);
+  --grad-t2:linear-gradient(90deg,#b16286,#458588);
+  --grad-bar:linear-gradient(180deg,#689d6a,#458588);
+  --grad-bar-alt:linear-gradient(180deg,#d79921,#cc241d);
+  --aurora-1:rgba(204,36,29,.25); --aurora-2:rgba(215,153,33,.3);
+  --aurora-3:rgba(104,157,106,.25); --aurora-4:rgba(69,133,136,.25);
+  --conic-a:rgba(204,36,29,.08); --conic-b:rgba(215,153,33,.10);
+  --conic-c:rgba(104,157,106,.07); --conic-d:rgba(69,133,136,.08);
+  --blob-op:.75;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.10),transparent 70%);
+  --halo:transparent;
+  --selection:#d7992133;
+  --badge-glow:color-mix(in srgb,var(--gold) 40%,transparent);
+  --ambient-extra:none;
+  --drift-dur:26s; --spin-dur:100s;
+  --glow-1:#cc241d; --glow-2:#b16286; --glow-3:#689d6a;
+  --glow-speed:4.5s; --pulse-speed:3.5s;
+  --glass-tint:rgba(215,153,33,.06);
+}
+[data-theme="gruvbox"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#282828; --bg-soft:#2d2d2a; --card:#3c3836;
+  --ink:#ebdbb2; --ink-soft:#d5c4a1; --muted:#b1a28a;
+  --line:#403c36; --line-strong:#504945;
+  --terracotta:#fb4934; --terracotta-deep:#fe8019;
+  --violet:#d3869b; --violet-soft:#3a2f36;
+  --teal:#8ec07c; --teal-soft:#2b352a;
+  --gold:#fabd2f; --danger:#fb4934; --success:#b8bb26;
+  --accent-active:#fabd2f;
+  --cursor-glow:#fb4934;
+  --grad-hero:linear-gradient(100deg,#fb4934 0%,#fabd2f 45%,#8ec07c 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#fb4934 0%,#fabd2f 45%,#8ec07c 100%);
+  --grad-soft:linear-gradient(120deg,#2d2d2a 0%,#2c2b24 100%);
+  --grad-t1:linear-gradient(90deg,#fb4934,#fe8019);
+  --grad-t2:linear-gradient(90deg,#d3869b,#83a598);
+  --grad-bar:linear-gradient(180deg,#8ec07c,#83a598);
+  --grad-bar-alt:linear-gradient(180deg,#fabd2f,#fe8019);
+  --aurora-1:rgba(251,73,52,.4); --aurora-2:rgba(250,189,47,.4);
+  --aurora-3:rgba(142,192,124,.35); --aurora-4:rgba(131,165,152,.35);
+  --conic-a:rgba(251,73,52,.16); --conic-b:rgba(250,189,47,.18);
+  --conic-c:rgba(142,192,124,.14); --conic-d:rgba(131,165,152,.16);
+  --blob-op:.22;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(250,189,47,.13),transparent 70%);
+  --halo:radial-gradient(50% 46% at 50% 40%,rgba(131,165,152,.14),transparent 72%);
+  --selection:#fabd2f33;
+  --badge-glow:color-mix(in srgb,var(--gold) 40%,transparent);
+  --ambient-extra:none;
+  --drift-dur:26s; --spin-dur:100s;
+  --glow-1:#fb4934; --glow-2:#fabd2f; --glow-3:#8ec07c;
+  --glow-speed:4.5s; --pulse-speed:3.5s;
+  --glass-tint:rgba(250,189,47,.08);
+}
+
+/* ════════════════════════════════════════════════════════════
+   GRUVBOX AMBIENT — retro warm haze
+   Amber dust settling from the bottom, like late afternoon
+   sunlight through a dusty window. Warm, earthy, 1970s CRT glow.
+   Static — the warmth is constant, like the theme itself.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="gruvbox"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;inset:-8%;
+  background:
+    radial-gradient(75% 55% at 50% 108%,rgba(250,189,47,.10) 0%,transparent 55%),
+    radial-gradient(50% 40% at 12% 90%,rgba(251,73,52,.08) 0%,transparent 55%),
+    radial-gradient(45% 35% at 88% 80%,rgba(142,192,124,.06) 0%,transparent 55%);
+  filter:blur(44px);
+}
+[data-theme="gruvbox"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;inset:-8%;
+  background:
+    radial-gradient(75% 55% at 50% 108%,rgba(215,153,33,.09) 0%,transparent 55%),
+    radial-gradient(50% 40% at 12% 90%,rgba(204,36,29,.06) 0%,transparent 55%),
+    radial-gradient(45% 35% at 88% 80%,rgba(104,157,106,.05) 0%,transparent 55%);
+  filter:blur(44px);
+}
+/* retro orbs: amber + orange, still */
+[data-theme="gruvbox"][data-mode] .blob.b3{background:radial-gradient(circle,rgba(250,189,47,.3) 0%,transparent 68%)}
+[data-theme="gruvbox"][data-mode="dark"] .blob.b2{background:radial-gradient(circle,rgba(251,73,52,.28) 0%,transparent 68%)}
+[data-theme="gruvbox"][data-mode="light"] .blob.b2{background:radial-gradient(circle,rgba(204,36,29,.22) 0%,transparent 68%)}
+[data-theme="gruvbox"][data-mode] .blob.b1,
+[data-theme="gruvbox"][data-mode] .blob.b4{opacity:0}
+
+/* ── GRUVBOX HERO: retro red→yellow→green rim ── */
+[data-theme="gruvbox"][data-mode="dark"] .hero-panel::before{
+  background:linear-gradient(110deg,#fb4934 0%,#fabd2f 40%,#8ec07c 100%);
+  opacity:.55;
+}
+[data-theme="gruvbox"][data-mode="light"] .hero-panel::before{
+  background:linear-gradient(110deg,#cc241d 0%,#d79921 40%,#689d6a 100%);
+  opacity:.5;
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   The sRGB rgba() stops above remain the universal baseline; these
+   guarded blocks upgrade the SAME gradients where the browser
+   supports the syntax, and fall back silently everywhere else.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── OKLCH interpolation: same stops, perceptually-uniform hue ── */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="gruvbox"][data-mode="dark"] .ambient::before{background:
+    radial-gradient(75% 55% at 50% 108% in oklch,rgba(250,189,47,.10) 0%,transparent 55%),
+    radial-gradient(50% 40% at 12% 90% in oklch,rgba(251,73,52,.08) 0%,transparent 55%),
+    radial-gradient(45% 35% at 88% 80% in oklch,rgba(142,192,124,.06) 0%,transparent 55%)}
+  [data-theme="gruvbox"][data-mode="light"] .ambient::before{background:
+    radial-gradient(75% 55% at 50% 108% in oklch,rgba(215,153,33,.09) 0%,transparent 55%),
+    radial-gradient(50% 40% at 12% 90% in oklch,rgba(204,36,29,.06) 0%,transparent 55%),
+    radial-gradient(45% 35% at 88% 80% in oklch,rgba(104,157,106,.05) 0%,transparent 55%)}
+  [data-theme="gruvbox"][data-mode] .blob.b3{background:radial-gradient(circle in oklch,rgba(250,189,47,.3) 0%,transparent 68%)}
+  [data-theme="gruvbox"][data-mode="dark"] .blob.b2{background:radial-gradient(circle in oklch,rgba(251,73,52,.28) 0%,transparent 68%)}
+  [data-theme="gruvbox"][data-mode="light"] .blob.b2{background:radial-gradient(circle in oklch,rgba(204,36,29,.22) 0%,transparent 68%)}
+  [data-theme="gruvbox"][data-mode="dark"] .hero-panel::before{background:linear-gradient(110deg in oklch,#fb4934 0%,#fabd2f 40%,#8ec07c 100%)}
+  [data-theme="gruvbox"][data-mode="light"] .hero-panel::before{background:linear-gradient(110deg in oklch,#cc241d 0%,#d79921 40%,#689d6a 100%)}
+}
+
+/* ── Display-P3 stops: wider-gamut, richer colors on capable screens ── */
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="gruvbox"][data-mode="dark"] .ambient::before{background:
+      radial-gradient(75% 55% at 50% 108% in oklch,color(display-p3 1.000 0.729 0.000) / .10 0%,transparent 55%),
+      radial-gradient(50% 40% at 12% 90% in oklch,color(display-p3 1.000 0.186 0.120) / .08 0%,transparent 55%),
+      radial-gradient(45% 35% at 88% 80% in oklch,color(display-p3 0.499 0.760 0.455) / .06 0%,transparent 55%)}
+    [data-theme="gruvbox"][data-mode="light"] .ambient::before{background:
+      radial-gradient(75% 55% at 50% 108% in oklch,color(display-p3 0.886 0.587 0.000) / .09 0%,transparent 55%),
+      radial-gradient(50% 40% at 12% 90% in oklch,color(display-p3 0.873 0.000 0.003) / .06 0%,transparent 55%),
+      radial-gradient(45% 35% at 88% 80% in oklch,color(display-p3 0.339 0.623 0.395) / .05 0%,transparent 55%)}
+    [data-theme="gruvbox"][data-mode] .blob.b3{background:radial-gradient(circle in oklch,color(display-p3 1.000 0.729 0.000) / .3 0%,transparent 68%)}
+    [data-theme="gruvbox"][data-mode="dark"] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 1.000 0.186 0.120) / .28 0%,transparent 68%)}
+    [data-theme="gruvbox"][data-mode="light"] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 0.873 0.000 0.003) / .22 0%,transparent 68%)}
+    [data-theme="gruvbox"][data-mode="dark"] .hero-panel::before{background:linear-gradient(110deg in oklch,color(display-p3 1.000 0.186 0.120) 0%,color(display-p3 1.000 0.729 0.000) 40%,color(display-p3 0.499 0.760 0.455) 100%)}
+    [data-theme="gruvbox"][data-mode="light"] .hero-panel::before{background:linear-gradient(110deg in oklch,color(display-p3 0.873 0.000 0.003) 0%,color(display-p3 0.886 0.587 0.000) 40%,color(display-p3 0.339 0.623 0.395) 100%)}
+  }
+}
+
+/* ── GRUVBOX MOTION — amber haze breathe (very slow, compositor-only,
+   killed by base.css reduced-motion + low-perf ambient rules) ── */
+[data-theme="gruvbox"][data-mode] .ambient::before{
+  animation:gvHaze 22s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes gvHaze{from{opacity:1}to{opacity:.85}}

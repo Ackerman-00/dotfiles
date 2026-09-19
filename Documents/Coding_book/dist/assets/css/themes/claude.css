@@ -1,0 +1,159 @@
+/* ============================================================
+   CLAUDE — Anthropic's official brand palette.
+   Coral #D97757 on cream #FAF9F5, ink #141413, hairlines
+   #E6DFD8 (never solid gray), blue #6A9BCC + green #788C5D
+   as secondary accents. Serif display, restrained motion.
+   Token contract: see assets/css/themes.css.
+   ============================================================ */
+[data-theme="claude"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#faf9f5; --bg-soft:#f5f0e8; --card:#ffffff;
+  --ink:#141413; --ink-soft:#3d3d3a; --muted:#7a766e;
+  --line:#e6dfd8; --line-strong:#d8d0bc;
+  --terracotta:#d97757; --terracotta-deep:#c6613f;
+  --violet:#6a9bcc; --violet-soft:#eaf1f8;
+  --teal:#5db8a6; --teal-soft:#e3f2ee;
+  --gold:#b07e24; --danger:#c93a3a; --success:#5f7a44;
+  --accent-active:#c6613f;
+  --cursor-glow:#d97757;
+  --grad-hero:linear-gradient(135deg,#d97757 0%,#c6613f 45%,#6a9bcc 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#d97757 0%,#c6613f 45%,#6a9bcc 100%);
+  --grad-soft:linear-gradient(120deg,#f5f0e8 0%,#eef2f8 100%);
+  --grad-t1:linear-gradient(90deg,#d97757,#c6613f);
+  --grad-t2:linear-gradient(90deg,#6a9bcc,#5db8a6);
+  --grad-bar:linear-gradient(180deg,#6a9bcc,#4e7ba6);
+  --grad-bar-alt:linear-gradient(180deg,#e8a55a,#d97757);
+  --aurora-1:rgba(217,119,87,.12); --aurora-2:rgba(232,165,90,.10);
+  --aurora-3:rgba(106,155,204,.10); --aurora-4:rgba(93,184,166,.08);
+  --conic-a:rgba(217,119,87,.06); --conic-b:rgba(106,155,204,.05);
+  --conic-c:rgba(93,184,166,.04); --conic-d:rgba(232,165,90,.05);
+  --blob-op:.5;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.6),transparent 70%);
+  --halo:transparent;
+  --selection:#d9775726;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 30%,transparent);
+  --ambient-extra:none;
+  --drift-dur:30s; --spin-dur:160s;
+  --glow-1:#e6dfd8; --glow-2:#d97757; --glow-3:#6a9bcc;
+  --glow-speed:7s; --pulse-speed:4s;
+  --glass-tint:rgba(217,119,87,.05);
+}
+[data-theme="claude"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#141413; --bg-soft:#1c1c1a; --card:#262624;
+  --ink:#faf9f5; --ink-soft:#d9d6cb; --muted:#a9a69c;
+  --line:#35352f; --line-strong:#47453f;
+  --terracotta:#d97757; --terracotta-deep:#e29373;
+  --violet:#8fb4dd; --violet-soft:#232a36;
+  --teal:#7cc9b8; --teal-soft:#1e2b27;
+  --gold:#d9a94e; --danger:#e87a7a; --success:#9db37e;
+  --accent-active:#e29373;
+  --cursor-glow:#d97757;
+  --grad-hero:linear-gradient(135deg,#d97757 0%,#c6613f 45%,#6a9bcc 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#d97757 0%,#c6613f 45%,#6a9bcc 100%);
+  --grad-soft:linear-gradient(120deg,#1e1c18 0%,#1a2029 100%);
+  --grad-t1:linear-gradient(90deg,#d97757,#e29373);
+  --grad-t2:linear-gradient(90deg,#8fb4dd,#7cc9b8);
+  --grad-bar:linear-gradient(180deg,#8fb4dd,#6a9bcc);
+  --grad-bar-alt:linear-gradient(180deg,#e8a55a,#d97757);
+  --aurora-1:rgba(217,119,87,.14); --aurora-2:rgba(232,165,90,.12);
+  --aurora-3:rgba(143,180,221,.12); --aurora-4:rgba(124,201,184,.10);
+  --conic-a:rgba(217,119,87,.06); --conic-b:rgba(143,180,221,.06);
+  --conic-c:rgba(124,201,184,.05); --conic-d:rgba(232,165,90,.05);
+  --blob-op:.16;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(250,249,245,.06),transparent 68%);
+  --halo:transparent;
+  --selection:#d9775733;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 35%,transparent);
+  --ambient-extra:none;
+  --drift-dur:30s; --spin-dur:160s;
+  --glow-1:#262624; --glow-2:#35352f; --glow-3:#d97757;
+  --glow-speed:7s; --pulse-speed:4s;
+  --glass-tint:rgba(217,119,87,.06);
+}
+
+/* ── book-cloth ambient: warm paper light, almost nothing ── */
+[data-theme="claude"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(217,119,87,.05) 0%,transparent 34%),
+    linear-gradient(180deg,rgba(20,20,19,.03) 0%,transparent 20%);
+}
+[data-theme="claude"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(217,119,87,.05) 0%,transparent 30%),
+    linear-gradient(180deg,rgba(250,249,245,.02) 0%,transparent 18%);
+}
+[data-theme="claude"][data-mode] .blob.b1{background:radial-gradient(circle,rgba(217,119,87,.10) 0%,transparent 70%)}
+[data-theme="claude"][data-mode] .blob.b2{background:radial-gradient(circle,rgba(106,155,204,.08) 0%,transparent 70%)}
+[data-theme="claude"][data-mode] .blob.b3{background:radial-gradient(circle,rgba(120,140,93,.07) 0%,transparent 70%)}
+[data-theme="claude"][data-mode] .blob.b4{opacity:0}
+
+/* ── hero: warm paper bloom, not a rainbow ── */
+[data-theme="claude"][data-mode="light"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(20,20,19,.05) 0%,rgba(217,119,87,.10) 100%);
+  opacity:.5;
+}
+[data-theme="claude"][data-mode="dark"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(250,249,245,.10) 0%,rgba(217,119,87,.12) 100%);
+  opacity:.5;
+}
+/* ── book-cloth nav: frosted cream, hairline floor ── */
+[data-theme="claude"][data-mode="light"] nav{
+  background:color-mix(in srgb,var(--card) 72%,transparent);
+  backdrop-filter:blur(16px) saturate(1.2);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  border-bottom:1px solid color-mix(in srgb,var(--ink) 9%,transparent);
+}
+[data-theme="claude"][data-mode="dark"] nav{
+  background:color-mix(in srgb,var(--bg-soft) 72%,transparent);
+  backdrop-filter:blur(16px) saturate(1.2);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
+}
+/* ── hairline cards — no solid gray, ever ── */
+[data-theme="claude"][data-mode] .hero-panel,
+[data-theme="claude"][data-mode] .widget,
+[data-theme="claude"][data-mode] .quiz-card,
+[data-theme="claude"][data-mode] .track-card{
+  border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);
+  box-shadow:none;
+}
+[data-theme="claude"][data-mode] .hero-panel:hover,
+[data-theme="claude"][data-mode] .widget:hover{
+  border-color:color-mix(in srgb,var(--ink) 22%,transparent);
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   ════════════════════════════════════════════════════════════ */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="claude"][data-mode="light"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(217,119,87,.05) 0%,transparent 34%),
+    linear-gradient(180deg in oklch,rgba(20,20,19,.03) 0%,transparent 20%)}
+  [data-theme="claude"][data-mode="dark"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(217,119,87,.05) 0%,transparent 30%),
+    linear-gradient(180deg in oklch,rgba(250,249,245,.02) 0%,transparent 18%)}
+  [data-theme="claude"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,rgba(217,119,87,.10) 0%,transparent 70%)}
+  [data-theme="claude"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,rgba(106,155,204,.08) 0%,transparent 70%)}
+  [data-theme="claude"][data-mode] .blob.b3{background:radial-gradient(circle in oklch,rgba(120,140,93,.07) 0%,transparent 70%)}
+  [data-theme="claude"][data-mode="light"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(20,20,19,.05) 0%,rgba(217,119,87,.10) 100%)}
+  [data-theme="claude"][data-mode="dark"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(250,249,245,.10) 0%,rgba(217,119,87,.12) 100%)}
+}
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="claude"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,color(display-p3 0.851 0.467 0.341) / .10 0%,transparent 70%)}
+    [data-theme="claude"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 0.416 0.608 0.799) / .08 0%,transparent 70%)}
+    [data-theme="claude"][data-mode] .blob.b3{background:radial-gradient(circle in oklch,color(display-p3 0.472 0.549 0.365) / .07 0%,transparent 70%)}
+    [data-theme="claude"][data-mode="light"] .hero-panel::before{background:linear-gradient(135deg in oklch,color(display-p3 0.078 0.078 0.074) / .05 0%,color(display-p3 0.851 0.467 0.341) / .10 100%)}
+    [data-theme="claude"][data-mode="dark"] .hero-panel::before{background:linear-gradient(135deg in oklch,color(display-p3 0.980 0.976 0.960) / .10 0%,color(display-p3 0.851 0.467 0.341) / .12 100%)}
+  }
+}
+
+/* ── CLAUDE MOTION — near-static, restrained (book, not billboard) ── */
+[data-theme="claude"][data-mode] .ambient::before{
+  animation:clBreathe 30s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes clBreathe{from{opacity:1}to{opacity:.9}}

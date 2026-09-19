@@ -1,0 +1,159 @@
+/* ============================================================
+   CHATGPT — OpenAI's official identity.
+   True black #000000 + white #FFFFFF, one emerald accent
+   #10A37F that appears only on the brand mark and key CTAs.
+   Quiet slabs, hairline rims, layered grays for depth.
+   Token contract: see assets/css/themes.css.
+   ============================================================ */
+[data-theme="chatgpt"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#ffffff; --bg-soft:#f9f9f9; --card:#ffffff;
+  --ink:#0d0d0d; --ink-soft:#353535; --muted:#6b766e;
+  --line:#e9e9e9; --line-strong:#d6d6d6;
+  --terracotta:#10a37f; --terracotta-deep:#0b7a5c;
+  --violet:#6e6ee8; --violet-soft:#eeeefd;
+  --teal:#0e9f8a; --teal-soft:#e6f4f0;
+  --gold:#a87f1f; --danger:#d92d20; --success:#0e8a5f;
+  --accent-active:#0b7a5c;
+  --cursor-glow:#10a37f;
+  --grad-hero:linear-gradient(135deg,#10a37f 0%,#0b7a5c 45%,#0d0d0d 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#10a37f 0%,#0b7a5c 45%,#0d0d0d 100%);
+  --grad-soft:linear-gradient(120deg,#f4f6f4 0%,#ffffff 100%);
+  --grad-t1:linear-gradient(90deg,#10a37f,#0e9f8a);
+  --grad-t2:linear-gradient(90deg,#6e6ee8,#0e9f8a);
+  --grad-bar:linear-gradient(180deg,#0e9f8a,#0b7a5c);
+  --grad-bar-alt:linear-gradient(180deg,#d6d6d6,#b8b8b8);
+  --aurora-1:rgba(16,163,127,.08); --aurora-2:rgba(110,110,232,.06);
+  --aurora-3:rgba(14,159,138,.06); --aurora-4:rgba(13,13,13,.04);
+  --conic-a:rgba(16,163,127,.06); --conic-b:rgba(110,110,232,.05);
+  --conic-c:rgba(14,159,138,.04); --conic-d:rgba(13,13,13,.04);
+  --blob-op:.55;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(16,163,127,.05),transparent 68%);
+  --halo:transparent;
+  --selection:#10a37f22;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 30%,transparent);
+  --ambient-extra:none;
+  --drift-dur:26s; --spin-dur:130s;
+  --glow-1:#d6d6d6; --glow-2:#10a37f; --glow-3:#0b7a5c;
+  --glow-speed:6s; --pulse-speed:3.5s;
+  --glass-tint:rgba(16,163,127,.04);
+}
+[data-theme="chatgpt"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#212121; --bg-soft:#171717; --card:#2f2f2f;
+  --ink:#ececec; --ink-soft:#c8c8c8; --muted:#a3a3a3;
+  --line:#333333; --line-strong:#454545;
+  --terracotta:#19c37d; --terracotta-deep:#10a37f;
+  --violet:#9c9cf5; --violet-soft:#262640;
+  --teal:#35c79a; --teal-soft:#12332a;
+  --gold:#d3a84c; --danger:#f06666; --success:#19c37d;
+  --accent-active:#19c37d;
+  --cursor-glow:#19c37d;
+  --grad-hero:linear-gradient(135deg,#0d1a15 0%,#212121 45%,#134e3c 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#0d1a15 0%,#212121 45%,#134e3c 100%);
+  --grad-soft:linear-gradient(120deg,#242424 0%,#1a1a1a 100%);
+  --grad-t1:linear-gradient(90deg,#19c37d,#10a37f);
+  --grad-t2:linear-gradient(90deg,#9c9cf5,#35c79a);
+  --grad-bar:linear-gradient(180deg,#35c79a,#19c37d);
+  --grad-bar-alt:linear-gradient(180deg,#454545,#333333);
+  --aurora-1:rgba(25,195,125,.13); --aurora-2:rgba(156,156,245,.10);
+  --aurora-3:rgba(16,163,127,.08); --aurora-4:rgba(211,168,76,.05);
+  --conic-a:rgba(25,195,125,.06); --conic-b:rgba(156,156,245,.05);
+  --conic-c:rgba(16,163,127,.05); --conic-d:rgba(236,236,236,.04);
+  --blob-op:.15;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(25,195,125,.07),transparent 68%);
+  --halo:transparent;
+  --selection:#19c37d33;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 35%,transparent);
+  --ambient-extra:none;
+  --drift-dur:26s; --spin-dur:130s;
+  --glow-1:#2f2f2f; --glow-2:#333333; --glow-3:#19c37d;
+  --glow-speed:6s; --pulse-speed:3.5s;
+  --glass-tint:rgba(25,195,125,.05);
+}
+
+/* ── chatgpt ambient: ink bed with one faint emerald sigh ── */
+[data-theme="chatgpt"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(16,163,127,.04) 0%,transparent 36%),
+    radial-gradient(60% 50% at 78% 20%,rgba(110,110,232,.05) 0%,transparent 70%);
+}
+[data-theme="chatgpt"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(25,195,125,.05) 0%,transparent 30%),
+    radial-gradient(60% 50% at 78% 20%,rgba(156,156,245,.05) 0%,transparent 70%);
+}
+[data-theme="chatgpt"][data-mode] .blob.b1{background:radial-gradient(circle,rgba(25,195,125,.10) 0%,transparent 70%)}
+[data-theme="chatgpt"][data-mode] .blob.b2{background:radial-gradient(circle,rgba(156,156,245,.08) 0%,transparent 70%)}
+[data-theme="chatgpt"][data-mode] .blob.b3{background:radial-gradient(circle,rgba(16,163,127,.07) 0%,transparent 70%)}
+[data-theme="chatgpt"][data-mode] .blob.b4{opacity:0}
+
+/* ── hero: emerald-to-ink photograph, one bright seam ── */
+[data-theme="chatgpt"][data-mode="light"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(11,122,92,.12) 0%,rgba(255,255,255,.0) 55%,rgba(11,122,92,.07) 100%);
+  opacity:.5;
+}
+[data-theme="chatgpt"][data-mode="dark"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(25,195,125,.14) 0%,rgba(33,33,33,.0) 55%,rgba(25,195,125,.08) 100%);
+  opacity:.55;
+}
+/* ── chatgpt nav: smoked glass ── */
+[data-theme="chatgpt"][data-mode="light"] nav{
+  background:color-mix(in srgb,var(--card) 72%,transparent);
+  backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border-bottom:1px solid color-mix(in srgb,var(--ink) 9%,transparent);
+}
+[data-theme="chatgpt"][data-mode="dark"] nav{
+  background:color-mix(in srgb,var(--bg-soft) 70%,transparent);
+  backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
+}
+/* ── quiet slabs: layered grays, only hairlines ── */
+[data-theme="chatgpt"][data-mode] .hero-panel,
+[data-theme="chatgpt"][data-mode] .widget,
+[data-theme="chatgpt"][data-mode] .quiz-card,
+[data-theme="chatgpt"][data-mode] .track-card{
+  border:1px solid color-mix(in srgb,var(--ink) 13%,transparent);
+  box-shadow:none;
+}
+[data-theme="chatgpt"][data-mode] .hero-panel:hover,
+[data-theme="chatgpt"][data-mode] .widget:hover{
+  border-color:color-mix(in srgb,var(--teal) 35%,transparent);
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   ════════════════════════════════════════════════════════════ */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="chatgpt"][data-mode="light"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(16,163,127,.04) 0%,transparent 36%),
+    radial-gradient(60% 50% at 78% 20% in oklch,rgba(110,110,232,.05) 0%,transparent 70%)}
+  [data-theme="chatgpt"][data-mode="dark"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(25,195,125,.05) 0%,transparent 30%),
+    radial-gradient(60% 50% at 78% 20% in oklch,rgba(156,156,245,.05) 0%,transparent 70%)}
+  [data-theme="chatgpt"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,rgba(25,195,125,.10) 0%,transparent 70%)}
+  [data-theme="chatgpt"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,rgba(156,156,245,.08) 0%,transparent 70%)}
+  [data-theme="chatgpt"][data-mode] .blob.b3{background:radial-gradient(circle in oklch,rgba(16,163,127,.07) 0%,transparent 70%)}
+  [data-theme="chatgpt"][data-mode="light"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(11,122,92,.12) 0%,rgba(255,255,255,.0) 55%,rgba(11,122,92,.07) 100%)}
+  [data-theme="chatgpt"][data-mode="dark"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(25,195,125,.14) 0%,rgba(33,33,33,.0) 55%,rgba(25,195,125,.08) 100%)}
+}
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="chatgpt"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,color(display-p3 0.098 0.765 0.490) / .10 0%,transparent 70%)}
+    [data-theme="chatgpt"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 0.611 0.611 0.961) / .08 0%,transparent 70%)}
+    [data-theme="chatgpt"][data-mode] .blob.b3{background:radial-gradient(circle in oklch,color(display-p3 0.063 0.639 0.498) / .07 0%,transparent 70%)}
+    [data-theme="chatgpt"][data-mode="light"] .hero-panel::before{background:linear-gradient(135deg in oklch,color(display-p3 0.043 0.479 0.360) / .12 0%,color(display-p3 1.000 1.000 1.000) / .0 55%,color(display-p3 0.043 0.479 0.360) / .07 100%)}
+    [data-theme="chatgpt"][data-mode="dark"] .hero-panel::before{background:linear-gradient(135deg in oklch,color(display-p3 0.098 0.765 0.490) / .14 0%,color(display-p3 0.129 0.129 0.129) / .0 55%,color(display-p3 0.098 0.765 0.490) / .08 100%)}
+  }
+}
+
+/* ── CHATGPT MOTION — still ink, alive only at the glow ── */
+[data-theme="chatgpt"][data-mode] .ambient::before{
+  animation:gpBreatheCh 26s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes gpBreatheCh{from{opacity:1}to{opacity:.9}}

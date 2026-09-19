@@ -1,0 +1,147 @@
+/* ============================================================
+   NORD — arctic calm
+   polar-night surfaces, frost blues, aurora-borealis accents.
+   Slow drift — this theme is meant to be quiet.
+   Token contract: see assets/css/themes.css.
+============================================================ */
+[data-theme="nord"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#eef1f6; --bg-soft:#f7f9fc; --card:#ffffff;
+  --ink:#2e3440; --ink-soft:#4c566a; --muted:#6c7686;
+  --line:#dfe4ee; --line-strong:#c9d1df;
+  --terracotta:#bf616a; --terracotta-deep:#a24f58;
+  --violet:#5e81ac; --violet-soft:#e7edf6;
+  --teal:#4d96a8; --teal-soft:#e2f0f3;
+  --gold:#b08d3e; --danger:#c05a63; --success:#7f9f5f;
+  --accent-active:#a24f58;
+  --cursor-glow:#bf616a;
+  --grad-hero:linear-gradient(100deg,#bf616a 0%,#9c6f9c 45%,#5e81ac 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#bf616a 0%,#9c6f9c 45%,#5e81ac 100%);
+  --grad-soft:linear-gradient(120deg,#eef2f8 0%,#e8edf7 100%);
+  --grad-t1:linear-gradient(90deg,#bf616a,#d08770);
+  --grad-t2:linear-gradient(90deg,#5e81ac,#81a1c1);
+  --grad-bar:linear-gradient(180deg,#81a1c1,#5e81ac);
+  --grad-bar-alt:linear-gradient(180deg,#d0a34f,#bf616a);
+  --aurora-1:rgba(191,97,106,.4); --aurora-2:rgba(235,203,139,.35);
+  --aurora-3:rgba(163,190,140,.35); --aurora-4:rgba(136,192,208,.4);
+  --conic-a:rgba(191,97,106,.08); --conic-b:rgba(235,203,139,.09);
+  --conic-c:rgba(163,190,140,.07); --conic-d:rgba(136,192,208,.09);
+  --blob-op:.75;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.10),transparent 70%);
+  --halo:transparent;
+  --selection:#5e81ac33;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 42%,transparent);
+  --ambient-extra:none;
+  --drift-dur:30s; --spin-dur:150s;
+  --glow-1:#bf616a; --glow-2:#d08770; --glow-3:#88c0d0;
+  --glow-speed:6s; --pulse-speed:4s;
+  --glass-tint:rgba(136,192,208,.06);
+}
+[data-theme="nord"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#2e3440; --bg-soft:#333b48; --card:#3b4252;
+  --ink:#eceff4; --ink-soft:#d8dee9; --muted:#a6b0c1;
+  --line:#3d4654; --line-strong:#4c566a;
+  --terracotta:#bf616a; --terracotta-deep:#d08770;
+  --violet:#81a1c1; --violet-soft:#30384a;
+  --teal:#88c0d0; --teal-soft:#263540;
+  --gold:#ebcb8b; --danger:#bf616a; --success:#a3be8c;
+  --accent-active:#8fbcbb;
+  --cursor-glow:#bf616a;
+  --grad-hero:linear-gradient(100deg,#bf616a 0%,#d08770 45%,#88c0d0 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#bf616a 0%,#d08770 45%,#88c0d0 100%);
+  --grad-soft:linear-gradient(120deg,#2c3441 0%,#2e3644 100%);
+  --grad-t1:linear-gradient(90deg,#bf616a,#d08770);
+  --grad-t2:linear-gradient(90deg,#81a1c1,#5e81ac);
+  --grad-bar:linear-gradient(180deg,#88c0d0,#5e81ac);
+  --grad-bar-alt:linear-gradient(180deg,#ebcb8b,#d08770);
+  --aurora-1:rgba(191,97,106,.5); --aurora-2:rgba(235,203,139,.45);
+  --aurora-3:rgba(163,190,140,.45); --aurora-4:rgba(136,192,208,.5);
+  --conic-a:rgba(191,97,106,.14); --conic-b:rgba(235,203,139,.16);
+  --conic-c:rgba(163,190,140,.12); --conic-d:rgba(136,192,208,.15);
+  --blob-op:.20;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(136,192,208,.15),transparent 70%);
+  --halo:radial-gradient(50% 46% at 50% 40%,rgba(129,161,193,.14),transparent 72%);
+  --selection:#88c0d033;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 42%,transparent);
+  --ambient-extra:none;
+  --drift-dur:30s; --spin-dur:150s;
+  --glow-1:#bf616a; --glow-2:#d08770; --glow-3:#88c0d0;
+  --glow-speed:6s; --pulse-speed:4s;
+  --glass-tint:rgba(136,192,208,.08);
+}
+
+/* ════════════════════════════════════════════════════════════
+   NORD AMBIENT — arctic aurora borealis band
+   A quiet, diffuse horizontal band of northern lights across the
+   upper viewport. Frost greens and teals, barely there. Static —
+   the aurora is a presence, not a performance.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="nord"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;top:-18%;left:-10%;right:-10%;height:64%;
+  background:linear-gradient(180deg,
+    rgba(163,190,140,.08) 0%,rgba(136,192,208,.06) 30%,rgba(129,161,193,.05) 55%,transparent 80%);
+  filter:blur(38px);
+}
+[data-theme="nord"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;top:-18%;left:-10%;right:-10%;height:64%;
+  background:linear-gradient(180deg,
+    rgba(163,190,140,.10) 0%,rgba(136,192,208,.08) 30%,rgba(129,161,193,.06) 55%,transparent 80%);
+  filter:blur(38px);
+}
+/* frost orbs: two polar lights, still */
+[data-theme="nord"][data-mode] .blob.b2{background:radial-gradient(circle,rgba(136,192,208,.4) 0%,transparent 68%)}
+[data-theme="nord"][data-mode] .blob.b4{background:radial-gradient(circle,rgba(163,190,140,.3) 0%,transparent 68%)}
+[data-theme="nord"][data-mode] .blob.b1,
+[data-theme="nord"][data-mode] .blob.b3{opacity:0}
+
+/* ── NORD HERO: aurora-borealis spectrum rim ── */
+[data-theme="nord"][data-mode="dark"] .hero-panel::before{
+  background:linear-gradient(115deg,#bf616a 0%,#d08770 30%,#ebcb8b 55%,#88c0d0 100%);
+  opacity:.55;
+}
+[data-theme="nord"][data-mode="light"] .hero-panel::before{
+  background:linear-gradient(115deg,#bf616a 0%,#d08770 30%,#5e81ac 55%,#88c0d0 100%);
+  opacity:.5;
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   The sRGB rgba() stops above remain the universal baseline; these
+   guarded blocks upgrade the SAME gradients where the browser
+   supports the syntax, and fall back silently everywhere else.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── OKLCH interpolation: same stops, perceptually-uniform hue ── */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="nord"][data-mode="dark"] .ambient::before{background:linear-gradient(180deg in oklch,
+    rgba(163,190,140,.10) 0%,rgba(136,192,208,.08) 30%,rgba(129,161,193,.06) 55%,transparent 80%)}
+  [data-theme="nord"][data-mode="light"] .ambient::before{background:linear-gradient(180deg in oklch,
+    rgba(163,190,140,.08) 0%,rgba(136,192,208,.06) 30%,rgba(129,161,193,.05) 55%,transparent 80%)}
+  [data-theme="nord"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,rgba(136,192,208,.4) 0%,transparent 68%)}
+  [data-theme="nord"][data-mode] .blob.b4{background:radial-gradient(circle in oklch,rgba(163,190,140,.3) 0%,transparent 68%)}
+  [data-theme="nord"][data-mode="dark"] .hero-panel::before{background:linear-gradient(115deg in oklch,#bf616a 0%,#d08770 30%,#ebcb8b 55%,#88c0d0 100%)}
+  [data-theme="nord"][data-mode="light"] .hero-panel::before{background:linear-gradient(115deg in oklch,#bf616a 0%,#d08770 30%,#5e81ac 55%,#88c0d0 100%)}
+}
+
+/* ── Display-P3 stops: wider-gamut, richer colors on capable screens ── */
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="nord"][data-mode="dark"] .ambient::before{background:linear-gradient(180deg in oklch,
+      color(display-p3 0.612 0.749 0.527) / .10 0%,color(display-p3 0.465 0.760 0.825) / .08 30%,color(display-p3 0.472 0.636 0.769) / .06 55%,transparent 80%)}
+    [data-theme="nord"][data-mode="light"] .ambient::before{background:linear-gradient(180deg in oklch,
+      color(display-p3 0.612 0.749 0.527) / .08 0%,color(display-p3 0.465 0.760 0.825) / .06 30%,color(display-p3 0.472 0.636 0.769) / .05 55%,transparent 80%)}
+    [data-theme="nord"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 0.465 0.760 0.825) / .4 0%,transparent 68%)}
+    [data-theme="nord"][data-mode] .blob.b4{background:radial-gradient(circle in oklch,color(display-p3 0.612 0.749 0.527) / .3 0%,transparent 68%)}
+    [data-theme="nord"][data-mode="dark"] .hero-panel::before{background:linear-gradient(115deg in oklch,color(display-p3 0.804 0.354 0.408) 0%,color(display-p3 0.864 0.513 0.419) 30%,color(display-p3 0.947 0.790 0.507) 55%,color(display-p3 0.465 0.760 0.825) 100%)}
+    [data-theme="nord"][data-mode="light"] .hero-panel::before{background:linear-gradient(115deg in oklch,color(display-p3 0.804 0.354 0.408) 0%,color(display-p3 0.864 0.513 0.419) 30%,color(display-p3 0.328 0.511 0.690) 55%,color(display-p3 0.465 0.760 0.825) 100%)}
+  }
+}
+
+/* ── NORD MOTION — aurora drift (very slow, compositor-only,
+   killed by base.css reduced-motion + low-perf ambient rules) ── */
+[data-theme="nord"][data-mode] .ambient::before{
+  animation:ndDrift 30s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes ndDrift{from{opacity:1}to{opacity:.85}}

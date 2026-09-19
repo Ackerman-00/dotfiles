@@ -1,0 +1,489 @@
+/* ============================================================
+   THEME SYSTEM — shared registry shell
+   · one theme per file in assets/css/themes/ (add a theme = drop
+     a file there + one entry in RZ_THEMES in assets/js/themes/themes.js)
+   · this file: the token CONTRACT, the ember-light fallback on
+     :root (site still renders if a theme file is missing), the
+     OKLCH gradient swap, animated visual effects, and the
+     premium theme-picker chrome.
+
+   TOKEN CONTRACT (every theme block defines the SAME set):
+     surfaces    --bg --bg-soft --card --ink --ink-soft --muted
+                 --line --line-strong
+     accents     --terracotta --terracotta-deep --violet --violet-soft
+                 --teal --teal-soft --gold --danger --success
+                 --accent-active        (links, nav, macro keywords)
+                 --cursor-glow          (premium cursor-follow glow hue)
+     gradients   --grad-hero --grad-hero-ok --grad-soft
+                 --grad-t1 --grad-t2     (race-track fills)
+                 --grad-bar --grad-bar-alt (sort / merge bars)
+     ambient     --aurora-1..4           (drift orbs)
+                 --conic-a..d            (aurora band)
+                 --blob-op               (orb opacity, dark < light)
+                 --glass-glow            (hero-panel interior bloom)
+                 --halo                  (halo behind glass panels)
+                 --selection --badge-glow
+                 --ambient-extra         (optional static layer)
+     motion      --drift-dur --spin-dur  (per-theme pace)
+     animated    --glow-1..3             (border/glow palette)
+                 --glow-speed            (gradient drift pace)
+                 --pulse-speed           (glass breathing pace)
+                 --glass-tint            (translucent glass overlay)
+   ============================================================ */
+
+/* ── FALLBACK: ember-light is the default before the picker runs.
+   Every theme file mirrors this shape for its own data-theme. ── */
+:root{
+  color-scheme:light;
+  --bg:#f4f0e7; --bg-soft:#faf7f0; --card:#fffdf8;
+  --ink:#26221b; --ink-soft:#4b453a; --muted:#8d8678;
+  --line:#e9e2d4; --line-strong:#d8cfbb;
+  --terracotta:#c96a4a; --terracotta-deep:#a94f32;
+  --violet:#6b51d9; --violet-soft:#efeaff;
+  --teal:#0e8f83; --teal-soft:#e1f5f2;
+  --gold:#a67c28; --danger:#cf3d3d; --success:#2b9559;
+  --accent-active:#a94f32;
+  --cursor-glow:#c96a4a;
+  --grad-hero:linear-gradient(100deg,#c96a4a 0%,#b0558a 45%,#6b51d9 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#c96a4a 0%,#b0558a 45%,#6b51d9 100%);
+  --grad-soft:linear-gradient(120deg,#f9ece2 0%,#f0ebfc 100%);
+  --grad-t1:linear-gradient(90deg,#c96a4a,#b0558a);
+  --grad-t2:linear-gradient(90deg,#6b51d9,#7c5cff);
+  --grad-bar:linear-gradient(180deg,#6b51d9,#5840b8);
+  --grad-bar-alt:linear-gradient(180deg,#d98d5f,#c96a4a);
+  --aurora-1:rgba(243,198,168,.55); --aurora-2:rgba(207,195,255,.5);
+  --aurora-3:rgba(191,232,226,.5); --aurora-4:rgba(190,160,240,.42);
+  --conic-a:rgba(192,96,154,.10); --conic-b:rgba(143,117,255,.12);
+  --conic-c:rgba(53,184,171,.08); --conic-d:rgba(224,138,100,.11);
+  --blob-op:.75;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.10),transparent 70%);
+  --halo:transparent;
+  --selection:#d9775733;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 45%,transparent);
+  --ambient-extra:none;
+  --drift-dur:22s; --spin-dur:110s;
+  --glow-1:#c96a4a; --glow-2:#b0558a; --glow-3:#6b51d9;
+  --glow-speed:4s; --pulse-speed:3s;
+  --glass-tint:rgba(201,106,74,.06);
+  --shadow-sm:0 1px 2px rgba(38,33,26,.06),0 4px 14px rgba(38,33,26,.05);
+  --shadow-md:0 2px 4px rgba(38,33,26,.07),0 16px 40px rgba(38,33,26,.10);
+  --hairline:rgba(38,33,26,.09);
+  --nav-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 30px rgba(38,33,26,.06);
+}
+
+/* shadows/hairlines are mode-derived from the theme's ink — every theme
+   block stays lean, these need no per-theme values. */
+[data-theme][data-mode="light"]{
+  --hairline:color-mix(in srgb,var(--ink) 9%,transparent);
+  --shadow-sm:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 4px 14px color-mix(in srgb,var(--ink) 5%,transparent);
+  --shadow-md:0 2px 4px color-mix(in srgb,var(--ink) 7%,transparent),0 16px 40px color-mix(in srgb,var(--ink) 10%,transparent);
+  --nav-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 30px color-mix(in srgb,var(--ink) 6%,transparent);
+}
+[data-theme][data-mode="dark"]{
+  --hairline:color-mix(in srgb,var(--ink) 10%,transparent);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.5),0 4px 14px rgba(0,0,0,.35);
+  --shadow-md:0 2px 4px rgba(0,0,0,.55),0 18px 44px rgba(0,0,0,.45);
+  --nav-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 14px 36px rgba(0,0,0,.45);
+}
+
+/* ════════════════════════════════════════════════════════════
+   TEXT-SAFE ACCENTS — small text never wears raw vivid color.
+   Every ratio below was measured to hold ≥4.5:1 against its
+   background in ALL themes × both modes (dark UIs get brighter
+   mixes, light UIs get deeper ones — same hue, safe luminance).
+   ════════════════════════════════════════════════════════════ */
+[data-mode="light"] .plain-card h3,
+[data-mode="light"] .map-head .mh.left,
+[data-mode="light"] .map-side.left .m-ic{color:color-mix(in srgb,var(--terracotta-deep) 80%,var(--ink))}
+[data-mode="dark"] .plain-card h3,
+[data-mode="dark"] .map-head .mh.left,
+[data-mode="dark"] .map-side.left .m-ic{color:color-mix(in srgb,var(--terracotta-deep) 70%,var(--ink))}
+[data-mode="light"] .why-card .wy-head,
+[data-mode="light"] .map-head .mh.right,
+[data-mode="light"] .map-side.right .m-ic,
+[data-mode="light"] .explain-panel .ep-title,
+[data-mode="light"] .syl-chip.w,
+[data-mode="light"] .syl-chip.ph,
+[data-mode="light"] .pj-tier-chip,
+[data-mode="light"] .pj-card-cta,
+[data-mode="light"] .pj-step-num,
+[data-mode="light"] .sdd-link:hover,
+[data-mode="light"] .track-card:hover .tc-arrow,
+[data-mode="light"] .crumb:hover{color:color-mix(in srgb,var(--violet) 65%,var(--ink))}
+[data-mode="dark"] .why-card .wy-head,
+[data-mode="dark"] .map-head .mh.right,
+[data-mode="dark"] .map-side.right .m-ic,
+[data-mode="dark"] .explain-panel .ep-title,
+[data-mode="dark"] .syl-chip.w,
+[data-mode="dark"] .syl-chip.ph,
+[data-mode="dark"] .pj-tier-chip,
+[data-mode="dark"] .pj-card-cta,
+[data-mode="dark"] .pj-step-num,
+[data-mode="dark"] .sdd-link:hover,
+[data-mode="dark"] .track-card:hover .tc-arrow,
+[data-mode="dark"] .crumb:hover{color:color-mix(in srgb,var(--violet) 80%,var(--ink))}
+[data-mode="light"] .tip b,
+[data-mode="light"] .func-io.out,
+[data-mode="light"] .result-item.ok,
+[data-mode="light"] .dz-out{color:color-mix(in srgb,var(--teal) 40%,var(--ink))}
+[data-mode="dark"] .tip b,
+[data-mode="dark"] .func-io.out,
+[data-mode="dark"] .result-item.ok,
+[data-mode="dark"] .dz-out{color:color-mix(in srgb,var(--teal) 90%,var(--ink))}
+[data-mode="light"] .w-msg.ok,
+[data-mode="light"] .ts-opt.right,
+[data-mode="light"] .quiz-opt.right,
+[data-mode="light"] .vbox.open .v-ic,
+[data-mode="light"] .vbox.open .v-seal,
+[data-mode="light"] .sidebar a.done .s-num,
+[data-mode="light"] .drawer-list a.done .s-num,
+[data-mode="light"] .sidebar .s-ck,
+[data-mode="light"] .drawer-list .s-ck,
+[data-mode="light"] .done-btn:hover{color:color-mix(in srgb,var(--success) 45%,var(--ink))}
+[data-mode="dark"] .w-msg.ok,
+[data-mode="dark"] .ts-opt.right,
+[data-mode="dark"] .quiz-opt.right,
+[data-mode="dark"] .vbox.open .v-ic,
+[data-mode="dark"] .vbox.open .v-seal,
+[data-mode="dark"] .sidebar a.done .s-num,
+[data-mode="dark"] .drawer-list a.done .s-num,
+[data-mode="dark"] .sidebar .s-ck,
+[data-mode="dark"] .drawer-list .s-ck,
+[data-mode="dark"] .done-btn:hover{color:color-mix(in srgb,var(--success) 90%,var(--ink))}
+[data-mode="light"] .w-msg.err,
+[data-mode="light"] .ts-opt.wrong,
+[data-mode="light"] .quiz-opt.wrong,
+[data-mode="light"] .v-value.gone,
+[data-mode="light"] .own-box.abandoned .o-flag,
+[data-mode="light"] .result-item.err{color:color-mix(in srgb,var(--danger) 90%,var(--ink))}
+[data-mode="dark"] .w-msg.err,
+[data-mode="dark"] .ts-opt.wrong,
+[data-mode="dark"] .quiz-opt.wrong,
+[data-mode="dark"] .v-value.gone,
+[data-mode="dark"] .own-box.abandoned .o-flag,
+[data-mode="dark"] .result-item.err{color:color-mix(in srgb,var(--danger) 55%,var(--ink))}
+[data-mode="light"] .nav-links a.active,
+[data-mode="light"] .spn-eyebrow,
+[data-mode="light"] .sidebar a.active,
+[data-mode="light"] .drawer-list a.active,
+[data-mode="light"] .road-btn,
+[data-mode="light"] ol.steps code.inline{color:color-mix(in srgb,var(--accent-active) 65%,var(--ink))}
+[data-mode="dark"] .nav-links a.active,
+[data-mode="dark"] .spn-eyebrow,
+[data-mode="dark"] .sidebar a.active,
+[data-mode="dark"] .drawer-list a.active,
+[data-mode="dark"] .road-btn,
+[data-mode="dark"] ol.steps code.inline{color:color-mix(in srgb,var(--accent-active) 90%,var(--ink))}
+[data-mode="light"] .coach-card .ch-head{color:color-mix(in srgb,var(--gold) 50%,var(--ink))}
+[data-mode="dark"] .coach-card .ch-head{color:color-mix(in srgb,var(--gold) 70%,var(--ink))}
+
+/* ── icon chips + done state: tinted fills, never white-on-vivid ── */
+.tip .t-ic{background:color-mix(in srgb,var(--teal) 16%,var(--card));border:1px solid color-mix(in srgb,var(--teal) 35%,transparent)}
+[data-mode="light"] .tip .t-ic{color:color-mix(in srgb,var(--teal) 40%,var(--ink))}
+[data-mode="dark"] .tip .t-ic{color:color-mix(in srgb,var(--teal) 90%,var(--ink))}
+.warn .w-ic{background:color-mix(in srgb,var(--danger) 14%,var(--card));border:1px solid color-mix(in srgb,var(--danger) 35%,transparent)}
+[data-mode="light"] .warn .w-ic{color:color-mix(in srgb,var(--danger) 90%,var(--ink))}
+[data-mode="dark"] .warn .w-ic{color:color-mix(in srgb,var(--danger) 55%,var(--ink))}
+.done-btn.is-done{background:color-mix(in srgb,var(--success) 22%,var(--card));border-color:color-mix(in srgb,var(--success) 55%,transparent)}
+[data-mode="light"] .done-btn.is-done{color:color-mix(in srgb,var(--success) 45%,var(--ink))}
+[data-mode="dark"] .done-btn.is-done{color:color-mix(in srgb,var(--success) 90%,var(--ink))}
+[data-mode="light"] .done-btn.is-done:hover{color:color-mix(in srgb,var(--success) 45%,var(--ink))}
+[data-mode="dark"] .done-btn.is-done:hover{color:color-mix(in srgb,var(--success) 90%,var(--ink))}
+
+/* ── solid gradient fills: dark ink in dark mode (vivid fills are
+   light — dark glyphs pass everywhere), white + shadow in light ── */
+[data-mode="dark"] .btn-primary,
+[data-mode="dark"] .brand-badge,
+[data-mode="dark"] .lesson-num,
+[data-mode="dark"] .syl-num,
+[data-mode="dark"] .pj-tier-badge,
+[data-mode="dark"] .graduation .g-ic,
+[data-mode="dark"] ol.steps li::before,
+[data-mode="dark"] .sp-num{color:#131316;text-shadow:none}
+[data-mode="light"] .syl-row.done .syl-num{color:color-mix(in srgb,var(--success) 45%,var(--ink))}
+[data-mode="dark"] .syl-row.done .syl-num{color:color-mix(in srgb,var(--success) 90%,var(--ink))}
+[data-mode="dark"] .syl-row.done .syl-chip.w,
+[data-mode="dark"] .syl-row.done .syl-chip.ph{color:color-mix(in srgb,var(--violet) 80%,var(--ink))}
+[data-mode="light"] .syl-row.done .syl-chip.w,
+[data-mode="light"] .syl-row.done .syl-chip.ph{color:color-mix(in srgb,var(--violet) 65%,var(--ink))}
+[data-mode="light"] .btn-primary,
+[data-mode="light"] .brand-badge,
+[data-mode="light"] .lesson-num,
+[data-mode="light"] .syl-num,
+[data-mode="light"] .pj-tier-badge,
+[data-mode="light"] .graduation .g-ic,
+[data-mode="light"] ol.steps li::before,
+[data-mode="light"] .sp-num{text-shadow:0 1px 2px rgba(0,0,0,.28)}
+
+/* 2026 gradient interpolation — every theme's --grad-hero gets its
+   OKLCH pass when the browser supports it (see --grad-hero-ok).
+   Selector must out-specify the theme blocks ([data-theme=x][data-mode=y])
+   so the swap always wins regardless of stylesheet order. */
+@supports (background:linear-gradient(in oklch,#fff,#000)){
+  :root,html[data-theme][data-mode]{--grad-hero:var(--grad-hero-ok)}
+}
+
+/* ════════════════════════════════════════════════════════════
+   HERO + AMBIENT VISUAL IDENTITY — per theme
+   There is intentionally NO global hero-border animation or ambient
+   gradient here. Every theme in assets/css/themes/*.css defines its
+   own hero treatment and its own ambient layer (scoped keyframes),
+   so no two themes share a gradient approach. base.css provides the
+   static fallback rim (.hero-panel::before) when a theme opts out.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── subtle glass tint wash on crumbs when present ── */
+[data-theme][data-mode] .crumbs::before{
+  background:var(--glass-tint,transparent);
+  transition:background .3s;
+}
+
+/* ── glow ring on focused/active interactive glass elements ── */
+[data-theme][data-mode] .hero-pill{
+  box-shadow:0 0 0 1px var(--glass-tint,transparent),var(--shadow-sm);
+}
+
+/* ════════════════════════════════════════════════════════════
+   THEME PICKER — premium glass morphism popover
+   Full-width animated gradient rows, glow ring on active,
+   smooth transitions. Built by RZ_THEMES in assets/js/themes/themes.js
+   ════════════════════════════════════════════════════════════ */
+.nav-right{position:relative}
+.theme-btn{position:relative}
+.tb-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--grad-hero);box-shadow:0 0 0 2px var(--card);transition:transform .2s}
+.theme-btn:hover .tb-dot{transform:scale(1.3)}
+
+/* ── popover shell ── */
+.theme-menu{
+  position:absolute;top:calc(100% + 10px);right:0;
+  width:min(340px,calc(100vw - 24px));z-index:70;
+  padding:16px;border-radius:20px;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--card) 92%,transparent),
+    color-mix(in srgb,var(--card) 72%,transparent));
+  backdrop-filter:blur(24px) saturate(1.6);
+  -webkit-backdrop-filter:blur(24px) saturate(1.6);
+  border:1px solid var(--hairline);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),
+    0 24px 64px -12px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.03);
+}
+.theme-menu[hidden]{display:none}
+@keyframes tmIn{from{opacity:0;transform:translateY(-8px) scale(.96)}to{opacity:1;transform:none}}
+.theme-menu{animation:tmIn .2s cubic-bezier(.16,1,.3,1)}
+
+/* ── mode toggle: sleek pills ── */
+.tm-mode{display:flex;gap:6px;margin-bottom:14px}
+.tm-mode-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:8px;border-radius:12px;border:1px solid var(--hairline);
+  background:color-mix(in srgb,var(--bg-soft) 50%,transparent);
+  color:var(--muted);font:inherit;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .2s;
+}
+.tm-mode-btn:hover{color:var(--ink-soft);background:color-mix(in srgb,var(--bg-soft) 80%,transparent)}
+.tm-mode-btn[aria-pressed="true"]{
+  color:var(--ink);background:var(--card);
+  box-shadow:inset 0 0 0 1px var(--hairline),var(--shadow-sm);
+}
+.tm-mode-btn[aria-disabled="true"]{opacity:.3;cursor:default;pointer-events:none}
+
+/* ── theme list: scrollable, grouped ── */
+.tm-list{display:flex;flex-direction:column;gap:6px;max-height:min(52vh,380px);overflow-y:auto;scrollbar-width:thin;padding-right:2px}
+.tm-group{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 12px 2px}
+.tm-group:first-child{padding-top:0}
+.tm-row{
+  position:relative;display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:14px;
+  border:1px solid transparent;
+  cursor:pointer;font:inherit;text-align:left;
+  transition:all .2s;color:var(--ink);
+}
+.tm-row:hover{
+  background:color-mix(in srgb,var(--card) 60%,transparent);
+  border-color:var(--hairline);
+  transform:translateX(3px);
+}
+
+/* ── animated gradient swatch bar ── */
+.tm-bar{
+  width:44px;height:32px;border-radius:9px;flex:none;
+  background:var(--tm-grad,var(--grad-hero));
+  background-size:200% 200%;
+  animation:tmBar var(--tm-speed,4s) ease-in-out infinite;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 0 0 1px rgba(0,0,0,.1),
+    0 2px 8px rgba(0,0,0,.15);
+  transition:transform .2s,box-shadow .2s;
+}
+.tm-row:hover .tm-bar{
+  transform:scale(1.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 0 0 1px rgba(0,0,0,.1),
+    0 4px 16px rgba(0,0,0,.2);
+}
+@keyframes tmBar{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+
+/* ── theme name + mode dots ── */
+.tm-info{flex:1;min-width:0}
+.tm-name{font-size:13px;font-weight:700;line-height:1.2;display:flex;align-items:center;gap:6px}
+.tm-name small{font-weight:600;color:var(--muted);font-size:10.5px}
+.tm-modes{display:flex;gap:4px;margin-left:auto;flex:none}
+.tm-dot{
+  width:18px;height:18px;border-radius:50%;display:grid;place-items:center;
+  font-size:9px;line-height:1;cursor:pointer;
+  border:1px solid var(--hairline);transition:all .15s;
+}
+.tm-dot:hover{transform:scale(1.15)}
+.tm-dot[data-mode="dark"]{background:#1b1a16;color:#e8e2d4}
+.tm-dot[data-mode="light"]{background:#fff8ec;color:#3c3836}
+.tm-dot.dim{opacity:.2;pointer-events:none}
+.tm-dot.cur{outline:2px solid var(--violet);outline-offset:1px}
+
+/* ── active row: glow ring ── */
+.tm-row.active{
+  border-color:color-mix(in srgb,var(--violet) 40%,transparent);
+  background:color-mix(in srgb,var(--card) 50%,transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--violet) 20%,transparent),
+    0 0 20px -4px var(--glass-tint,transparent);
+}
+.tm-row.active .tm-bar{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 0 0 1px rgba(0,0,0,.1),
+    0 0 16px -2px var(--glass-tint,rgba(255,255,255,.15));
+}
+
+/* ── mobile: full-width overlay ── */
+@media(max-width:640px){
+  .theme-menu{position:fixed;top:64px;right:12px}
+}
+
+/* ════════════════════════════════════════════════════════════
+   REDUCED-MOTION + LOW-PERF — collapse all animated visuals
+   (per-theme keyframes are killed inside each theme file; here we
+   only cover the shared picker chrome)
+   ════════════════════════════════════════════════════════════ */
+@media(prefers-reduced-motion:reduce){
+  .tm-bar{animation:none !important}
+}
+html[data-perf="low"] .tm-bar{animation:none !important}
+
+/* ════════════════════════════════════════════════════════════
+   PREMIUM 2026 LAYER — shared across ALL themes
+   Cursor-follow ambient glow (vars fed by themes.js), cinematic
+   vignette, film grain, scroll-progress bar (scroll-driven),
+   nav gradient underline sweep, button/quiz sheen, focus glow,
+   hover lifts with theme-colored light, themed scrollbar.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── cursor-follow ambient glow: dedicated composited layer ──
+   A small fixed disc moved with transform (GPU-composited, zero
+   repaint). The old viewport-sized radial gradient re-rasterized
+   the whole page on every pointermove frame — a top heat source. */
+.rz-glow{
+  position:fixed;top:0;left:0;z-index:1;pointer-events:none;
+  width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--cursor-glow,var(--accent-active)) 9%,transparent) 0%,transparent 68%);
+  transform:translate3d(var(--gx,50vw),var(--gy,42vh),0);
+  will-change:transform;
+}
+@media(pointer:coarse){.rz-glow{display:none}}
+
+/* ── soft vignette: static, rasterized once ── */
+body::before{
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(130% 110% at 50% 42%,transparent 58%,rgba(0,0,0,.14) 100%);
+}
+@media(pointer:coarse){body::before{background:none}}
+
+/* ── film grain ──
+   No mix-blend-mode: overlay would force the browser to blend
+   the ENTIRE page against this layer every single frame — with
+   any animation running, that is a full-page recomposite loop.
+   Plain opacity keeps the grain visual at a fraction of the cost. */
+body::after{
+  content:"";position:fixed;inset:0;z-index:120;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.05;
+}
+
+/* ── scroll-progress bar (scroll-driven, modern) ── */
+@supports (animation-timeline: scroll()){
+  html::before{
+    content:"";position:fixed;top:0;left:0;right:0;height:3px;z-index:130;
+    background:var(--grad-hero);
+    transform-origin:0 50%;transform:scaleX(0);
+    animation:rzProgress linear;
+    animation-timeline:scroll(root);
+    pointer-events:none;
+  }
+}
+@keyframes rzProgress{to{transform:scaleX(1)}}
+
+/* ── nav pills: gradient underline sweep ── */
+.nav-links a{position:relative}
+.nav-links a::after{
+  content:"";position:absolute;left:50%;right:50%;bottom:3px;height:2px;border-radius:2px;
+  background:var(--grad-hero);
+  transition:left .22s ease,right .22s ease;
+}
+.nav-links a:hover::after{left:9px;right:9px}
+.nav-links a.active::after{left:9px;right:9px;opacity:.9}
+
+/* ── sheen sweep: primary buttons + quiz options ── */
+.btn-primary,.w-btn,.ts-opt{position:relative;overflow:hidden}
+.btn-primary::after,.w-btn::after,.ts-opt::after{
+  content:"";position:absolute;top:-20%;bottom:-20%;width:34%;left:-60%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);
+  transform:skewX(-20deg);
+  transition:left .55s ease;pointer-events:none;
+}
+.btn-primary:hover::after,.w-btn:hover::after,.ts-opt:hover::after{left:130%}
+
+/* ── study interactives: focus glow, hover lift, swatch ring ── */
+.w-input:focus{
+  border-color:color-mix(in srgb,var(--accent-active) 70%,var(--line-strong));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent-active) 16%,transparent);
+}
+.ts-opt:hover{
+  border-color:color-mix(in srgb,var(--accent-active) 60%,var(--line-strong));
+  transform:translateY(-1px);
+  box-shadow:0 6px 18px -6px color-mix(in srgb,var(--terracotta) 30%,transparent);
+}
+.match-swatch:hover{
+  outline:3px solid color-mix(in srgb,var(--violet) 40%,transparent);
+  outline-offset:2px;transform:scale(1.06);
+}
+
+/* ── cards: theme-colored light on hover ── */
+[data-theme][data-mode] .track-card:hover,
+[data-theme][data-mode] .syl-row:hover,
+[data-theme][data-mode] .widget:hover,
+[data-theme][data-mode] .quiz-card:hover,
+[data-theme][data-mode] .vbox:hover,
+[data-theme][data-mode] .own-box:hover{
+  box-shadow:0 18px 42px -14px color-mix(in srgb,var(--accent-active) 28%,transparent);
+}
+
+/* ── themed thin scrollbar ── */
+:root{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--line-strong) 75%,transparent) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{
+  background:color-mix(in srgb,var(--line-strong) 70%,transparent);
+  border:3px solid transparent;background-clip:padding-box;border-radius:999px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background:color-mix(in srgb,var(--accent-active) 45%,var(--line-strong));
+  border:3px solid transparent;background-clip:padding-box;border-radius:999px;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html::before{animation:none !important}
+  body::after{opacity:.03}
+  .rz-glow{display:none}
+}
+html[data-perf="low"]::before{animation:none !important}
+html[data-perf="low"] .rz-glow{display:none}

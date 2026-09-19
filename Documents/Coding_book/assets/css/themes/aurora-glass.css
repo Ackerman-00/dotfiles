@@ -1,0 +1,412 @@
+/* ============================================================
+   AURORA GLASS — premium animated green gradients glass
+   Deep forest-black base, neon emerald/cyan glow, drifting
+   aurora mesh background, pulsing glass panels.
+   EVERY card surface carries a COMET BEAM — a white-hot liquid
+   ball with an emerald → cyan gradient trail that travels the
+   whole card perimeter (CSS Motion Path, the 2026 border-beam
+   pattern), plus a static conic ring matching the UI palette.
+   Token contract: see assets/css/themes.css.
+============================================================ */
+
+/* ── comet beams run on the CSS Motion Path compositor (see below) ── */
+
+/* ── AURORA GLASS DARK ── */
+[data-theme="aurora-glass"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#050f0a; --bg-soft:#0a1a12; --card:#0e2218;
+  --ink:#e0f5ec; --ink-soft:#a8d5c0; --muted:#59957b;
+  --line:#153024; --line-strong:#1e4533;
+  --terracotta:#10b981; --terracotta-deep:#34d399;
+  --violet:#8b5cf6; --violet-soft:#1a1430;
+  --teal:#06b6d4; --teal-soft:#0a2830;
+  --gold:#fbbf24; --danger:#ef4444; --success:#10b981;
+  --accent-active:#34d399;
+  --cursor-glow:#5eead4;
+  --grad-hero:linear-gradient(135deg,#10b981 0%,#06b6d4 45%,#8b5cf6 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#10b981 0%,#06b6d4 45%,#8b5cf6 100%);
+  --grad-soft:linear-gradient(135deg,#0a1a12 0%,#0a1520 100%);
+  --grad-t1:linear-gradient(90deg,#10b981,#059669);
+  --grad-t2:linear-gradient(90deg,#06b6d4,#0891b2);
+  --grad-bar:linear-gradient(180deg,#06b6d4,#0e7490);
+  --grad-bar-alt:linear-gradient(180deg,#10b981,#059669);
+  --aurora-1:rgba(16,185,129,.5); --aurora-2:rgba(6,182,212,.45);
+  --aurora-3:rgba(139,92,246,.4); --aurora-4:rgba(52,211,153,.35);
+  --conic-a:rgba(16,185,129,.22); --conic-b:rgba(6,182,212,.20);
+  --conic-c:rgba(139,92,246,.18); --conic-d:rgba(52,211,153,.22);
+  --blob-op:.25;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(16,185,129,.18),transparent 70%);
+  --halo:radial-gradient(50% 46% at 50% 40%,rgba(6,182,212,.16),transparent 72%);
+  --selection:#10b98133;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 50%,transparent);
+  --ambient-extra:radial-gradient(ellipse 70% 50% at 25% 25%,rgba(16,185,129,.07) 0%,transparent 55%),radial-gradient(ellipse 50% 70% at 75% 75%,rgba(6,182,212,.06) 0%,transparent 55%),radial-gradient(ellipse 60% 40% at 50% 50%,rgba(139,92,246,.04) 0%,transparent 60%);
+  --drift-dur:20s; --spin-dur:90s;
+  --glow-1:#10b981; --glow-2:#06b6d4; --glow-3:#8b5cf6;
+  --glow-speed:4s; --pulse-speed:3s;
+  --glass-tint:rgba(16,185,129,.10);
+}
+
+/* ── AURORA GLASS LIGHT ── */
+[data-theme="aurora-glass"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#ecfdf5; --bg-soft:#f0fdf8; --card:#ffffff;
+  --ink:#064e3b; --ink-soft:#047857; --muted:#4d7c6b;
+  --line:#d1fae5; --line-strong:#a7f3d0;
+  --terracotta:#059669; --terracotta-deep:#047857;
+  --violet:#7c3aed; --violet-soft:#ede9fe;
+  --teal:#0891b2; --teal-soft:#cffafe;
+  --gold:#d97706; --danger:#dc2626; --success:#059669;
+  --accent-active:#059669;
+  --cursor-glow:#10b981;
+  --grad-hero:linear-gradient(135deg,#059669 0%,#0891b2 45%,#7c3aed 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#059669 0%,#0891b2 45%,#7c3aed 100%);
+  --grad-soft:linear-gradient(135deg,#ecfdf5 0%,#f0f9ff 100%);
+  --grad-t1:linear-gradient(90deg,#059669,#10b981);
+  --grad-t2:linear-gradient(90deg,#0891b2,#06b6d4);
+  --grad-bar:linear-gradient(180deg,#06b6d4,#0891b2);
+  --grad-bar-alt:linear-gradient(180deg,#059669,#10b981);
+  --aurora-1:rgba(5,150,105,.35); --aurora-2:rgba(8,145,178,.3);
+  --aurora-3:rgba(124,58,237,.25); --aurora-4:rgba(16,185,129,.3);
+  --conic-a:rgba(5,150,105,.08); --conic-b:rgba(8,145,178,.07);
+  --conic-c:rgba(124,58,237,.06); --conic-d:rgba(16,185,129,.08);
+  --blob-op:.8;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.12),transparent 70%);
+  --halo:transparent;
+  --selection:#05966922;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 40%,transparent);
+  --ambient-extra:none;
+  --drift-dur:26s; --spin-dur:130s;
+  --glow-1:#059669; --glow-2:#0891b2; --glow-3:#7c3aed;
+  --glow-speed:5s; --pulse-speed:4s;
+  --glass-tint:rgba(5,150,105,.06);
+}
+
+/* ════════════════════════════════════════════════════════════
+   AURORA GLASS — UNIQUE ANIMATED VISUAL EFFECTS
+   Comet beam: a white-hot liquid ball with an emerald→cyan
+   gradient trail travels around EVERY card perimeter via CSS
+   Motion Path (offset-path + offset-distance, GPU-composited).
+   offset-rotate:auto banks the pill around corners like a comet
+   on a track. A static conic ring (::before) adds the gradient
+   colors matching the UI where the slot is free.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── aurora mesh: drifting green/cyan radial layers ──
+   Drift via transform (composited, blur rasterized once) — the
+   old @property background-position animation re-rasterized this
+   blurred layer every frame. */
+[data-theme="aurora-glass"][data-mode="dark"] .ambient::after{
+  content:'';position:absolute;inset:-12%;
+  background:
+    radial-gradient(ellipse 70% 50% at 25% 25%,rgba(16,185,129,.10) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 70% at 75% 75%,rgba(6,182,212,.08) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 40% at 50% 50%,rgba(139,92,246,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 60% at 50% 50%,rgba(52,211,153,.05) 0%,transparent 50%);
+  animation:agMesh 20s ease-in-out infinite alternate;
+  pointer-events:none;z-index:0;
+  filter:blur(40px);
+}
+@keyframes agMesh{
+  0%{transform:translate3d(-2.5%,-1.5%,0);opacity:.55}
+  50%{transform:translate3d(2.5%,1.5%,0);opacity:.85}
+  100%{transform:translate3d(-2.5%,-1.5%,0);opacity:1}
+}
+@keyframes agSpin{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+/* ── card surfaces become positioning contexts for beams ── */
+[data-theme="aurora-glass"][data-mode] .hero-panel,
+[data-theme="aurora-glass"][data-mode] .widget,
+[data-theme="aurora-glass"][data-mode] .quiz-card,
+[data-theme="aurora-glass"][data-mode] .track-card,
+[data-theme="aurora-glass"][data-mode] .terminal,
+[data-theme="aurora-glass"][data-mode] .side-progress,
+[data-theme="aurora-glass"][data-mode] .sp-next,
+[data-theme="aurora-glass"][data-mode] .id-card,
+[data-theme="aurora-glass"][data-mode] .vbox,
+[data-theme="aurora-glass"][data-mode] .own-box,
+[data-theme="aurora-glass"][data-mode] .ts-value,
+[data-theme="aurora-glass"][data-mode] .match-arm,
+[data-theme="aurora-glass"][data-mode] .shelf-item,
+[data-theme="aurora-glass"][data-mode] .road-dot,
+[data-theme="aurora-glass"][data-mode] .func-io,
+[data-theme="aurora-glass"][data-mode] .map-row,
+[data-theme="aurora-glass"][data-mode] .crumb,
+[data-theme="aurora-glass"][data-mode] .stat-chip{
+  position:relative;
+}
+
+/* ── static conic ring (::before, free slots) — gradient color, no motion ── */
+[data-theme="aurora-glass"][data-mode="dark"] .widget::before,
+[data-theme="aurora-glass"][data-mode="dark"] .quiz-card::before,
+[data-theme="aurora-glass"][data-mode="dark"] .terminal::before,
+[data-theme="aurora-glass"][data-mode="dark"] .side-progress::before,
+[data-theme="aurora-glass"][data-mode="dark"] .sp-next::before,
+[data-theme="aurora-glass"][data-mode="dark"] .id-card::before,
+[data-theme="aurora-glass"][data-mode="dark"] .own-box::before,
+[data-theme="aurora-glass"][data-mode="dark"] .vbox::before,
+[data-theme="aurora-glass"][data-mode="dark"] .ts-value::before,
+[data-theme="aurora-glass"][data-mode="dark"] .match-arm::before,
+[data-theme="aurora-glass"][data-mode="dark"] .shelf-item::before,
+[data-theme="aurora-glass"][data-mode="dark"] .road-dot::before,
+[data-theme="aurora-glass"][data-mode="dark"] .func-io::before,
+[data-theme="aurora-glass"][data-mode="dark"] .map-row::before,
+[data-theme="aurora-glass"][data-mode="dark"] .crumb::before,
+[data-theme="aurora-glass"][data-mode="dark"] .stat-chip::before,
+[data-theme="aurora-glass"][data-mode="dark"] .syl-row::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  padding:1.5px;
+  background:conic-gradient(#10b981,#06b6d4,#8b5cf6,#34d399,#10b981);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none;opacity:.5;z-index:0;
+}
+[data-theme="aurora-glass"][data-mode="light"] .widget::before,
+[data-theme="aurora-glass"][data-mode="light"] .quiz-card::before,
+[data-theme="aurora-glass"][data-mode="light"] .terminal::before,
+[data-theme="aurora-glass"][data-mode="light"] .side-progress::before,
+[data-theme="aurora-glass"][data-mode="light"] .sp-next::before,
+[data-theme="aurora-glass"][data-mode="light"] .id-card::before,
+[data-theme="aurora-glass"][data-mode="light"] .own-box::before,
+[data-theme="aurora-glass"][data-mode="light"] .vbox::before,
+[data-theme="aurora-glass"][data-mode="light"] .ts-value::before,
+[data-theme="aurora-glass"][data-mode="light"] .match-arm::before,
+[data-theme="aurora-glass"][data-mode="light"] .shelf-item::before,
+[data-theme="aurora-glass"][data-mode="light"] .road-dot::before,
+[data-theme="aurora-glass"][data-mode="light"] .func-io::before,
+[data-theme="aurora-glass"][data-mode="light"] .map-row::before,
+[data-theme="aurora-glass"][data-mode="light"] .crumb::before,
+[data-theme="aurora-glass"][data-mode="light"] .stat-chip::before,
+[data-theme="aurora-glass"][data-mode="light"] .syl-row::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  padding:1.5px;
+  background:conic-gradient(#059669,#0891b2,#7c3aed,#10b981,#059669);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none;opacity:.45;z-index:0;
+}
+
+/* graduation — its ::before is the border layer; recolor it static */
+[data-theme="aurora-glass"][data-mode] .graduation::before{
+  background:conic-gradient(#10b981,#06b6d4,#8b5cf6,#34d399,#10b981);
+  opacity:.85;
+}
+
+/* ── COMET BEAM — CSS Motion Path, compositor-only ──
+   The white-hot comet is a small pill pseudo-element that TRAVELS
+   the card perimeter via offset-path:inset() + a single
+   offset-distance keyframe. Motion-path animations are handled on
+   the compositor (no per-frame gradient repaint — the old
+   @property --ag-angle conic re-painted the border every frame).
+   offset-rotate:auto banks the pill around corners; the gradient
+   trail fades out behind the head. Runs ONLY on large/interactive
+   cards while in the viewport (themes.js data-glow gating) at a
+   slow 10s orbit. Small chips keep their static conic ring. Falls
+   back to "no comet" where offset-path:inset() is unsupported. */
+@supports (offset-path:inset(0 round 12px)){
+  [data-theme="aurora-glass"][data-mode] .widget::after,
+  [data-theme="aurora-glass"][data-mode] .quiz-card::after,
+  [data-theme="aurora-glass"][data-mode] .track-card::after,
+  [data-theme="aurora-glass"][data-mode] .terminal::after,
+  [data-theme="aurora-glass"][data-mode] .graduation::after{
+    content:'';position:absolute;top:0;left:0;
+    width:16px;height:4px;border-radius:999px;
+    background:linear-gradient(90deg,rgba(16,185,129,0),rgba(16,185,129,.9) 55%,rgba(255,255,255,.95));
+    box-shadow:0 0 6px rgba(110,231,183,.85),0 0 14px rgba(16,185,129,.5);
+    offset-path:inset(1px round var(--radius));
+    offset-rotate:auto;
+    animation:agComet 10s linear infinite;
+    animation-play-state:paused;
+    pointer-events:none;z-index:1;opacity:.95;
+  }
+  [data-theme="aurora-glass"][data-mode="light"] .widget::after,
+  [data-theme="aurora-glass"][data-mode="light"] .quiz-card::after,
+  [data-theme="aurora-glass"][data-mode="light"] .track-card::after,
+  [data-theme="aurora-glass"][data-mode="light"] .terminal::after,
+  [data-theme="aurora-glass"][data-mode="light"] .graduation::after{
+    background:linear-gradient(90deg,rgba(5,150,105,0),rgba(5,150,105,.85) 55%,rgba(255,255,255,.9));
+    box-shadow:0 0 6px rgba(5,150,105,.7),0 0 14px rgba(16,185,129,.45);
+  }
+  @keyframes agComet{
+    to{offset-distance:100%}
+  }
+}
+[data-theme="aurora-glass"][data-mode] [data-glow="on"]::before,
+[data-theme="aurora-glass"][data-mode] [data-glow="on"]::after{
+  animation-play-state:running;
+}
+
+/* ── hero-panel: static aurora rim (base ::before is the border layer) ── */
+[data-theme="aurora-glass"][data-mode] .hero-panel::before{
+  background:conic-gradient(#10b981,#06b6d4,#8b5cf6,#34d399,#10b981);
+  opacity:.7;
+}
+
+/* ── hero-panel: aurora glass interior ── */
+[data-theme="aurora-glass"][data-mode] .hero-panel::after{
+  background:
+    radial-gradient(62% 45% at 50% 0%,rgba(16,185,129,.15),transparent 65%),
+    radial-gradient(40% 30% at 70% 70%,rgba(6,182,212,.08),transparent 50%);
+  animation:agGlow var(--pulse-speed,3s) ease-in-out infinite alternate;
+}
+@keyframes agGlow{
+  0%{opacity:.35} 100%{opacity:1}
+}
+
+/* ── hero-panel: enhanced glassmorphism with green tint ── */
+[data-theme="aurora-glass"][data-mode="dark"] .hero-panel{
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--card) 65%,transparent),color-mix(in srgb,var(--card) 40%,transparent));
+  border:1px solid rgba(16,185,129,.12);
+}
+[data-theme="aurora-glass"][data-mode="light"] .hero-panel{
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--card) 75%,transparent),color-mix(in srgb,var(--card) 50%,transparent));
+  border:1px solid rgba(5,150,105,.15);
+}
+
+/* ── nav: aurora glass bar ── */
+[data-theme="aurora-glass"][data-mode="dark"] nav{
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  background:linear-gradient(180deg,rgba(5,15,10,.7),rgba(5,15,10,.4));
+  border-bottom:1px solid rgba(16,185,129,.08);
+}
+
+/* ── ambient aurora: green/cyan shift ── */
+[data-theme="aurora-glass"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;left:50%;top:50%;width:120vmax;height:120vmax;
+  background:conic-gradient(from 0deg at 50% 50%,rgba(16,185,129,.15),rgba(6,182,212,.12),rgba(139,92,246,.10),rgba(52,211,153,.14),rgba(16,185,129,.15));
+  animation:agSpin var(--spin-dur,90s) linear infinite;
+  filter:blur(48px);
+}
+[data-theme="aurora-glass"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;left:50%;top:50%;width:120vmax;height:120vmax;
+  background:conic-gradient(from 0deg at 50% 50%,rgba(5,150,105,.12),rgba(8,145,178,.10),rgba(124,58,237,.08),rgba(16,185,129,.12),rgba(5,150,105,.12));
+  animation:agSpin var(--spin-dur,130s) linear infinite;
+  filter:blur(48px);
+}
+
+/* ── sidebar: aurora glass panel ── */
+[data-theme="aurora-glass"][data-mode="dark"] .sidebar{
+  backdrop-filter:blur(10px) saturate(140%);
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  background:linear-gradient(180deg,rgba(14,34,24,.6),rgba(14,34,24,.3));
+  border:1px solid rgba(16,185,129,.08);
+  border-radius:18px;
+}
+
+/* ── code blocks: aurora glass ── */
+[data-theme="aurora-glass"][data-mode="dark"] code.inline,
+[data-theme="aurora-glass"][data-mode="dark"] .code-block{
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  background:rgba(14,34,24,.5);
+  border:1px solid rgba(16,185,129,.10);
+}
+
+/* ── stat chips: emerald glow on hover ── */
+[data-theme="aurora-glass"][data-mode="dark"] .stat-chip:hover{
+  border-color:rgba(16,185,129,.25);
+  box-shadow:0 0 24px -4px rgba(16,185,129,.2);
+}
+
+/* ── btn-primary: emerald glow shadow ── */
+[data-theme="aurora-glass"][data-mode="dark"] .btn-primary{
+  box-shadow:0 8px 24px rgba(16,185,129,.3);
+}
+[data-theme="aurora-glass"][data-mode="dark"] .btn-primary:hover{
+  box-shadow:0 12px 32px rgba(16,185,129,.4);
+}
+
+/* ── sp-fill: aurora progress bar — composited shimmer ── */
+[data-theme="aurora-glass"][data-mode] .sp-fill{
+  position:relative;overflow:hidden;
+  background:linear-gradient(90deg,#10b981,#06b6d4,#8b5cf6);
+}
+[data-theme="aurora-glass"][data-mode] .sp-fill::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:translateX(-100%);
+  animation:agProgress 2.6s ease-in-out infinite;
+}
+@keyframes agProgress{
+  to{transform:translateX(100%)}
+}
+
+/* ════════════════════════════════════════════════════════════
+   REDUCED-MOTION + LOW-PERF
+   ════════════════════════════════════════════════════════════ */
+@media(prefers-reduced-motion:reduce){
+  [data-theme="aurora-glass"][data-mode] .hero-panel::after,
+  [data-theme="aurora-glass"][data-mode] .ambient::before,
+  [data-theme="aurora-glass"][data-mode] .ambient::after,
+  [data-theme="aurora-glass"][data-mode] .graduation::before,
+  [data-theme="aurora-glass"][data-mode] .sp-fill,
+  [data-theme="aurora-glass"][data-mode] .sp-fill::after,
+  [data-theme="aurora-glass"][data-mode] .widget::after,
+  [data-theme="aurora-glass"][data-mode] .quiz-card::after,
+  [data-theme="aurora-glass"][data-mode] .track-card::after,
+  [data-theme="aurora-glass"][data-mode] .terminal::after,
+  [data-theme="aurora-glass"][data-mode] .graduation::after{animation:none !important}
+  [data-theme="aurora-glass"][data-mode] .sp-fill::after,
+  [data-theme="aurora-glass"][data-mode] .widget::after,
+  [data-theme="aurora-glass"][data-mode] .quiz-card::after,
+  [data-theme="aurora-glass"][data-mode] .track-card::after,
+  [data-theme="aurora-glass"][data-mode] .terminal::after,
+  [data-theme="aurora-glass"][data-mode] .graduation::after{opacity:0 !important}
+}
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .hero-panel::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .ambient::before,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .ambient::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .graduation::before,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .sp-fill,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .sp-fill::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .widget::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .quiz-card::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .track-card::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .terminal::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .graduation::after{animation:none !important}
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .ambient::before,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .ambient::after{opacity:.35 !important}
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .sp-fill::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .widget::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .quiz-card::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .track-card::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .terminal::after,
+html[data-perf="low"] [data-theme="aurora-glass"][data-mode] .graduation::after{opacity:0 !important}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   The sRGB rgba()/hex stops above remain the universal baseline;
+   these guarded blocks upgrade the SAME gradients where the browser
+   supports the syntax, and fall back silently everywhere else.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── OKLCH interpolation: same stops, perceptually-uniform hue ── */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="aurora-glass"][data-mode="dark"] .ambient::before{background:conic-gradient(from 0deg at 50% 50% in oklch,rgba(16,185,129,.15),rgba(6,182,212,.12),rgba(139,92,246,.10),rgba(52,211,153,.14),rgba(16,185,129,.15))}
+  [data-theme="aurora-glass"][data-mode="light"] .ambient::before{background:conic-gradient(from 0deg at 50% 50% in oklch,rgba(5,150,105,.12),rgba(8,145,178,.10),rgba(124,58,237,.08),rgba(16,185,129,.12),rgba(5,150,105,.12))}
+  [data-theme="aurora-glass"][data-mode="dark"] .ambient::after{background:
+    radial-gradient(ellipse 70% 50% at 25% 25% in oklch,rgba(16,185,129,.10) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 70% at 75% 75% in oklch,rgba(6,182,212,.08) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 40% at 50% 50% in oklch,rgba(139,92,246,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 60% at 50% 50% in oklch,rgba(52,211,153,.05) 0%,transparent 50%)}
+}
+
+/* ── Display-P3 stops: wider-gamut, richer colors on capable screens ── */
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="aurora-glass"][data-mode="dark"] .ambient::before{background:conic-gradient(from 0deg at 50% 50% in oklch,color(display-p3 0.000 0.739 0.488) / .15,color(display-p3 0.000 0.727 0.847) / .12,color(display-p3 0.577 0.350 0.999) / .10,color(display-p3 0.000 0.842 0.582) / .14,color(display-p3 0.000 0.739 0.488) / .15)}
+    [data-theme="aurora-glass"][data-mode="light"] .ambient::before{background:conic-gradient(from 0deg at 50% 50% in oklch,color(display-p3 0.000 0.599 0.398) / .12,color(display-p3 0.000 0.579 0.713) / .10,color(display-p3 0.524 0.208 0.965) / .08,color(display-p3 0.000 0.739 0.488) / .12,color(display-p3 0.000 0.599 0.398) / .12)}
+    [data-theme="aurora-glass"][data-mode="dark"] .ambient::after{background:
+      radial-gradient(ellipse 70% 50% at 25% 25% in oklch,color(display-p3 0.000 0.739 0.488) / .10 0%,transparent 55%),
+      radial-gradient(ellipse 50% 70% at 75% 75% in oklch,color(display-p3 0.000 0.727 0.847) / .08 0%,transparent 55%),
+      radial-gradient(ellipse 60% 40% at 50% 50% in oklch,color(display-p3 0.577 0.350 0.999) / .06 0%,transparent 60%),
+      radial-gradient(ellipse 40% 60% at 50% 50% in oklch,color(display-p3 0.000 0.842 0.582) / .05 0%,transparent 50%)}
+  }
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════
+  Learn to Code from Zero — protected build
+  · All code is deliberately obfuscated (see tools/protect.mjs)
+  · Client-side guards in assets/js/security.js
+  · Content is for the owner. No permission to copy, scrape,
+    or redistribute. Enjoy the course.
+  ═══════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<!-- frame-ancestors is a response-header-only directive (a <meta> CSP can't
+     carry it and the browser logs a console error for it) — the deployed
+     _headers file sends X-Frame-Options: DENY, which does the same job. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="description" content="Learn to code from zero — interactive playgrounds, plain words, and a zero-to-hero project ladder.">
+<title>Learn to Code from Zero</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%80%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/themes.css">
+<link rel="stylesheet" href="assets/css/themes/ember.css">
+<link rel="stylesheet" href="assets/css/themes/nord.css">
+<link rel="stylesheet" href="assets/css/themes/tokyo-night.css">
+<link rel="stylesheet" href="assets/css/themes/dracula.css">
+<link rel="stylesheet" href="assets/css/themes/catppuccin.css">
+<link rel="stylesheet" href="assets/css/themes/gruvbox.css">
+<link rel="stylesheet" href="assets/css/themes/graphite.css">
+<link rel="stylesheet" href="assets/css/themes/void.css">
+<link rel="stylesheet" href="assets/css/themes/liquid-glass.css">
+<link rel="stylesheet" href="assets/css/themes/aurora-glass.css">
+<link rel="stylesheet" href="assets/css/themes/claude.css">
+<link rel="stylesheet" href="assets/css/themes/chatgpt.css">
+<link rel="stylesheet" href="assets/css/themes/grok.css">
+  <link rel="stylesheet" href="assets/css/widgets.css">
+</head>
+<body>
+
+<div class="ambient"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
+<div class="rz-glow" aria-hidden="true"></div>
+<div class="progressbar" id="progressbar"></div>
+
+<nav>
+  <a class="brand" href="#home" aria-label="Back to the home page"><div class="brand-badge code">&lt;/&gt;</div><span>Learn to Code from Zero</span></a>
+  <div class="track-switch" id="trackSwitch" data-track="rust">
+    <span class="track-pill"></span>
+    <button class="track-btn active" data-track="rust"><span class="t-ic">🦀</span> Rust</button>
+    <button class="track-btn" data-track="general"><span class="t-ic">🧠</span> General</button>
+  </div>
+  <div class="nav-links" id="navlinks"></div>
+  <button class="lesson-menu-btn" id="lessonMenuBtn" aria-label="Lessons">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.2"/><circle cx="3.5" cy="12" r="1.2"/><circle cx="3.5" cy="18" r="1.2"/></svg>
+    <span class="lmb-label">Lessons</span>
+  </button>
+  <div class="nav-right">
+    <span class="progress-pct" id="pct">0%</span>
+    <button class="theme-btn" id="themeBtn" title="Themes" aria-label="Change theme">
+      <i class="tb-dot" aria-hidden="true"></i>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+    <div class="theme-menu" id="themeMenu" hidden></div>
+    <button class="read-btn" id="readBtn" title="Reading settings" aria-label="Reading settings" aria-haspopup="true" aria-expanded="false" aria-controls="readMenu">
+      <span aria-hidden="true">Aa</span>
+    </button>
+    <div class="read-menu" id="readMenu" hidden></div>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main id="main"></main>
+</div>
+
+<div class="sr-only" id="routeLive" aria-live="polite" role="status"></div>
+
+<footer>
+  <b>Learn to Code from Zero</b> — 65 lessons, taught in plain words. Your progress is saved in this browser.<br>
+  <span class="tiny" style="margin-top:6px;display:block">Built for you. Open the console, play with everything, and when a lesson clicks — mark it done.</span>
+</footer>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="lesson-drawer" id="lessonDrawer" aria-label="Lessons">
+  <div class="drawer-head">
+    <div class="dh-ic" id="drawerIcon">🦀</div>
+    <div><div class="dh-t" id="drawerTitle">Rust path</div><div class="dh-s" id="drawerSub">45 lessons</div></div>
+    <button class="drawer-close" id="drawerClose" aria-label="Close lessons">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="side-progress drawer-progress">
+      <div class="sp-top"><span class="sp-count">0 of 43 done</span></div>
+      <div class="sp-bar"><div class="sp-fill"></div></div>
+      <a class="sp-next" href="#what"><span class="spn-eyebrow">Up next</span><span class="spn-title"></span><span class="spn-arrow">→</span></a>
+    </div>
+    <nav class="drawer-list" id="drawerList"></nav>
+  </div>
+</aside>
+
+<script src="assets/js/util.js"></script>
+<script src="assets/js/data.js"></script>
+<!-- lessons: rust track (45) -->
+  <script src="assets/js/lessons/rust/what.js"></script>
+  <script src="assets/js/lessons/rust/install.js"></script>
+  <script src="assets/js/lessons/rust/hello.js"></script>
+  <script src="assets/js/lessons/rust/flow.js"></script>
+  <script src="assets/js/lessons/rust/vars.js"></script>
+  <script src="assets/js/lessons/rust/types.js"></script>
+  <script src="assets/js/lessons/rust/math.js"></script>
+  <script src="assets/js/lessons/rust/if.js"></script>
+  <script src="assets/js/lessons/rust/loops.js"></script>
+  <script src="assets/js/lessons/rust/funcs.js"></script>
+  <script src="assets/js/lessons/rust/input.js"></script>
+  <script src="assets/js/lessons/rust/guess.js"></script>
+  <script src="assets/js/lessons/rust/ownership.js"></script>
+  <script src="assets/js/lessons/rust/borrow.js"></script>
+  <script src="assets/js/lessons/rust/shapes.js"></script>
+  <script src="assets/js/lessons/rust/strings.js"></script>
+  <script src="assets/js/lessons/rust/structs.js"></script>
+  <script src="assets/js/lessons/rust/methods.js"></script>
+  <script src="assets/js/lessons/rust/enums.js"></script>
+  <script src="assets/js/lessons/rust/match.js"></script>
+  <script src="assets/js/lessons/rust/modules.js"></script>
+  <script src="assets/js/lessons/rust/vecs.js"></script>
+  <script src="assets/js/lessons/rust/hashmap.js"></script>
+  <script src="assets/js/lessons/rust/errors.js"></script>
+  <script src="assets/js/lessons/rust/files.js"></script>
+  <script src="assets/js/lessons/rust/generics.js"></script>
+  <script src="assets/js/lessons/rust/traits.js"></script>
+  <script src="assets/js/lessons/rust/lifetimes.js"></script>
+  <script src="assets/js/lessons/rust/tests.js"></script>
+  <script src="assets/js/lessons/rust/minigrep.js"></script>
+  <script src="assets/js/lessons/rust/closures.js"></script>
+  <script src="assets/js/lessons/rust/iterators.js"></script>
+  <script src="assets/js/lessons/rust/crates.js"></script>
+  <script src="assets/js/lessons/rust/smartp.js"></script>
+  <script src="assets/js/lessons/rust/threads.js"></script>
+  <script src="assets/js/lessons/rust/asyncr.js"></script>
+  <script src="assets/js/lessons/rust/dyn.js"></script>
+  <script src="assets/js/lessons/rust/pattern.js"></script>
+  <script src="assets/js/lessons/rust/unsafe.js"></script>
+  <script src="assets/js/lessons/rust/macros.js"></script>
+  <script src="assets/js/lessons/rust/webserver.js"></script>
+  <script src="assets/js/lessons/rust/cheats.js"></script>
+  <script src="assets/js/lessons/rust/glossary.js"></script>
+  <script src="assets/js/lessons/rust/next.js"></script>
+  <script src="assets/js/lessons/rust/quiz.js"></script>
+<!-- lessons: general track (20) -->
+  <script src="assets/js/lessons/general/threads.js"></script>
+  <script src="assets/js/lessons/general/async.js"></script>
+  <script src="assets/js/lessons/general/smartptr.js"></script>
+  <script src="assets/js/lessons/general/testing.js"></script>
+  <script src="assets/js/lessons/general/modules.js"></script>
+  <script src="assets/js/lessons/general/bigo.js"></script>
+  <script src="assets/js/lessons/general/alist.js"></script>
+  <script src="assets/js/lessons/general/stackque.js"></script>
+  <script src="assets/js/lessons/general/binsearch.js"></script>
+  <script src="assets/js/lessons/general/sorter.js"></script>
+  <script src="assets/js/lessons/general/recursion.js"></script>
+  <script src="assets/js/lessons/general/treeview.js"></script>
+  <script src="assets/js/lessons/general/graphview.js"></script>
+  <script src="assets/js/lessons/general/heaps.js"></script>
+  <script src="assets/js/lessons/general/mergesort.js"></script>
+  <script src="assets/js/lessons/general/backtrack.js"></script>
+  <script src="assets/js/lessons/general/dp.js"></script>
+  <script src="assets/js/lessons/general/hashd.js"></script>
+  <script src="assets/js/lessons/general/psolve.js"></script>
+  <script src="assets/js/lessons/general/gtfinale.js"></script>
+<script src="assets/js/tracks.js"></script>
+<script src="assets/js/themes/themes.js"></script>
+<script src="assets/js/widgets.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/security.js"></script>
+</body>
+</html>

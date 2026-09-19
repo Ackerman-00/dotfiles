@@ -1,0 +1,454 @@
+/* ============================================================
+   LIQUID GLASS — Apple-inspired premium glassmorphism
+   Real glass on EVERY card: translucent fill + backdrop blur +
+   specular top highlight + darkened bottom edge (the Apple
+   liquid-glass recipe). Vivid holographic blobs sit BEHIND the
+   glass so the blur is visible. Apple silicon marketing colors:
+   pink → purple → indigo → cyan. A COMET BEAM — white-hot ball
+   with a holographic gradient trail — travels the perimeter of
+   every card (CSS Motion Path, the 2026 border-beam pattern).
+   Token contract: see assets/css/themes.css.
+============================================================ */
+
+/* LIQUID GLASS is intentionally STATIC — Apple's 2026 liquid glass is
+   translucency + edge optics, NOT animated rainbows. No @property, no
+   per-frame gradient rotation; every edge treatment is a one-time paint. */
+
+/* ── LIQUID GLASS DARK ── */
+[data-theme="liquid-glass"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#0a0e17; --bg-soft:#101624; --card:#161d30;
+  --ink:#eef2fb; --ink-soft:#aab6d0; --muted:#7c87a1;
+  --line:#1e2740; --line-strong:#2b3654;
+  --terracotta:#ff375f; --terracotta-deep:#ff6b87;
+  --violet:#bf5af2; --violet-soft:#241539;
+  --teal:#64d2ff; --teal-soft:#0c2338;
+  --gold:#ffd60a; --danger:#ff453a; --success:#30d158;
+  --accent-active:#60a5fa;
+  --cursor-glow:#64d2ff;
+  --grad-hero:linear-gradient(135deg,#ff375f 0%,#bf5af2 35%,#5e5ce6 65%,#64d2ff 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#ff375f 0%,#bf5af2 35%,#5e5ce6 65%,#64d2ff 100%);
+  --grad-soft:linear-gradient(135deg,#141a2e 0%,#1a1440 100%);
+  --grad-t1:linear-gradient(90deg,#ff375f,#bf5af2);
+  --grad-t2:linear-gradient(90deg,#5e5ce6,#64d2ff);
+  --grad-bar:linear-gradient(180deg,#5e5ce6,#4946c8);
+  --grad-bar-alt:linear-gradient(180deg,#ff9f0a,#ff375f);
+  --aurora-1:rgba(255,55,95,.55); --aurora-2:rgba(191,90,242,.5);
+  --aurora-3:rgba(94,92,230,.48); --aurora-4:rgba(100,210,255,.45);
+  --conic-a:rgba(255,55,95,.22); --conic-b:rgba(191,90,242,.25);
+  --conic-c:rgba(94,92,230,.20); --conic-d:rgba(100,210,255,.22);
+  --blob-op:.28;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.14),transparent 65%);
+  --halo:radial-gradient(50% 46% at 50% 40%,rgba(191,90,242,.15),transparent 72%);
+  --selection:#64d2ff33;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 50%,transparent);
+  --ambient-extra:none;
+  --drift-dur:24s; --spin-dur:120s;
+  --glow-1:#ff375f; --glow-2:#bf5af2; --glow-3:#64d2ff;
+  --glow-speed:5s; --pulse-speed:3.5s;
+  --glass-tint:rgba(255,55,95,.10);
+}
+
+/* ── LIQUID GLASS LIGHT ── */
+[data-theme="liquid-glass"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#eef1fb; --bg-soft:#f6f7fd; --card:#ffffff;
+  --ink:#0f1a33; --ink-soft:#3c4a6b; --muted:#68749a;
+  --line:#dfe4f5; --line-strong:#c6cee8;
+  --terracotta:#ff2d55; --terracotta-deep:#e01e46;
+  --violet:#8a4fe8; --violet-soft:#f1e9fd;
+  --teal:#0096d6; --teal-soft:#e0f4ff;
+  --gold:#d98200; --danger:#e0243d; --success:#1f9d61;
+  --accent-active:#60a5fa;
+  --cursor-glow:#0e9fd8;
+  --grad-hero:linear-gradient(135deg,#ff2d55 0%,#8a4fe8 35%,#3f3fe0 65%,#0096d6 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#ff2d55 0%,#8a4fe8 35%,#3f3fe0 65%,#0096d6 100%);
+  --grad-soft:linear-gradient(135deg,#f3f0ff 0%,#eaf3ff 100%);
+  --grad-t1:linear-gradient(90deg,#ff2d55,#8a4fe8);
+  --grad-t2:linear-gradient(90deg,#3f3fe0,#0096d6);
+  --grad-bar:linear-gradient(180deg,#3f3fe0,#3333cc);
+  --grad-bar-alt:linear-gradient(180deg,#ff9500,#ff2d55);
+  --aurora-1:rgba(255,45,85,.32); --aurora-2:rgba(138,79,232,.3);
+  --aurora-3:rgba(63,63,224,.25); --aurora-4:rgba(0,150,214,.28);
+  --conic-a:rgba(255,45,85,.08); --conic-b:rgba(138,79,232,.09);
+  --conic-c:rgba(63,63,224,.07); --conic-d:rgba(0,150,214,.08);
+  --blob-op:.85;
+  --glass-glow:radial-gradient(55% 40% at 50% 10%,rgba(255,255,255,.14),transparent 60%);
+  --halo:transparent;
+  --selection:#0096d622;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 40%,transparent);
+  --ambient-extra:none;
+  --drift-dur:28s; --spin-dur:140s;
+  --glow-1:#ff2d55; --glow-2:#8a4fe8; --glow-3:#0096d6;
+  --glow-speed:6s; --pulse-speed:4s;
+  --glass-tint:rgba(255,45,85,.06);
+}
+
+/* ════════════════════════════════════════════════════════════
+   LIQUID GLASS — APPLE GLASS RECIPE
+   Translucent fill + backdrop blur + specular top highlight +
+   darkened bottom edge. Applied to every card surface. Vivid
+   blobs behind the glass make the blur read as real glass.
+   ════════════════════════════════════════════════════════════ */
+
+/* soft colored light sources behind the glass — when blurred through
+   backdrop-filter they bleed subtle color, not saturated discs. */
+[data-theme="liquid-glass"][data-mode="dark"] .blob.b1{background:radial-gradient(circle,rgba(255,55,95,.22) 0%,transparent 70%)}
+[data-theme="liquid-glass"][data-mode="dark"] .blob.b2{background:radial-gradient(circle,rgba(191,90,242,.18) 0%,transparent 70%)}
+[data-theme="liquid-glass"][data-mode="dark"] .blob.b3{background:radial-gradient(circle,rgba(94,92,230,.16) 0%,transparent 70%)}
+[data-theme="liquid-glass"][data-mode="dark"] .blob.b4{background:radial-gradient(circle,rgba(100,210,255,.15) 0%,transparent 68%)}
+[data-theme="liquid-glass"][data-mode="light"] .blob.b1{background:radial-gradient(circle,rgba(255,45,85,.16) 0%,transparent 70%)}
+[data-theme="liquid-glass"][data-mode="light"] .blob.b2{background:radial-gradient(circle,rgba(138,79,232,.14) 0%,transparent 70%)}
+[data-theme="liquid-glass"][data-mode="light"] .blob.b3{background:radial-gradient(circle,rgba(63,63,224,.11) 0%,transparent 70%)}
+[data-theme="liquid-glass"][data-mode="light"] .blob.b4{background:radial-gradient(circle,rgba(0,150,214,.13) 0%,transparent 68%)}
+
+/* every card becomes real glass */
+[data-theme="liquid-glass"][data-mode] .hero-panel,
+[data-theme="liquid-glass"][data-mode] .widget,
+[data-theme="liquid-glass"][data-mode] .quiz-card,
+[data-theme="liquid-glass"][data-mode] .track-card,
+[data-theme="liquid-glass"][data-mode] .terminal,
+[data-theme="liquid-glass"][data-mode] .side-progress,
+[data-theme="liquid-glass"][data-mode] .sp-next,
+[data-theme="liquid-glass"][data-mode] .id-card,
+[data-theme="liquid-glass"][data-mode] .vbox,
+[data-theme="liquid-glass"][data-mode] .own-box,
+[data-theme="liquid-glass"][data-mode] .ts-value,
+[data-theme="liquid-glass"][data-mode] .graduation,
+[data-theme="liquid-glass"][data-mode] .match-arm,
+[data-theme="liquid-glass"][data-mode] .shelf-item,
+[data-theme="liquid-glass"][data-mode] .road-dot,
+[data-theme="liquid-glass"][data-mode] .func-io,
+[data-theme="liquid-glass"][data-mode] .map-row,
+[data-theme="liquid-glass"][data-mode] .crumb,
+[data-theme="liquid-glass"][data-mode] .stat-chip{
+  position:relative;
+}
+
+/* full glass: heavy blur surfaces */
+[data-theme="liquid-glass"][data-mode="dark"] .hero-panel,
+[data-theme="liquid-glass"][data-mode="dark"] .widget,
+[data-theme="liquid-glass"][data-mode="dark"] .quiz-card,
+[data-theme="liquid-glass"][data-mode="dark"] .track-card,
+[data-theme="liquid-glass"][data-mode="dark"] .terminal,
+[data-theme="liquid-glass"][data-mode="dark"] .side-progress,
+[data-theme="liquid-glass"][data-mode="dark"] .sp-next,
+[data-theme="liquid-glass"][data-mode="dark"] .id-card,
+[data-theme="liquid-glass"][data-mode="dark"] .vbox,
+[data-theme="liquid-glass"][data-mode="dark"] .own-box,
+[data-theme="liquid-glass"][data-mode="dark"] .ts-value,
+[data-theme="liquid-glass"][data-mode="dark"] .graduation{
+  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
+  backdrop-filter:blur(10px) saturate(150%);
+  -webkit-backdrop-filter:blur(10px) saturate(150%);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.45);
+}
+
+/* light glass: brighter pane */
+[data-theme="liquid-glass"][data-mode="light"] .hero-panel,
+[data-theme="liquid-glass"][data-mode="light"] .widget,
+[data-theme="liquid-glass"][data-mode="light"] .quiz-card,
+[data-theme="liquid-glass"][data-mode="light"] .track-card,
+[data-theme="liquid-glass"][data-mode="light"] .terminal,
+[data-theme="liquid-glass"][data-mode="light"] .side-progress,
+[data-theme="liquid-glass"][data-mode="light"] .sp-next,
+[data-theme="liquid-glass"][data-mode="light"] .id-card,
+[data-theme="liquid-glass"][data-mode="light"] .vbox,
+[data-theme="liquid-glass"][data-mode="light"] .own-box,
+[data-theme="liquid-glass"][data-mode="light"] .ts-value,
+[data-theme="liquid-glass"][data-mode="light"] .graduation{
+  background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,.14));
+  backdrop-filter:blur(10px) saturate(150%);
+  -webkit-backdrop-filter:blur(10px) saturate(150%);
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(15,26,51,.08),0 12px 40px rgba(15,26,51,.12);
+}
+
+/* light glass: compact surfaces — translucent fill + specular, no blur (perf) */
+[data-theme="liquid-glass"][data-mode] .match-arm,
+[data-theme="liquid-glass"][data-mode] .shelf-item,
+[data-theme="liquid-glass"][data-mode] .road-dot,
+[data-theme="liquid-glass"][data-mode] .func-io,
+[data-theme="liquid-glass"][data-mode] .map-row,
+[data-theme="liquid-glass"][data-mode] .crumb,
+[data-theme="liquid-glass"][data-mode] .stat-chip{
+  background:linear-gradient(180deg,rgba(245,245,247,.16),rgba(245,245,247,.04));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(0,0,0,.22);
+}
+[data-theme="liquid-glass"][data-mode="light"] .match-arm,
+[data-theme="liquid-glass"][data-mode="light"] .shelf-item,
+[data-theme="liquid-glass"][data-mode="light"] .road-dot,
+[data-theme="liquid-glass"][data-mode="light"] .func-io,
+[data-theme="liquid-glass"][data-mode="light"] .map-row,
+[data-theme="liquid-glass"][data-mode="light"] .crumb,
+[data-theme="liquid-glass"][data-mode="light"] .stat-chip{
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.10));
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(15,26,51,.06);
+}
+
+/* ── LIQUID GLASS EDGE (authentic, STATIC, Apple 2026) ──
+   Apple's liquid glass is a NEUTRAL frosted material — the
+   chromatic shimmer comes from blurred background content, NOT from
+   a painted rainbow. The edge is a hairline white frost (~.20 light
+   / ~.11 dark) with only a de-saturated accent kiss so the pane still
+   reads "glass" against a dark field without becoming a neon ring.
+   No animation — glass reads even when frozen, like macOS Tahoe. */
+[data-theme="liquid-glass"][data-mode] .hero-panel::before,
+[data-theme="liquid-glass"][data-mode] .widget::before,
+[data-theme="liquid-glass"][data-mode] .quiz-card::before,
+[data-theme="liquid-glass"][data-mode] .track-card::before,
+[data-theme="liquid-glass"][data-mode] .terminal::before,
+[data-theme="liquid-glass"][data-mode] .side-progress::before,
+[data-theme="liquid-glass"][data-mode] .sp-next::before,
+[data-theme="liquid-glass"][data-mode] .id-card::before,
+[data-theme="liquid-glass"][data-mode] .vbox::before,
+[data-theme="liquid-glass"][data-mode] .own-box::before,
+[data-theme="liquid-glass"][data-mode] .ts-value::before,
+[data-theme="liquid-glass"][data-mode] .graduation::before,
+[data-theme="liquid-glass"][data-mode] .match-arm::before,
+[data-theme="liquid-glass"][data-mode] .shelf-item::before,
+[data-theme="liquid-glass"][data-mode] .road-dot::before,
+[data-theme="liquid-glass"][data-mode] .func-io::before,
+[data-theme="liquid-glass"][data-mode] .map-row::before,
+[data-theme="liquid-glass"][data-mode] .crumb::before,
+[data-theme="liquid-glass"][data-mode] .stat-chip::before,
+[data-theme="liquid-glass"][data-mode] .syl-row::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;
+  background:linear-gradient(145deg,
+    rgba(255,255,255,.11) 0%,color-mix(in srgb,rgba(255,55,95,.12) 60%,rgba(191,90,242,.10)) 25%,
+    rgba(255,255,255,.10) 50%,color-mix(in srgb,rgba(100,210,255,.12) 60%,rgba(94,92,230,.08)) 75%,
+    rgba(255,255,255,.11) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none;z-index:0;
+}
+[data-theme="liquid-glass"][data-mode="light"] .hero-panel::before,
+[data-theme="liquid-glass"][data-mode="light"] .widget::before,
+[data-theme="liquid-glass"][data-mode="light"] .quiz-card::before,
+[data-theme="liquid-glass"][data-mode="light"] .track-card::before,
+[data-theme="liquid-glass"][data-mode="light"] .terminal::before,
+[data-theme="liquid-glass"][data-mode="light"] .side-progress::before,
+[data-theme="liquid-glass"][data-mode="light"] .sp-next::before,
+[data-theme="liquid-glass"][data-mode="light"] .id-card::before,
+[data-theme="liquid-glass"][data-mode="light"] .vbox::before,
+[data-theme="liquid-glass"][data-mode="light"] .own-box::before,
+[data-theme="liquid-glass"][data-mode="light"] .ts-value::before,
+[data-theme="liquid-glass"][data-mode="light"] .graduation::before,
+[data-theme="liquid-glass"][data-mode="light"] .match-arm::before,
+[data-theme="liquid-glass"][data-mode="light"] .shelf-item::before,
+[data-theme="liquid-glass"][data-mode="light"] .road-dot::before,
+[data-theme="liquid-glass"][data-mode="light"] .func-io::before,
+[data-theme="liquid-glass"][data-mode="light"] .map-row::before,
+[data-theme="liquid-glass"][data-mode="light"] .crumb::before,
+[data-theme="liquid-glass"][data-mode="light"] .stat-chip::before,
+[data-theme="liquid-glass"][data-mode="light"] .syl-row::before{
+  /* light glass: cool white frost — lets the blurred bg tint it */
+  background:linear-gradient(145deg,
+    rgba(255,255,255,.20) 0%,color-mix(in srgb,rgba(0,150,214,.10) 55%,rgba(255,255,255,.14)) 25%,
+    rgba(255,255,255,.17) 50%,color-mix(in srgb,rgba(63,63,224,.09) 55%,rgba(255,255,255,.13)) 75%,
+    rgba(255,255,255,.20) 100%);
+}
+
+/* ── specular sheen: static top-corner light (the glass "catchlight") ── */
+[data-theme="liquid-glass"][data-mode] .hero-panel::after,
+[data-theme="liquid-glass"][data-mode] .widget::after,
+[data-theme="liquid-glass"][data-mode] .quiz-card::after,
+[data-theme="liquid-glass"][data-mode] .track-card::after,
+[data-theme="liquid-glass"][data-mode] .terminal::after,
+[data-theme="liquid-glass"][data-mode] .side-progress::after,
+[data-theme="liquid-glass"][data-mode] .sp-next::after,
+[data-theme="liquid-glass"][data-mode] .id-card::after,
+[data-theme="liquid-glass"][data-mode] .vbox::after,
+[data-theme="liquid-glass"][data-mode] .own-box::after,
+[data-theme="liquid-glass"][data-mode] .ts-value::after,
+[data-theme="liquid-glass"][data-mode] .graduation::after,
+[data-theme="liquid-glass"][data-mode] .match-arm::after,
+[data-theme="liquid-glass"][data-mode] .shelf-item::after,
+[data-theme="liquid-glass"][data-mode] .road-dot::after,
+[data-theme="liquid-glass"][data-mode] .func-io::after,
+[data-theme="liquid-glass"][data-mode] .map-row::after,
+[data-theme="liquid-glass"][data-mode] .crumb::after,
+[data-theme="liquid-glass"][data-mode] .stat-chip::after,
+[data-theme="liquid-glass"][data-mode] .syl-row::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(120% 60% at 28% 18%,rgba(255,255,255,.16) 0%,transparent 60%);
+  pointer-events:none;z-index:1;
+}
+
+/* ── liquid mesh background: static color pools (no drift — Apple keeps
+   ambient light fixed so text stays readable; motion budget saved) ── */
+[data-theme="liquid-glass"][data-mode="dark"] .ambient::after{
+  content:'';position:absolute;inset:-20%;
+  background:
+    radial-gradient(ellipse 80% 60% at 25% 30%,rgba(255,55,95,.10) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 75% 70%,rgba(191,90,242,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 60%,rgba(100,210,255,.07) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+   filter:blur(40px);
+}
+
+/* ── nav: real glass bar (Apple thick material) ──
+   thick pane = blur(40px) saturate(200%), near-opaque frost. */
+[data-theme="liquid-glass"][data-mode="dark"] nav{
+  backdrop-filter:blur(24px) saturate(170%);
+  -webkit-backdrop-filter:blur(24px) saturate(170%);
+  background:linear-gradient(180deg,rgba(10,14,23,.55),rgba(10,14,23,.25));
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 14px 36px rgba(0,0,0,.4);
+}
+[data-theme="liquid-glass"][data-mode="light"] nav{
+  backdrop-filter:blur(24px) saturate(170%);
+  -webkit-backdrop-filter:blur(24px) saturate(170%);
+  background:linear-gradient(180deg,rgba(238,241,251,.68),rgba(238,241,251,.32));
+  border-bottom:1px solid rgba(0,0,0,.05);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+/* ── ambient aurora: static soft field (no spin — a slow rotating
+   background behind blurred cards is exactly the "too much animation
+   / flashy" motion the user rejected; Apple ships this as still light.
+   NB: we must declare animation:none because the base .ambient::before
+   ships a global auroraSpin that would otherwise inherit here. ── */
+[data-theme="liquid-glass"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;left:50%;top:50%;width:150vmax;height:150vmax;
+  background:radial-gradient(60% 60% at 50% 50%,rgba(255,55,95,.14),rgba(191,90,242,.16),rgba(94,92,230,.14),rgba(100,210,255,.15),transparent 70%);
+  filter:blur(80px) saturate(1.6);
+  animation:none;
+}
+[data-theme="liquid-glass"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;left:50%;top:50%;width:150vmax;height:150vmax;
+  background:radial-gradient(60% 60% at 50% 50%,rgba(255,45,85,.10),rgba(138,79,232,.11),rgba(63,63,224,.09),rgba(0,150,214,.10),transparent 70%);
+  filter:blur(80px) saturate(1.6);
+  animation:none;
+}
+
+/* ── sidebar: real glass panel ── */
+[data-theme="liquid-glass"][data-mode="dark"] .sidebar{
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  background:linear-gradient(180deg,rgba(22,29,48,.55),rgba(22,29,48,.22));
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 12px 40px rgba(0,0,0,.35);
+}
+
+/* ── code blocks: glass panes ── */
+[data-theme="liquid-glass"][data-mode="dark"] code.inline,
+[data-theme="liquid-glass"][data-mode="dark"] .code-block{
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  background:rgba(22,29,48,.45);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+/* ── stat chips: holographic hover ── */
+[data-theme="liquid-glass"][data-mode="dark"] .stat-chip:hover{
+  border-color:rgba(100,210,255,.35);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 0 24px -4px rgba(100,210,255,.25);
+}
+[data-theme="liquid-glass"][data-mode] .map-row:hover{background:rgba(255,255,255,.06)}
+[data-theme="liquid-glass"][data-mode="dark"] .crumb:hover{background:rgba(255,255,255,.08)}
+
+/* ── theme menu: glass pane ── */
+[data-theme="liquid-glass"][data-mode] .theme-menu{
+  background:linear-gradient(180deg,rgba(22,29,48,.6),rgba(22,29,48,.3));
+  backdrop-filter:blur(20px) saturate(170%);
+  -webkit-backdrop-filter:blur(20px) saturate(170%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 24px 64px -12px rgba(0,0,0,.5);
+}
+[data-theme="liquid-glass"][data-mode="light"] .theme-menu{
+  background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.4));
+  border:1px solid rgba(255,255,255,.85);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 24px 64px -12px rgba(15,26,51,.2);
+}
+
+/* ── btn-primary: Apple gradient + glow ── */
+[data-theme="liquid-glass"][data-mode="dark"] .btn-primary{
+  box-shadow:0 8px 24px rgba(255,55,95,.3),inset 0 1px 0 rgba(255,255,255,.3);
+}
+[data-theme="liquid-glass"][data-mode="dark"] .btn-primary:hover{
+  box-shadow:0 12px 32px rgba(255,55,95,.42),inset 0 1px 0 rgba(255,255,255,.3);
+}
+
+/* ════════════════════════════════════════════════════════════
+   REDUCED-MOTION + LOW-PERF
+   Liquid Glass is static by design (Apple's 2026 direction:
+   readability over motion). On reduced-motion the ambient color
+   field (already a still, slow gradient) is dimmed so text stays
+   the focus; low-perf drops the heavy blur pools but keeps the
+   static glass edge+rim because that is the whole theme.
+   ════════════════════════════════════════════════════════════ */
+@media(prefers-reduced-motion:reduce){
+  [data-theme="liquid-glass"][data-mode="dark"] .ambient::before{
+    background:radial-gradient(60% 60% at 50% 50%,rgba(255,55,95,.08),rgba(191,90,242,.1),rgba(94,92,230,.08),rgba(100,210,255,.09),transparent 70%);
+  }
+  [data-theme="liquid-glass"][data-mode="dark"] .ambient::after{
+    opacity:.7;
+  }
+}
+html[data-perf="low"] [data-theme="liquid-glass"][data-mode="dark"] .ambient::before{opacity:0}
+html[data-perf="low"] [data-theme="liquid-glass"][data-mode="dark"] .ambient::after{opacity:0}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   The sRGB rgba() stops above remain the universal baseline; these
+   guarded blocks upgrade the SAME gradients where the browser
+   supports the syntax, and fall back silently everywhere else.
+   LIQUID GLASS stays static by design — no motion block here.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── OKLCH interpolation: same stops, perceptually-uniform hue ── */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="liquid-glass"][data-mode="dark"] .ambient::before{background:radial-gradient(60% 60% at 50% 50% in oklch,rgba(255,55,95,.14),rgba(191,90,242,.16),rgba(94,92,230,.14),rgba(100,210,255,.15),transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="light"] .ambient::before{background:radial-gradient(60% 60% at 50% 50% in oklch,rgba(255,45,85,.10),rgba(138,79,232,.11),rgba(63,63,224,.09),rgba(0,150,214,.10),transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="dark"] .ambient::after{background:
+    radial-gradient(ellipse 80% 60% at 25% 30% in oklch,rgba(255,55,95,.10) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 75% 70% in oklch,rgba(191,90,242,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 60% in oklch,rgba(100,210,255,.07) 0%,transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="dark"] .blob.b1{background:radial-gradient(circle in oklch,rgba(255,55,95,.22) 0%,transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="dark"] .blob.b2{background:radial-gradient(circle in oklch,rgba(191,90,242,.18) 0%,transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="dark"] .blob.b3{background:radial-gradient(circle in oklch,rgba(94,92,230,.16) 0%,transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="dark"] .blob.b4{background:radial-gradient(circle in oklch,rgba(100,210,255,.15) 0%,transparent 68%)}
+  [data-theme="liquid-glass"][data-mode="light"] .blob.b1{background:radial-gradient(circle in oklch,rgba(255,45,85,.16) 0%,transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="light"] .blob.b2{background:radial-gradient(circle in oklch,rgba(138,79,232,.14) 0%,transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="light"] .blob.b3{background:radial-gradient(circle in oklch,rgba(63,63,224,.11) 0%,transparent 70%)}
+  [data-theme="liquid-glass"][data-mode="light"] .blob.b4{background:radial-gradient(circle in oklch,rgba(0,150,214,.13) 0%,transparent 68%)}
+}
+
+/* ── Display-P3 stops: wider-gamut, richer colors on capable screens ── */
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="liquid-glass"][data-mode="dark"] .ambient::before{background:radial-gradient(60% 60% at 50% 50% in oklch,color(display-p3 1.000 0.000 0.354) / .14,color(display-p3 0.807 0.322 0.981) / .16,color(display-p3 0.370 0.360 0.935) / .14,color(display-p3 0.108 0.836 1.000) / .15,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="light"] .ambient::before{background:radial-gradient(60% 60% at 50% 50% in oklch,color(display-p3 1.000 0.000 0.309) / .10,color(display-p3 0.578 0.295 0.943) / .11,color(display-p3 0.247 0.247 0.913) / .09,color(display-p3 0.000 0.599 0.862) / .10,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="dark"] .ambient::after{background:
+      radial-gradient(ellipse 80% 60% at 25% 30% in oklch,color(display-p3 1.000 0.000 0.354) / .10 0%,transparent 60%),
+      radial-gradient(ellipse 60% 80% at 75% 70% in oklch,color(display-p3 0.807 0.322 0.981) / .08 0%,transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 60% in oklch,color(display-p3 0.108 0.836 1.000) / .07 0%,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="dark"] .blob.b1{background:radial-gradient(circle in oklch,color(display-p3 1.000 0.000 0.354) / .22 0%,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="dark"] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 0.807 0.322 0.981) / .18 0%,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="dark"] .blob.b3{background:radial-gradient(circle in oklch,color(display-p3 0.370 0.360 0.935) / .16 0%,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="dark"] .blob.b4{background:radial-gradient(circle in oklch,color(display-p3 0.108 0.836 1.000) / .15 0%,transparent 68%)}
+    [data-theme="liquid-glass"][data-mode="light"] .blob.b1{background:radial-gradient(circle in oklch,color(display-p3 1.000 0.000 0.309) / .16 0%,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="light"] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 0.578 0.295 0.943) / .14 0%,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="light"] .blob.b3{background:radial-gradient(circle in oklch,color(display-p3 0.247 0.247 0.913) / .11 0%,transparent 70%)}
+    [data-theme="liquid-glass"][data-mode="light"] .blob.b4{background:radial-gradient(circle in oklch,color(display-p3 0.000 0.599 0.862) / .13 0%,transparent 68%)}
+  }
+}
+
+/* reduced-motion keeps its dimmed field — now with the same engine */
+@media (prefers-reduced-motion:reduce){
+  @supports (background:linear-gradient(in oklch,#000,#fff)){
+    [data-theme="liquid-glass"][data-mode="dark"] .ambient::before{background:radial-gradient(60% 60% at 50% 50% in oklch,rgba(255,55,95,.08),rgba(191,90,242,.1),rgba(94,92,230,.08),rgba(100,210,255,.09),transparent 70%)}
+  }
+  @supports (background:color(display-p3 1 0 0)){
+    @media (color-gamut:p3){
+      [data-theme="liquid-glass"][data-mode="dark"] .ambient::before{background:radial-gradient(60% 60% at 50% 50% in oklch,color(display-p3 1.000 0.000 0.354) / .08,color(display-p3 0.807 0.322 0.981) / .1,color(display-p3 0.370 0.360 0.935) / .08,color(display-p3 0.108 0.836 1.000) / .09,transparent 70%)}
+    }
+  }
+}
+

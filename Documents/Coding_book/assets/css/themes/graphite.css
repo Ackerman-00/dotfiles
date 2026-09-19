@@ -1,0 +1,171 @@
+/* ============================================================
+   GRAPHITE — ChatGPT-like tonal subtraction
+   #212121 canvas / #2F2F2F surfaces, #ECECEC text, #10A37F emerald.
+   Hairline borders, system font, 15% chrome. Quiet, subtraction-not-addition.
+   Token contract: see assets/css/themes.css.
+   ============================================================ */
+[data-theme="graphite"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#212121; --bg-soft:#2A2A2A; --card:#2F2F2F;
+  --ink:#ECECEC; --ink-soft:#C8C8C8; --muted:#9A9A9A;
+  --line:#353535; --line-strong:#404040;
+  --terracotta:#10A37F; --terracotta-deep:#0D8C6D;
+  --violet:#10A37F; --violet-soft:#1E2E28;
+  --teal:#19C37D; --teal-soft:#1A2E26;
+  --gold:#ECECEC; --danger:#E53E3E; --success:#10A37F;
+  --accent-active:#10A37F;
+  --cursor-glow:#10A37F;
+  --grad-hero:linear-gradient(135deg,#1A1A1A 0%,#2F2F2F 50%,#10A37F 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#1A1A1A 0%,#2F2F2F 50%,#10A37F 100%);
+  --grad-soft:linear-gradient(120deg,#212121 0%,#2A2A2A 100%);
+  --grad-t1:linear-gradient(90deg,#2F2F2F,#3A3A3A);
+  --grad-t2:linear-gradient(90deg,#10A37F,#19C37D);
+  --grad-bar:linear-gradient(180deg,#10A37F,#0D8C6D);
+  --grad-bar-alt:linear-gradient(180deg,#3A3A3A,#2F2F2F);
+  --aurora-1:rgba(16,163,127,.07); --aurora-2:rgba(236,236,236,.04);
+  --aurora-3:rgba(16,163,127,.05); --aurora-4:rgba(236,236,236,.03);
+  --conic-a:rgba(16,163,127,.07); --conic-b:rgba(236,236,236,.06);
+  --conic-c:rgba(16,163,127,.05); --conic-d:rgba(236,236,236,.05);
+  --blob-op:.14;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(16,163,127,.10),transparent 68%);
+  --halo:transparent;
+  --selection:#10A37F2e;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 35%,transparent);
+  --ambient-extra:none;
+  --drift-dur:28s; --spin-dur:140s;
+  --glow-1:#2F2F2F; --glow-2:#3A3A3A; --glow-3:#10A37F;
+  --glow-speed:6s; --pulse-speed:3.5s;
+  --glass-tint:rgba(16,163,127,.05);
+}
+[data-theme="graphite"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#FFFFFF; --bg-soft:#F7F7F8; --card:#FFFFFF;
+  --ink:#0D0D0D; --ink-soft:#2E2E2E; --muted:#6E6E6E;
+  --line:#E5E5E5; --line-strong:#D4D4D4;
+  --terracotta:#0F8A6B; --terracotta-deep:#0C7058;
+  --violet:#10A37F; --violet-soft:#E6F5F0;
+  --teal:#0F8A6B; --teal-soft:#E6F5F0;
+  --gold:#8A8A8A; --danger:#C53030; --success:#0F8A6B;
+  --accent-active:#0F8A6B;
+  --cursor-glow:#10A37F;
+  --grad-hero:linear-gradient(135deg,#0F8A6B 0%,#10A37F 45%,#212121 100%);
+  --grad-hero-ok:linear-gradient(135deg in oklch,#0F8A6B 0%,#10A37F 45%,#212121 100%);
+  --grad-soft:linear-gradient(120deg,#F7F7F8 0%,#FFFFFF 100%);
+  --grad-t1:linear-gradient(90deg,#0F8A6B,#10A37F);
+  --grad-t2:linear-gradient(90deg,#212121,#2F2F2F);
+  --grad-bar:linear-gradient(180deg,#10A37F,#0F8A6B);
+  --grad-bar-alt:linear-gradient(180deg,#E5E5E5,#D4D4D4);
+  --aurora-1:rgba(16,163,127,.06); --aurora-2:rgba(13,13,13,.04);
+  --aurora-3:rgba(16,163,127,.04); --aurora-4:rgba(13,13,13,.03);
+  --conic-a:rgba(16,163,127,.06); --conic-b:rgba(13,13,13,.05);
+  --conic-c:rgba(16,163,127,.04); --conic-d:rgba(13,13,13,.04);
+  --blob-op:.06;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(16,163,127,.06),transparent 68%);
+  --halo:transparent;
+  --selection:#10A37F22;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 30%,transparent);
+  --ambient-extra:none;
+  --drift-dur:28s; --spin-dur:140s;
+  --glow-1:#E5E5E5; --glow-2:#0F8A6B; --glow-3:#10A37F;
+  --glow-speed:6s; --pulse-speed:3.5s;
+  --glass-tint:rgba(16,163,127,.04);
+}
+
+/* ── system font override — ChatGPT tonal uses native system stack ── */
+html[data-theme="graphite"]{
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';
+}
+
+/* ════════════════════════════════════════════════════════════
+   GRAPHITE AMBIENT — 15% chrome subtraction
+   Almost nothing: a hairline top gradient at 15% chrome opacity,
+   hairline borders. The subtraction IS the design. Static.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="graphite"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(16,163,127,.06) 0%,transparent 28%),
+    linear-gradient(180deg,rgba(236,236,236,.03) 0%,transparent 18%);
+}
+[data-theme="graphite"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(16,163,127,.04) 0%,transparent 32%),
+    linear-gradient(180deg,rgba(13,13,13,.02) 0%,transparent 20%);
+}
+/* subtle orbs — barely there, tonal */
+[data-theme="graphite"][data-mode] .blob.b1{background:radial-gradient(circle,rgba(16,163,127,.08) 0%,transparent 70%)}
+[data-theme="graphite"][data-mode] .blob.b3{background:radial-gradient(circle,rgba(236,236,236,.06) 0%,transparent 70%)}
+[data-theme="graphite"][data-mode] .blob.b2,
+[data-theme="graphite"][data-mode] .blob.b4{opacity:0}
+
+/* ── GRAPHITE HERO: hairline + 15% chrome, not rainbow ── */
+[data-theme="graphite"][data-mode="dark"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(236,236,236,.14) 0%,rgba(16,163,127,.18) 100%);
+  opacity:.35;
+}
+[data-theme="graphite"][data-mode="light"] .hero-panel::before{
+  background:linear-gradient(135deg,rgba(13,13,13,.10) 0%,rgba(16,163,127,.14) 100%);
+  opacity:.28;
+}
+/* 15% chrome nav — translucent, blurred, barely there */
+[data-theme="graphite"][data-mode="dark"] nav{
+  background:color-mix(in srgb,var(--card) 15%,transparent);
+  backdrop-filter:blur(12px) saturate(1.2);
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+[data-theme="graphite"][data-mode="light"] nav{
+  background:color-mix(in srgb,var(--card) 72%,transparent);
+  backdrop-filter:blur(12px) saturate(1.2);
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+/* hairline cards — no shadow, just hairline */
+[data-theme="graphite"][data-mode] .hero-panel,
+[data-theme="graphite"][data-mode] .widget,
+[data-theme="graphite"][data-mode] .quiz-card,
+[data-theme="graphite"][data-mode] .track-card{
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+[data-theme="graphite"][data-mode] .hero-panel:hover,
+[data-theme="graphite"][data-mode] .widget:hover{
+  border-color:var(--line-strong);
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   ════════════════════════════════════════════════════════════ */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="graphite"][data-mode="dark"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(16,163,127,.06) 0%,transparent 28%),
+    linear-gradient(180deg in oklch,rgba(236,236,236,.03) 0%,transparent 18%)}
+  [data-theme="graphite"][data-mode="light"] .ambient::before{background:
+    linear-gradient(180deg in oklch,rgba(16,163,127,.04) 0%,transparent 32%),
+    linear-gradient(180deg in oklch,rgba(13,13,13,.02) 0%,transparent 20%)}
+  [data-theme="graphite"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,rgba(16,163,127,.08) 0%,transparent 70%)}
+  [data-theme="graphite"][data-mode] .blob.b3{background:radial-gradient(circle in oklch,rgba(236,236,236,.06) 0%,transparent 70%)}
+  [data-theme="graphite"][data-mode="dark"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(236,236,236,.14) 0%,rgba(16,163,127,.18) 100%)}
+  [data-theme="graphite"][data-mode="light"] .hero-panel::before{background:linear-gradient(135deg in oklch,rgba(13,13,13,.10) 0%,rgba(16,163,127,.14) 100%)}
+}
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="graphite"][data-mode="dark"] .ambient::before{background:
+      linear-gradient(180deg in oklch,color(display-p3 0.000 0.639 0.488) / .06 0%,transparent 28%),
+      linear-gradient(180deg in oklch,color(display-p3 0.929 0.929 0.929) / .03 0%,transparent 18%)}
+    [data-theme="graphite"][data-mode="light"] .ambient::before{background:
+      linear-gradient(180deg in oklch,color(display-p3 0.000 0.639 0.488) / .04 0%,transparent 32%),
+      linear-gradient(180deg in oklch,color(display-p3 0.051 0.051 0.051) / .02 0%,transparent 20%)}
+    [data-theme="graphite"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,color(display-p3 0.000 0.639 0.488) / .08 0%,transparent 70%)}
+    [data-theme="graphite"][data-mode="dark"] .hero-panel::before{background:linear-gradient(135deg in oklch,color(display-p3 0.929 0.929 0.929) / .14 0%,color(display-p3 0.000 0.639 0.488) / .18 100%)}
+    [data-theme="graphite"][data-mode="light"] .hero-panel::before{background:linear-gradient(135deg in oklch,color(display-p3 0.051 0.051 0.051) / .10 0%,color(display-p3 0.000 0.639 0.488) / .14 100%)}
+  }
+}
+
+/* ── GRAPHITE MOTION — near-static, tonal (compositor-only) ── */
+[data-theme="graphite"][data-mode] .ambient::before{
+  animation:gpBreathe 28s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes gpBreathe{from{opacity:1}to{opacity:.92}}

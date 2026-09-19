@@ -1,0 +1,105 @@
+/* ============================================================
+   TOKYO NIGHT — deep indigo + neon
+   #7aa2f7 blues, #bb9af7 violet, cyan teal, plus a faint
+   city-light dot grid and the fastest aurora spin — the neon
+   district. Dark-only (Tokyo Night is a night-first palette).
+   Token contract: see assets/css/themes.css.
+============================================================ */
+[data-theme="tokyo"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#1a1b26; --bg-soft:#1f2030; --card:#24283b;
+  --ink:#c0caf5; --ink-soft:#a9b1d6; --muted:#8a90b0;
+  --line:#2a2e44; --line-strong:#3b4261;
+  --terracotta:#ff9e64; --terracotta-deep:#ffc777;
+  --violet:#bb9af7; --violet-soft:#2b2940;
+  --teal:#7dcfff; --teal-soft:#1d2e42;
+  --gold:#e0af68; --danger:#f7768e; --success:#9ece6a;
+  --accent-active:#7aa2f7;
+  --cursor-glow:#ff9e64;
+  --grad-hero:linear-gradient(100deg,#ff9e64 0%,#bb9af7 45%,#7dcfff 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#ff9e64 0%,#bb9af7 45%,#7dcfff 100%);
+  --grad-soft:linear-gradient(120deg,#1f2030 0%,#1c2036 100%);
+  --grad-t1:linear-gradient(90deg,#ff9e64,#ffc777);
+  --grad-t2:linear-gradient(90deg,#bb9af7,#7aa2f7);
+  --grad-bar:linear-gradient(180deg,#7dcfff,#7aa2f7);
+  --grad-bar-alt:linear-gradient(180deg,#ff9e64,#ffc777);
+  --aurora-1:rgba(187,154,247,.5); --aurora-2:rgba(122,162,247,.45);
+  --aurora-3:rgba(125,207,255,.45); --aurora-4:rgba(158,206,106,.4);
+  --conic-a:rgba(187,154,247,.20); --conic-b:rgba(122,162,247,.24);
+  --conic-c:rgba(125,207,255,.16); --conic-d:rgba(255,158,100,.22);
+  --blob-op:.26;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(122,162,247,.18),transparent 70%);
+  --halo:radial-gradient(50% 46% at 50% 40%,rgba(187,154,247,.15),transparent 72%);
+  --selection:#7aa2f733;
+  --badge-glow:color-mix(in srgb,var(--terracotta) 45%,transparent);
+  --ambient-extra:radial-gradient(rgba(192,202,245,.055) 1px,transparent 1.4px);
+  --drift-dur:18s; --spin-dur:60s;
+  --glow-1:#ff9e64; --glow-2:#bb9af7; --glow-3:#7dcfff;
+  --glow-speed:3s; --pulse-speed:2.5s;
+  --glass-tint:rgba(122,162,247,.10);
+}
+
+/* ════════════════════════════════════════════════════════════
+   TOKYO NIGHT AMBIENT — neon district
+   Faint dot grid (city lights scattered across the dark sky) plus
+   two vertical neon shafts at the left and right edges like light
+   leaking from narrow alley buildings. Static, moody, urban.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="tokyo"][data-mode] .ambient::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(rgba(192,202,245,.055) 1px,transparent 1.4px),
+    linear-gradient(90deg,rgba(122,162,247,.10) 0%,transparent 22%),
+    linear-gradient(90deg,transparent 78%,rgba(125,207,255,.10) 100%);
+  background-size:44px 44px,100% 100%,100% 100%;
+}
+/* neon reflection orbs */
+[data-theme="tokyo"][data-mode] .blob.b2{background:radial-gradient(circle,rgba(122,162,247,.45) 0%,transparent 68%)}
+[data-theme="tokyo"][data-mode] .blob.b4{background:radial-gradient(circle,rgba(125,207,255,.4) 0%,transparent 68%)}
+[data-theme="tokyo"][data-mode] .blob.b1,
+[data-theme="tokyo"][data-mode] .blob.b3{opacity:0}
+
+/* ── TOKYO HERO: neon orange→purple→cyan rim ── */
+[data-theme="tokyo"][data-mode] .hero-panel::before{
+  background:linear-gradient(130deg,#ff9e64 0%,#bb9af7 40%,#7dcfff 100%);
+  opacity:.65;
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   The sRGB rgba() stops above remain the universal baseline; these
+   guarded blocks upgrade the SAME gradients where the browser
+   supports the syntax, and fall back silently everywhere else.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── OKLCH interpolation: same stops, perceptually-uniform hue ── */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="tokyo"][data-mode] .ambient::before{background-image:
+    radial-gradient(in oklch,rgba(192,202,245,.055) 1px,transparent 1.4px),
+    linear-gradient(90deg in oklch,rgba(122,162,247,.10) 0%,transparent 22%),
+    linear-gradient(90deg in oklch,transparent 78%,rgba(125,207,255,.10) 100%)}
+  [data-theme="tokyo"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,rgba(122,162,247,.45) 0%,transparent 68%)}
+  [data-theme="tokyo"][data-mode] .blob.b4{background:radial-gradient(circle in oklch,rgba(125,207,255,.4) 0%,transparent 68%)}
+  [data-theme="tokyo"][data-mode] .hero-panel::before{background:linear-gradient(130deg in oklch,#ff9e64 0%,#bb9af7 40%,#7dcfff 100%)}
+}
+
+/* ── Display-P3 stops: wider-gamut, richer colors on capable screens ── */
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="tokyo"][data-mode] .ambient::before{background-image:
+      radial-gradient(in oklch,color(display-p3 0.744 0.794 0.976) / .055 1px,transparent 1.4px),
+      linear-gradient(90deg in oklch,color(display-p3 0.433 0.641 0.995) / .10 0%,transparent 22%),
+      linear-gradient(90deg in oklch,transparent 78%,color(display-p3 0.367 0.822 1.000) / .10 100%)}
+    [data-theme="tokyo"][data-mode] .blob.b2{background:radial-gradient(circle in oklch,color(display-p3 0.433 0.641 0.995) / .45 0%,transparent 68%)}
+    [data-theme="tokyo"][data-mode] .blob.b4{background:radial-gradient(circle in oklch,color(display-p3 0.367 0.822 1.000) / .4 0%,transparent 68%)}
+    [data-theme="tokyo"][data-mode] .hero-panel::before{background:linear-gradient(130deg in oklch,color(display-p3 1.000 0.596 0.338) 0%,color(display-p3 0.759 0.598 0.994) 40%,color(display-p3 0.367 0.822 1.000) 100%)}
+  }
+}
+
+/* ── TOKYO MOTION — city-light pulse (very slow, compositor-only,
+   killed by base.css reduced-motion + low-perf ambient rules) ── */
+[data-theme="tokyo"][data-mode] .ambient::before{
+  animation:tkPulse 28s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes tkPulse{from{opacity:1}to{opacity:.85}}

@@ -1,0 +1,160 @@
+/* ============================================================
+   CATPPUCCIN — cozy pastels
+   Mocha (dark: lavender/peach/mauve on near-black) and Latte
+   (light: the soft daylight flavor). The gentle one — lowest
+   blob presence, slowest spin.
+   Token contract: see assets/css/themes.css.
+============================================================ */
+[data-theme="catppuccin"][data-mode="light"]{
+  color-scheme:light;
+  --bg:#eff1f5; --bg-soft:#f6f7fa; --card:#ffffff;
+  --ink:#4c4f69; --ink-soft:#6c6f85; --muted:#72758b;
+  --line:#dce0e8; --line-strong:#ccd0da;
+  --terracotta:#fe640b; --terracotta-deep:#d20f39;
+  --violet:#8839ef; --violet-soft:#efe8fb;
+  --teal:#04a5e5; --teal-soft:#e0f1fa;
+  --gold:#df8e1d; --danger:#d20f39; --success:#40a02b;
+  --accent-active:#d20f39;
+  --cursor-glow:#fe640b;
+  --grad-hero:linear-gradient(100deg,#fe640b 0%,#8839ef 45%,#04a5e5 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#fe640b 0%,#8839ef 45%,#04a5e5 100%);
+  --grad-soft:linear-gradient(120deg,#f3f2f9 0%,#e8f2f8 100%);
+  --grad-t1:linear-gradient(90deg,#fe640b,#ea76cb);
+  --grad-t2:linear-gradient(90deg,#8839ef,#1e66f5);
+  --grad-bar:linear-gradient(180deg,#04a5e5,#1e66f5);
+  --grad-bar-alt:linear-gradient(180deg,#df8e1d,#fe640b);
+  --aurora-1:rgba(136,57,239,.35); --aurora-2:rgba(234,118,203,.3);
+  --aurora-3:rgba(64,160,43,.25); --aurora-4:rgba(30,102,245,.3);
+  --conic-a:rgba(136,57,239,.09); --conic-b:rgba(234,118,203,.10);
+  --conic-c:rgba(64,160,43,.07); --conic-d:rgba(254,100,11,.09);
+  --blob-op:.75;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.10),transparent 70%);
+  --halo:transparent;
+  --selection:#8839ef2e;
+  --badge-glow:color-mix(in srgb,var(--violet) 45%,transparent);
+  --ambient-extra:none;
+  --drift-dur:26s; --spin-dur:130s;
+  --glow-1:#fe640b; --glow-2:#8839ef; --glow-3:#04a5e5;
+  --glow-speed:5s; --pulse-speed:4s;
+  --glass-tint:rgba(136,57,239,.06);
+}
+[data-theme="catppuccin"][data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#1e1e2e; --bg-soft:#232337; --card:#313244;
+  --ink:#cdd6f4; --ink-soft:#bac2de; --muted:#969db6;
+  --line:#33354a; --line-strong:#45475a;
+  --terracotta:#fab387; --terracotta-deep:#f38ba8;
+  --violet:#cba6f7; --violet-soft:#2e293f;
+  --teal:#89dceb; --teal-soft:#1e3340;
+  --gold:#f9e2af; --danger:#f38ba8; --success:#a6e3a1;
+  --accent-active:#f5c2e7;
+  --cursor-glow:#fab387;
+  --grad-hero:linear-gradient(100deg,#fab387 0%,#cba6f7 45%,#89dceb 100%);
+  --grad-hero-ok:linear-gradient(100deg in oklch,#fab387 0%,#cba6f7 45%,#89dceb 100%);
+  --grad-soft:linear-gradient(120deg,#232337 0%,#222438 100%);
+  --grad-t1:linear-gradient(90deg,#fab387,#f38ba8);
+  --grad-t2:linear-gradient(90deg,#cba6f7,#89b4fa);
+  --grad-bar:linear-gradient(180deg,#89dceb,#89b4fa);
+  --grad-bar-alt:linear-gradient(180deg,#fab387,#f9e2af);
+  --aurora-1:rgba(203,166,247,.45); --aurora-2:rgba(245,194,231,.4);
+  --aurora-3:rgba(166,227,161,.35); --aurora-4:rgba(137,180,250,.4);
+  --conic-a:rgba(203,166,247,.13); --conic-b:rgba(245,194,231,.15);
+  --conic-c:rgba(166,227,161,.11); --conic-d:rgba(250,179,135,.14);
+  --blob-op:.18;
+  --glass-glow:radial-gradient(62% 45% at 50% 0%,rgba(203,166,247,.14),transparent 70%);
+  --halo:radial-gradient(50% 46% at 50% 40%,rgba(203,166,247,.13),transparent 72%);
+  --selection:#cba6f733;
+  --badge-glow:color-mix(in srgb,var(--violet) 50%,transparent);
+  --ambient-extra:none;
+  --drift-dur:26s; --spin-dur:130s;
+  --glow-1:#fab387; --glow-2:#cba6f7; --glow-3:#89dceb;
+  --glow-speed:5s; --pulse-speed:4s;
+  --glass-tint:rgba(203,166,247,.08);
+}
+
+/* ════════════════════════════════════════════════════════════
+   CATPPUCCIN AMBIENT — cozy pastel wash
+   Multi-source soft pastel clouds drifting from different corners.
+   Lavender, pink, blue — lowest opacity of any theme. Dreamy,
+   barely there, like afternoon light through curtains. Static.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="catppuccin"][data-mode="dark"] .ambient::before{
+  content:"";position:absolute;inset:-8%;
+  background:
+    radial-gradient(70% 50% at 30% 25%,rgba(203,166,247,.07) 0%,transparent 55%),
+    radial-gradient(60% 45% at 75% 70%,rgba(137,180,250,.06) 0%,transparent 55%),
+    radial-gradient(50% 40% at 60% 20%,rgba(245,194,231,.05) 0%,transparent 55%);
+  filter:blur(46px);
+}
+[data-theme="catppuccin"][data-mode="light"] .ambient::before{
+  content:"";position:absolute;inset:-8%;
+  background:
+    radial-gradient(70% 50% at 30% 25%,rgba(136,57,239,.05) 0%,transparent 55%),
+    radial-gradient(60% 45% at 75% 70%,rgba(30,102,245,.04) 0%,transparent 55%),
+    radial-gradient(50% 40% at 60% 20%,rgba(234,118,203,.04) 0%,transparent 55%);
+  filter:blur(46px);
+}
+/* pastel orbs: lavender + blue, still */
+[data-theme="catppuccin"][data-mode] .blob.b1{background:radial-gradient(circle,rgba(203,166,247,.32) 0%,transparent 68%)}
+[data-theme="catppuccin"][data-mode] .blob.b4{background:radial-gradient(circle,rgba(137,180,250,.28) 0%,transparent 68%)}
+[data-theme="catppuccin"][data-mode] .blob.b2,
+[data-theme="catppuccin"][data-mode] .blob.b3{opacity:0}
+
+/* ── CATPPUCCIN HERO: pastel peach→mauve→sky rim ── */
+[data-theme="catppuccin"][data-mode="dark"] .hero-panel::before{
+  background:linear-gradient(125deg,#f5c2e7 0%,#cba6f7 40%,#89b4fa 100%);
+  opacity:.5;
+}
+[data-theme="catppuccin"][data-mode="light"] .hero-panel::before{
+  background:linear-gradient(125deg,#ea76cb 0%,#8839ef 40%,#1e66f5 100%);
+  opacity:.4;
+}
+
+/* ════════════════════════════════════════════════════════════
+   2026 GRADIENT ENGINE — OKLCH interpolation + Display-P3
+   The sRGB rgba() stops above remain the universal baseline; these
+   guarded blocks upgrade the SAME gradients where the browser
+   supports the syntax, and fall back silently everywhere else.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── OKLCH interpolation: same stops, perceptually-uniform hue ── */
+@supports (background:linear-gradient(in oklch,#000,#fff)){
+  [data-theme="catppuccin"][data-mode="dark"] .ambient::before{background:
+    radial-gradient(70% 50% at 30% 25% in oklch,rgba(203,166,247,.07) 0%,transparent 55%),
+    radial-gradient(60% 45% at 75% 70% in oklch,rgba(137,180,250,.06) 0%,transparent 55%),
+    radial-gradient(50% 40% at 60% 20% in oklch,rgba(245,194,231,.05) 0%,transparent 55%)}
+  [data-theme="catppuccin"][data-mode="light"] .ambient::before{background:
+    radial-gradient(70% 50% at 30% 25% in oklch,rgba(136,57,239,.05) 0%,transparent 55%),
+    radial-gradient(60% 45% at 75% 70% in oklch,rgba(30,102,245,.04) 0%,transparent 55%),
+    radial-gradient(50% 40% at 60% 20% in oklch,rgba(234,118,203,.04) 0%,transparent 55%)}
+  [data-theme="catppuccin"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,rgba(203,166,247,.32) 0%,transparent 68%)}
+  [data-theme="catppuccin"][data-mode] .blob.b4{background:radial-gradient(circle in oklch,rgba(137,180,250,.28) 0%,transparent 68%)}
+  [data-theme="catppuccin"][data-mode="dark"] .hero-panel::before{background:linear-gradient(125deg in oklch,#f5c2e7 0%,#cba6f7 40%,#89b4fa 100%)}
+  [data-theme="catppuccin"][data-mode="light"] .hero-panel::before{background:linear-gradient(125deg in oklch,#ea76cb 0%,#8839ef 40%,#1e66f5 100%)}
+}
+
+/* ── Display-P3 stops: wider-gamut, richer colors on capable screens ── */
+@supports (background:color(display-p3 1 0 0)){
+  @media (color-gamut:p3){
+    [data-theme="catppuccin"][data-mode="dark"] .ambient::before{background:
+      radial-gradient(70% 50% at 30% 25% in oklch,color(display-p3 0.824 0.644 0.991) / .07 0%,transparent 55%),
+      radial-gradient(60% 45% at 75% 70% in oklch,color(display-p3 0.489 0.712 1.000) / .06 0%,transparent 55%),
+      radial-gradient(50% 40% at 60% 20% in oklch,color(display-p3 0.999 0.751 0.915) / .05 0%,transparent 55%)}
+    [data-theme="catppuccin"][data-mode="light"] .ambient::before{background:
+      radial-gradient(70% 50% at 30% 25% in oklch,color(display-p3 0.577 0.197 0.973) / .05 0%,transparent 55%),
+      radial-gradient(60% 45% at 75% 70% in oklch,color(display-p3 0.000 0.407 0.997) / .04 0%,transparent 55%),
+      radial-gradient(50% 40% at 60% 20% in oklch,color(display-p3 0.985 0.429 0.813) / .04 0%,transparent 55%)}
+    [data-theme="catppuccin"][data-mode] .blob.b1{background:radial-gradient(circle in oklch,color(display-p3 0.824 0.644 0.991) / .32 0%,transparent 68%)}
+    [data-theme="catppuccin"][data-mode] .blob.b4{background:radial-gradient(circle in oklch,color(display-p3 0.489 0.712 1.000) / .28 0%,transparent 68%)}
+    [data-theme="catppuccin"][data-mode="dark"] .hero-panel::before{background:linear-gradient(125deg in oklch,color(display-p3 0.999 0.751 0.915) 0%,color(display-p3 0.824 0.644 0.991) 40%,color(display-p3 0.489 0.712 1.000) 100%)}
+    [data-theme="catppuccin"][data-mode="light"] .hero-panel::before{background:linear-gradient(125deg in oklch,color(display-p3 0.985 0.429 0.813) 0%,color(display-p3 0.577 0.197 0.973) 40%,color(display-p3 0.000 0.407 0.997) 100%)}
+  }
+}
+
+/* ── CATPPUCCIN MOTION — pastel wash drift (very slow, compositor-only,
+   killed by base.css reduced-motion + low-perf ambient rules) ── */
+[data-theme="catppuccin"][data-mode] .ambient::before{
+  animation:cpDrift 26s ease-in-out infinite alternate;
+  will-change:opacity;
+}
+@keyframes cpDrift{from{opacity:1}to{opacity:.85}}

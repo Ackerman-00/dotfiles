@@ -1,0 +1,878 @@
+/* ============================================
+   Learn to Code from Zero — base styles
+   layout, nav, hero, sidebar, lessons, cards
+   NOTE: all color tokens live in assets/css/themes.css
+   (one file per theme in themes/). base.css is structural.
+============================================ */
+:root{
+  --radius:18px; --radius-sm:12px;
+  --mono:'Geist Mono',ui-monospace,'SF Mono',monospace;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter',-apple-system,'Segoe UI',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+::selection{background:var(--selection,#d9775733)}
+/* .ambient is a STRUCTURAL shell only — it positions a fixed, full-viewport,
+   pointer-transparent layer behind the page. Each theme owns its own ambient
+   visuals (.ambient::before/::after, .blob.b1..b4) in assets/css/themes/*.css
+   so no global gradient or animation is shared across themes. */
+.ambient{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+/* .blob is a structural orb shell — size/position only. Backgrounds,
+   opacity and motion are defined per-theme (or left invisible). */
+.blob{position:absolute;border-radius:50%;pointer-events:none}
+.blob.b1{width:520px;height:520px;top:-180px;left:-120px}
+.blob.b2{width:460px;height:460px;top:30%;right:-160px}
+.blob.b3{width:380px;height:380px;bottom:-140px;left:28%}
+.blob.b4{width:620px;height:620px;top:6%;left:44%}
+@keyframes confetti-fall{0%{opacity:1;transform:translate(0,0) rotate(0) scale(1)}100%{opacity:0;transform:translate(var(--dx,0),130px) rotate(720deg) scale(.55)}}
+.confetti{position:fixed;z-index:99;width:9px;height:14px;border-radius:2px;pointer-events:none;animation:confetti-fall 1.15s ease-out forwards}
+.progressbar{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:var(--grad-hero);border-radius:0 3px 3px 0;transition:width .5s ease}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:14px;padding:12px 28px;background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 88%,transparent),color-mix(in srgb,var(--bg) 62%,transparent));backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid var(--hairline);box-shadow:var(--nav-shadow)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:-.01em;white-space:nowrap;text-decoration:none;color:var(--ink);cursor:pointer;user-select:none;transition:opacity .18s}
+.brand:hover{opacity:.82}
+.brand-badge{width:30px;height:30px;border-radius:9px;background:var(--grad-hero);display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px;box-shadow:0 4px 14px var(--badge-glow),inset 0 1px 0 rgba(255,255,255,.3)}
+.brand-badge.code{font-size:11px;letter-spacing:-.06em}
+.nav-links{display:flex;gap:4px;margin-left:6px;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 14px),transparent);mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 14px),transparent)}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--ink);background:var(--card)}
+.nav-links a.active{color:var(--accent-active);background:color-mix(in srgb,var(--terracotta) 12%,transparent)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+
+/* track switcher — glass capsule (2026 segmented control) */
+.track-switch{position:relative;display:flex;background:color-mix(in srgb,var(--bg-soft) 94%,var(--bg));border:1px solid var(--hairline);border-radius:999px;padding:4px;flex:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);max-width:100%;overflow-x:auto;scrollbar-width:none}
+.track-switch::-webkit-scrollbar{display:none}
+.track-pill{position:absolute;top:4px;left:4px;height:calc(100% - 8px);width:calc(50% - 4px);border-radius:999px;background:linear-gradient(180deg,var(--card),color-mix(in srgb,var(--card) 86%,var(--bg-soft)));box-shadow:0 4px 14px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px var(--hairline);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.track-switch[data-track="general"] .track-pill{transform:translateX(100%)}
+.track-btn{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:7px;border:none;background:transparent;color:var(--muted);font-weight:700;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:color .25s;white-space:nowrap;flex:1}
+.track-btn:hover{color:var(--ink)}
+.track-btn.active{color:var(--ink)}
+.track-btn .t-ic{font-size:14px;line-height:1}
+.progress-pct{font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.lesson-menu-btn{display:none;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:700;color:var(--ink);background:linear-gradient(180deg,var(--card),color-mix(in srgb,var(--card) 86%,var(--bg-soft)));border:1px solid var(--hairline);border-radius:10px;padding:8px 12px;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.lesson-menu-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+@media(max-width:1000px){.lesson-menu-btn{display:inline-flex}}
+@media(max-width:640px){.lesson-menu-btn .lmb-label{display:none}}
+.drawer-backdrop{position:fixed;inset:0;z-index:90;background:rgba(20,16,10,.45);opacity:0;pointer-events:none;transition:opacity .3s ease;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+body.drawer-locked{overflow:hidden}
+.lesson-drawer{position:fixed;top:0;left:0;bottom:0;z-index:91;width:min(340px,88vw);display:flex;flex-direction:column;background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--bg) 92%,var(--bg-soft)));backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-right:1px solid var(--hairline);box-shadow:24px 0 60px rgba(0,0,0,.35);transform:translateX(-102%);transition:transform .34s cubic-bezier(.32,.72,.28,1)}
+.lesson-drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:16px 16px 12px;border-bottom:1px solid var(--hairline)}
+.drawer-head .dh-ic{width:34px;height:34px;border-radius:10px;background:var(--grad-soft);border:1px solid var(--hairline);display:grid;place-items:center;font-size:16px;box-shadow:var(--shadow-sm)}
+.drawer-head .dh-t{font-size:13px;font-weight:800;color:var(--ink)}
+.drawer-head .dh-s{font-size:10.5px;color:var(--muted);font-weight:600}
+.drawer-close{margin-left:auto;width:32px;height:32px;border-radius:9px;border:1px solid var(--hairline);background:color-mix(in srgb,var(--bg-soft) 60%,transparent);color:var(--muted);font-size:14px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:color .2s,transform .2s}
+.drawer-close:hover{color:var(--ink);transform:rotate(90deg)}
+.drawer-body{flex:1;overflow-y:auto;padding:14px 12px 30px;scrollbar-width:thin}
+.drawer-progress{margin-bottom:12px}
+.drawer-list{display:flex;flex-direction:column;gap:2px}
+.theme-btn{border:1px solid var(--hairline);background:linear-gradient(180deg,var(--card),color-mix(in srgb,var(--card) 86%,var(--bg-soft)));color:var(--ink);width:34px;height:34px;border-radius:10px;cursor:pointer;display:grid;place-items:center;transition:transform .2s,box-shadow .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.theme-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm),inset 0 1px 0 rgba(255,255,255,.06)}
+
+.layout{max-width:1180px;margin:0 auto;padding:0 24px 120px;display:grid;grid-template-columns:242px 1fr;gap:38px}
+@media(max-width:1000px){.layout{grid-template-columns:1fr;padding:0 20px 100px}}
+
+.sidebar{position:sticky;top:86px;align-self:start;max-height:calc(100vh - 104px);overflow-y:auto;scrollbar-width:thin;display:block;padding:6px 2px 20px}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--muted) 28%,transparent);border-radius:99px}
+@media(max-width:1000px){.sidebar{display:none}}
+.side-progress{padding:12px;border-radius:14px;background:linear-gradient(160deg,color-mix(in srgb,var(--terracotta) 9%,var(--card)),var(--card));border:1px solid var(--hairline);box-shadow:var(--shadow-sm);margin-bottom:14px}
+.sp-bar{height:7px;border-radius:999px;background:color-mix(in srgb,var(--ink) 7%,transparent);box-shadow:inset 0 1px 2px rgba(0,0,0,.12);overflow:hidden}
+.sp-fill{display:block;height:100%;width:0;border-radius:999px;background:var(--grad-hero);box-shadow:0 0 12px color-mix(in srgb,var(--terracotta) 55%,transparent);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.sp-top{margin-bottom:8px}
+#pcount{font-size:11px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.sp-next{display:flex;flex-direction:column;gap:2px;text-decoration:none;margin-top:10px;padding:9px 11px;border-radius:12px;background:linear-gradient(160deg,color-mix(in srgb,var(--terracotta) 11%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--terracotta) 22%,transparent);transition:transform .2s,box-shadow .2s;position:relative}
+.sp-next:hover{transform:translateY(-1px);box-shadow:0 8px 20px color-mix(in srgb,var(--terracotta) 20%,transparent)}
+.spn-eyebrow{font-size:8.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-active)}
+.spn-title{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:16px}
+.spn-arrow{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:800;font-size:13px;transition:transform .2s,color .2s}
+.sp-next:hover .spn-arrow{color:var(--accent-active);transform:translate(3px,-50%)}
+.sidebar h4{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding-left:10px}
+.sidebar a,.drawer-list a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink-soft);font-size:13px;font-weight:600;padding:8px 10px;border-radius:12px;transition:background .18s,color .18s,transform .18s;position:relative}
+.sidebar a:hover,.drawer-list a:hover{background:color-mix(in srgb,var(--card) 80%,transparent);color:var(--ink);transform:translateX(2px)}
+.sidebar a.active,.drawer-list a.active{background:var(--grad-soft);color:var(--accent-active);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--terracotta) 24%,transparent),0 6px 18px rgba(0,0,0,.07)}
+.sidebar .s-num,.drawer-list .s-num{font-family:var(--mono);font-size:10.5px;color:var(--muted);width:22px;flex:none}
+.sidebar a.done,.drawer-list a.done{opacity:.6}
+.sidebar a.done .s-num,.drawer-list a.done .s-num{color:var(--success)}
+.sidebar .s-ck,.drawer-list .s-ck{display:none;font-size:11px;color:var(--success)}
+.sidebar a.done .s-ck,.drawer-list a.done .s-ck{display:inline}
+.sidebar .s-next,.drawer-list .s-next{display:none;margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-active);background:color-mix(in srgb,var(--terracotta) 12%,transparent);padding:2px 7px;border-radius:999px;white-space:nowrap}
+.sidebar a.next,.drawer-list a.next{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--terracotta) 35%,transparent)}
+.sidebar a.next .s-next,.drawer-list a.next .s-next{display:inline}
+
+main{min-width:0;overflow-anchor:none;view-transition-name:page-content;contain:layout}
+
+/* hero */
+.hero{padding:64px 0 30px;text-align:center}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink-soft);border:1px solid var(--line-strong);background:var(--card);padding:8px 16px;border-radius:999px;margin-bottom:26px;box-shadow:var(--shadow-sm)}
+.hero-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 4px rgba(47,158,95,.15);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(47,158,95,.15)}50%{box-shadow:0 0 0 7px rgba(47,158,95,.06)}}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(42px,6.5vw,68px);letter-spacing:-.02em;line-height:1.06;margin-bottom:20px}
+.hero h1 .grad{background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);font-size:clamp(16px,2vw,18.5px);max-width:600px;margin:0 auto 34px}
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:14.5px;padding:13px 26px;border-radius:14px;transition:transform .22s,box-shadow .22s;cursor:pointer;border:none}
+.btn-primary{background:var(--grad-hero);color:#fff;box-shadow:0 8px 24px color-mix(in srgb,var(--terracotta) 35%,transparent)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--terracotta) 45%,transparent)}
+.btn:active{transform:translateY(1px) scale(.99);transition:transform .12s ease}
+.btn-ghost{background:var(--card);color:var(--ink);border:1px solid var(--line-strong);box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{transform:translateY(-2px);border-color:var(--muted)}
+.btn-sm{padding:9px 18px;font-size:13px;border-radius:11px}
+.hero-stats{display:flex;justify-content:center;gap:34px;margin-top:44px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat b{display:block;font-family:var(--serif);font-size:26px;font-weight:600}
+.stat span{font-size:11.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+
+/* lessons */
+.lesson{scroll-margin-top:84px;padding-top:26px;margin-top:34px}
+.lesson-head{display:flex;gap:22px;align-items:flex-start}
+.lesson-num{flex:none;width:58px;height:58px;border-radius:16px;background:var(--grad-hero);color:#fff;font-family:var(--serif);font-size:26px;font-weight:600;display:grid;place-items:center;box-shadow:0 8px 22px color-mix(in srgb,var(--terracotta) 35%,transparent)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-active);background:color-mix(in srgb,var(--terracotta) 10%,transparent);padding:6px 14px;border-radius:999px;margin-bottom:8px}
+/* reading measure — long-form text never spans the full column
+   (WCAG/USWDS sweet spot: 45–75ch; widgets + code keep full width) */
+.lesson-head,.plain-card,.coach-card,.why-card,.tip,.warn,.quiz-card{max-width:700px}
+h2.serif{font-family:var(--serif);font-size:clamp(26px,3.6vw,36px);font-weight:600;letter-spacing:-.01em;line-height:1.16;margin-bottom:8px}
+h2.serif em{font-style:italic;background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--muted);font-size:15.5px;max-width:660px}
+
+.plain-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:26px 28px;margin-top:26px}
+.plain-card h3{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--terracotta-deep);margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.plain-card h3 .ic{width:26px;height:26px;border-radius:8px;background:color-mix(in srgb,var(--terracotta) 13%,transparent);display:grid;place-items:center}
+.plain-card p{color:var(--ink-soft);font-size:15px;margin-bottom:12px}
+.plain-card p:last-child{margin-bottom:0}
+.plain-card p b{color:var(--ink)}
+.plain-card p.hl-line{color:var(--ink);font-size:16px}
+/* donkey — our patience coach; serif story beats between sections */
+.coach-card{position:relative;margin-top:18px;padding:20px 24px 20px 58px;border-radius:var(--radius);background:linear-gradient(120deg,color-mix(in srgb,var(--gold) 9%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,var(--line));box-shadow:var(--shadow-sm)}
+.coach-card .ch-head{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#b8862b;margin-bottom:8px;flex-wrap:wrap}
+.coach-card .ch-ic{font-size:24px;position:absolute;left:16px;top:16px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.2))}
+.coach-card .ch-tag{font-weight:600;color:var(--muted);letter-spacing:.02em;text-transform:none}
+.coach-card p{font-family:var(--serif);font-size:17px;line-height:1.65;color:var(--ink)}
+/* why — the grown-up lens; it earns the "not baby stuff" tag */
+.why-card{margin-top:18px;padding:22px 24px;border-radius:var(--radius);background:linear-gradient(120deg,color-mix(in srgb,var(--violet) 9%,var(--card)),color-mix(in srgb,var(--teal) 7%,var(--card)));border:1px solid color-mix(in srgb,var(--violet) 22%,var(--line-strong));box-shadow:var(--shadow-md)}
+.why-card .wy-head{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);margin-bottom:10px;flex-wrap:wrap}
+.why-card .wy-ic{font-size:16px}
+.why-card .wy-kick{font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;text-transform:none;margin-left:auto}
+.why-card p{color:var(--ink-soft);font-size:15px;line-height:1.65}
+.why-card ul{margin:12px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+.why-card ul li{color:var(--ink-soft);font-size:14.5px;line-height:1.55}
+.why-card ul li b{color:var(--ink)}
+
+/* ---------- analogy map card ---------- */
+.map-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden;margin-top:18px}
+.map-head{display:flex;background:var(--bg-soft);border-bottom:1px solid var(--line)}
+.map-head .mh{flex:1;padding:13px 20px;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.map-head .mh.left{color:var(--terracotta-deep)}
+.map-head .mh.right{color:var(--violet);text-align:right}
+.map-row{display:flex;align-items:center;gap:16px;padding:15px 20px;border-bottom:1px dashed var(--line);transition:background .2s;animation:rowIn .5s ease both;animation-delay:calc(var(--ri)*80ms)}
+.map-row:last-child{border-bottom:none}
+.map-row:hover{background:var(--bg-soft)}
+@keyframes rowIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.map-side{flex:1;display:flex;align-items:center;gap:13px;min-width:0}
+.map-side .m-ic{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.map-side.left .m-ic{background:color-mix(in srgb,var(--terracotta) 14%,transparent);color:var(--terracotta-deep)}
+.map-side.right .m-ic{background:var(--violet-soft);color:var(--violet)}
+.map-side .m-label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.map-side .m-value{font-size:16px;font-weight:700;color:var(--ink);line-height:1.3}
+.map-side.right .m-value{font-family:var(--mono);font-size:14px;font-weight:600}
+.map-link{flex:none;display:flex;align-items:center;gap:7px;color:var(--muted)}
+.map-link .ml-line{width:46px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--terracotta),var(--violet));transition:width .25s}
+.map-row:hover .ml-line{width:64px}
+.map-link .ml-arrow{width:9px;height:9px;border-top:2px solid var(--violet);border-right:2px solid var(--violet);transform:rotate(45deg);flex:none}
+@media(max-width:640px){
+  .map-row{gap:10px;padding:13px 14px}
+  .map-side{gap:9px}
+  .map-side .m-ic{width:32px;height:32px;border-radius:9px}
+  .map-side .m-value{font-size:14px}
+  .map-side.right .m-value{font-size:12.5px}
+  .map-link .ml-line{width:22px}
+  .map-row:hover .ml-line{width:28px}
+}
+
+/* ============================================================
+   HOME — cross-track search + bento track cards
+============================================================ */
+.search-wrap{max-width:640px;margin:0 auto 34px;position:relative;z-index:40}
+.search-box{display:flex;align-items:center;gap:12px;background:color-mix(in srgb,var(--card) 88%,var(--bg-soft));border:1px solid transparent;border-radius:16px;padding:12px 18px;box-shadow:0 10px 34px -14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);transition:box-shadow .2s,background .2s}
+.search-box:hover{box-shadow:0 10px 34px -14px rgba(0,0,0,.5),inset 0 0 0 1px var(--hairline)}
+.search-box:focus-within{border-color:transparent;box-shadow:0 0 0 4px color-mix(in srgb,var(--violet) 16%,transparent),0 10px 34px -14px rgba(0,0,0,.5)}
+.search-ic{color:var(--muted);flex:none}
+.search-box input{flex:1;background:none;border:none;outline:none;color:var(--ink);font-size:15px;font-family:inherit;min-width:0}
+.search-box input::placeholder{color:var(--muted)}
+.search-kbd{display:inline-flex;flex:none}
+.search-kbd kbd{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--muted);background:color-mix(in srgb,var(--bg-soft) 70%,transparent);border:1px solid var(--hairline);border-radius:6px;padding:4px 8px;white-space:nowrap}
+
+.search-results{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:color-mix(in srgb,var(--card) 94%,var(--bg));border:1px solid var(--hairline);border-radius:16px;box-shadow:0 24px 60px -12px rgba(0,0,0,.5),var(--shadow-md);overflow:hidden;z-index:50;padding:6px}
+.search-results.open{display:block;animation:popIn .18s ease}
+.sr-empty{padding:16px 18px;color:var(--muted);font-size:13.5px}
+.sr-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;cursor:pointer;transition:background .15s}
+.sr-item + .sr-item{box-shadow:0 -1px 0 var(--hairline)}
+.sr-item.sel,.sr-item:hover{background:color-mix(in srgb,var(--violet) 10%,var(--bg-soft))}
+.sr-item.sel{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--violet) 30%,transparent)}
+.sr-foot{display:flex;align-items:center;gap:12px;padding:9px 12px 5px;margin-top:6px;border-top:1px solid var(--hairline);font-size:10.5px;color:var(--muted);font-weight:600}
+.sr-foot kbd{font-family:var(--mono);font-size:9.5px;background:color-mix(in srgb,var(--bg-soft) 70%,transparent);border:1px solid var(--hairline);border-radius:5px;padding:1px 5px}
+.sr-foot span{white-space:nowrap}
+.sr-num{font-family:var(--mono);font-size:11px;color:var(--muted);width:32px;flex:none}
+.sr-name{flex:1;font-size:14px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sr-name mark{background:color-mix(in srgb,var(--terracotta) 26%,transparent);color:var(--ink);border-radius:4px;padding:0 2px}
+.sr-track{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;flex:none;background:color-mix(in srgb,var(--track-accent,var(--violet)) 15%,transparent);color:color-mix(in srgb,var(--track-accent,var(--violet)) 75%,var(--ink))}
+
+.home-bento{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;max-width:1080px;margin:0 auto 36px}
+@media (max-width:640px){.home-bento{grid-template-columns:1fr}}
+.track-card{display:block;text-align:left;text-decoration:none;background:linear-gradient(160deg,var(--card),var(--bg-soft));border:1px solid var(--line-strong);border-radius:20px;padding:22px 22px 18px;box-shadow:var(--shadow-sm);transition:transform .22s,box-shadow .22s,border-color .22s;position:relative;overflow:hidden}
+.track-card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 160px at 15% -20%,color-mix(in srgb,var(--track-accent,var(--violet)) 16%,transparent),transparent 70%);pointer-events:none}
+.track-card:hover{transform:translateY(-3px);border-color:var(--muted);box-shadow:var(--shadow-md)}
+.tc-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.tc-ic{font-size:22px}
+.tc-num{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg-soft);border:1px solid var(--line-strong);padding:4px 10px;border-radius:999px}
+.tc-arrow{margin-left:auto;color:var(--muted);font-size:16px;transition:transform .2s,color .2s}
+.track-card:hover .tc-arrow{transform:translate(2px,-2px);color:var(--violet)}
+.track-card h3{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.track-card p{font-size:13.5px;line-height:1.55;color:var(--muted);margin-bottom:16px;min-height:42px}
+.tc-progress{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.tc-bar{flex:1;height:6px;background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:999px;overflow:hidden}
+.tc-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--track-accent,var(--terracotta)),color-mix(in srgb,var(--track-accent,var(--terracotta)) 55%,var(--card)));transition:width .5s ease}
+.tc-pct{font-family:var(--mono);font-size:11.5px;color:var(--muted);min-width:38px;text-align:right}
+.tc-cta{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:color-mix(in srgb,var(--track-accent,var(--violet)) 75%,var(--ink));transition:gap .2s}
+.track-card:hover .tc-cta{gap:12px}
+
+/* flash — search target pulse (legacy same-page scroll cue, no longer emitted) */
+
+@media (prefers-reduced-motion:reduce){
+  .search-results.open{animation:none}
+  .track-card:hover{transform:none}
+}
+
+/* ============================================================
+   PAGES — portal (home) vs path pages
+============================================================ */
+body[data-page="home"] .sidebar,
+body[data-page="home"] .lesson-menu-btn,
+body[data-page="home"] .track-switch,
+body[data-page="home"] .lesson-drawer,
+body[data-page="home"] .drawer-backdrop{display:none}
+body[data-page="home"] .layout{grid-template-columns:1fr}
+
+.track-head{position:relative;padding:60px 0 44px;text-align:center}
+/* the "glass needs light" rule (2026): a glass panel with nothing behind it
+   reads as flat grey — this violet halo floats behind the frosted pane so the
+   glass visibly refracts color instead of sitting on flat background */
+.track-head::before{content:"";position:absolute;left:50%;top:-8px;width:min(740px,94vw);height:400px;transform:translateX(-50%);background:var(--halo,transparent);pointer-events:none}
+/* breadcrumb — floating glass pill (2026 premium pattern) */
+.crumbs{display:inline-flex;align-items:center;gap:4px;margin-bottom:30px;padding:5px 8px 5px 5px;border-radius:999px;background:linear-gradient(180deg,color-mix(in srgb,var(--card) 96%,var(--bg)),color-mix(in srgb,var(--card) 88%,var(--bg)));border:1px solid var(--hairline);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),var(--shadow-sm);font-size:12px;font-weight:600}
+.crumb{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink-soft);padding:7px 13px;border-radius:999px;transition:color .18s,background .18s}
+.crumb svg{color:var(--muted);flex:none}
+.crumb:hover{color:var(--violet);background:color-mix(in srgb,var(--violet) 9%,transparent)}
+.crumb.current{color:var(--muted);cursor:default}
+.cr-sep{color:var(--muted);opacity:.5;font-size:15px;line-height:1;padding:0 1px}
+.track-head h1{font-family:var(--serif);font-weight:600;font-size:clamp(36px,5vw,52px);letter-spacing:-.02em;line-height:1.08;margin-bottom:16px}
+.track-head h1 .grad{background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.track-head p{color:var(--muted);font-size:clamp(15px,1.8vw,17px);max-width:600px;margin:0 auto 28px}
+.track-head .hero-cta{justify-content:center}
+/* hero glass — layered glass panel (2026): content floats on frosted glass,
+   chips at the 25% fill tier, crumbs straddle the top edge */
+.hero-panel{position:relative;max-width:760px;margin:-26px auto 0;padding:54px 44px 46px;border-radius:32px;background:linear-gradient(180deg,color-mix(in srgb,var(--card) 90%,transparent),color-mix(in srgb,var(--card) 66%,transparent));backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);border:1px solid var(--hairline);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 24px 60px -24px rgba(0,0,0,.4);contain:paint}
+.hero-panel::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(135deg,color-mix(in srgb,var(--terracotta) 50%,transparent),color-mix(in srgb,var(--violet) 55%,transparent) 45%,color-mix(in srgb,var(--teal) 50%,transparent));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.8}
+/* interior aurora — a soft top-light over the glass pane so the panel reads
+   as lit frosted glass; dark mode gets a violet bloom instead of white */
+.hero-panel::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--glass-glow,radial-gradient(62% 45% at 50% 0%,rgba(255,255,255,.10),transparent 70%));pointer-events:none}
+.crumbs{position:relative;z-index:2}
+.hero-glass{max-width:720px;margin:0 auto}
+.hero-stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.hero-stats + .hero-cta,.mini-chips + .hero-cta{margin-top:34px}
+/* floating mini chips — the 25% fill glass tier, layered on the panel */
+.mini-chips{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.mini-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;font-size:11.5px;font-weight:600;color:var(--ink-soft);background:color-mix(in srgb,var(--card) 90%,var(--bg-soft));border:1px solid var(--hairline);user-select:none}
+.mini-chip svg{color:var(--violet);flex:none}
+@media(max-width:640px){.hero-panel{padding:44px 22px 40px;border-radius:24px}}
+.stat-chip{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:linear-gradient(180deg,color-mix(in srgb,var(--card) 94%,var(--bg)),color-mix(in srgb,var(--card) 82%,var(--bg)));border:1px solid var(--hairline);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);user-select:none}
+.stat-chip svg{color:var(--violet);flex:none}
+
+.home-features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:720px;margin:0 auto 38px}
+@media(max-width:640px){.home-features{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.hf{background:var(--card);border:1px solid var(--line-strong);border-radius:16px;padding:16px 14px;text-align:left;box-shadow:var(--shadow-sm)}
+.hf span{font-size:18px}
+.hf b{display:block;font-size:13.5px;margin-top:8px}
+.hf p{font-size:12px;color:var(--muted);margin:2px 0 0}
+
+/* ============================================================
+   PROJECTS — the rust workshop: tiered grid, brief pages,
+   and the sidebar dropdown
+============================================================ */
+.pj-tier{max-width:760px;margin:14px auto 72px}
+.pj-tier-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:22px;text-align:left}
+.pj-tier-badge{flex:none;width:38px;height:38px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:17px;color:#fff;background:var(--grad-hero);box-shadow:0 6px 18px color-mix(in srgb,var(--terracotta) 35%,transparent)}
+.pj-tier-head h2{font-family:var(--serif);font-size:clamp(24px,3vw,30px);letter-spacing:-.01em;margin:2px 0 4px}
+.pj-tier-head p{margin:0;font-size:13.5px;color:var(--muted)}
+.pj-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:900px){.pj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.pj-grid{grid-template-columns:1fr}}
+/* the ladder: each rung knows its level, each tier knows what it unlocks */
+.pj-unlock{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-soft);background:linear-gradient(160deg,color-mix(in srgb,var(--violet) 9%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--violet) 22%,var(--hairline));border-radius:14px;padding:11px 16px;margin-bottom:16px;box-shadow:var(--shadow-sm);text-align:left}
+.pj-unlock b{font-weight:700;color:var(--violet)}
+.pj-card{position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;text-align:left;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--card) 94%,var(--bg-soft)),var(--card));border:1px solid var(--hairline);border-radius:18px;padding:18px 18px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),var(--shadow-sm);transition:transform .22s,border-color .22s,box-shadow .22s}
+.pj-card::before{content:"";position:absolute;inset:0 auto auto 0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),transparent);opacity:0;transform:translateY(-2px);transition:opacity .25s,transform .25s}
+.pj-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--violet) 45%,var(--hairline));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 38px -16px color-mix(in srgb,var(--violet) 45%,transparent)}
+.pj-card:hover::before{opacity:.9;transform:translateY(0)}
+.pj-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pj-level{font-size:10.5px;font-weight:800;letter-spacing:.12em;color:var(--muted);font-variant-numeric:tabular-nums}
+.pj-tier-chip{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
+.pj-time{font-size:11px;color:var(--muted);font-weight:600}
+.pj-card h3{font-family:var(--serif);font-size:19px;margin:2px 0 0;letter-spacing:-.01em}
+.pj-card>p{font-size:12.5px;line-height:1.5;color:var(--muted);margin:0;flex:1}
+.pj-skills{display:flex;flex-wrap:wrap;gap:6px}
+.pj-skills span{font-size:10.5px;font-weight:600;color:var(--ink-soft);background:color-mix(in srgb,var(--violet) 8%,transparent);border:1px solid var(--hairline);padding:4px 9px;border-radius:999px}
+/* real button on the card — not a text link */
+.pj-card-cta{margin-top:4px;display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid color-mix(in srgb,var(--violet) 30%,var(--hairline));background:color-mix(in srgb,var(--violet) 8%,transparent);border-radius:12px;padding:10px 14px;font-size:12.5px;font-weight:700;color:var(--violet);transition:background .2s,border-color .2s}
+.pj-card-cta .pj-arr{transition:transform .2s}
+.pj-card:hover .pj-card-cta{background:color-mix(in srgb,var(--violet) 14%,transparent);border-color:color-mix(in srgb,var(--violet) 50%,transparent)}
+.pj-card:hover .pj-arr{transform:translateX(4px)}
+/* cascade entrance — cards rise one after another, Claude-style */
+.pj-card.in,.pj-step.in,.pj-use-row.in,.pj-pre-chip.in{transition-delay:calc(min(var(--ri,0),6)*45ms)}
+/* project brief page */
+.pj-body{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:6px 0 48px}
+.pj-body .plain-card p{margin:8px 0 0;color:var(--ink-soft)}
+.pj-block{border:1px solid var(--line-strong);border-radius:18px;padding:22px;background:var(--card);box-shadow:var(--shadow-sm);text-align:left}
+.pj-block h3{font-family:var(--serif);font-size:19px;margin:0 0 12px}
+.pj-skills-lg{display:flex;flex-wrap:wrap;gap:8px}
+.pj-skills-lg span{font-size:12px;padding:6px 12px}
+/* what you'll use — and why */
+.pj-use{background:linear-gradient(160deg,color-mix(in srgb,var(--teal) 7%,var(--card)),var(--card));border-color:color-mix(in srgb,var(--teal) 22%,var(--line-strong))}
+.pj-use-list{display:flex;flex-direction:column;gap:10px}
+.pj-use-row{display:flex;gap:14px;align-items:flex-start;background:color-mix(in srgb,var(--card) 55%,transparent);border:1px solid var(--hairline);border-radius:12px;padding:11px 14px}
+.pj-use-name{flex:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:var(--ink);background:color-mix(in srgb,var(--teal) 12%,transparent);border:1px solid color-mix(in srgb,var(--teal) 30%,transparent);border-radius:8px;padding:4px 9px}
+.pj-use-row p{margin:1px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
+/* before you start */
+.pj-pre{border-color:color-mix(in srgb,var(--gold) 25%,var(--line-strong))}
+.pj-pre-list{display:flex;flex-wrap:wrap;gap:8px}
+.pj-pre-chip{font-size:12px;font-weight:600;color:var(--ink-soft);background:color-mix(in srgb,var(--gold) 10%,transparent);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);padding:7px 13px;border-radius:999px}
+.pj-steps{display:flex;flex-direction:column;gap:10px}
+.pj-step{display:flex;gap:14px;align-items:flex-start;background:color-mix(in srgb,var(--card) 55%,transparent);border:1px solid var(--hairline);border-radius:14px;padding:13px 16px;transition:transform .2s,border-color .2s}
+.pj-step:hover{transform:translateX(3px);border-color:color-mix(in srgb,var(--violet) 35%,var(--hairline))}
+.pj-step-num{flex:none;width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--violet);background:color-mix(in srgb,var(--violet) 12%,transparent);border:1px solid color-mix(in srgb,var(--violet) 30%,transparent)}
+.pj-step p{margin:1px 0 0;font-size:13.5px;line-height:1.55;color:var(--ink-soft)}
+.pj-note{background:linear-gradient(160deg,color-mix(in srgb,var(--terracotta) 8%,var(--card)),var(--card));border-color:color-mix(in srgb,var(--terracotta) 25%,var(--line-strong))}
+.pj-note p{margin:0;font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.btn-arr{transition:transform .2s}
+.btn-primary:hover .btn-arr{transform:translate(2px,-2px)}
+/* sidebar dropdown */
+.side-dd{border:1px solid var(--hairline);border-radius:14px;margin:14px 0 6px;overflow:hidden;background:color-mix(in srgb,var(--card) 45%,transparent)}
+.side-dd summary{list-style:none;display:flex;align-items:center;gap:9px;padding:11px 14px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--ink-soft);user-select:none;transition:background .15s}
+.side-dd summary::-webkit-details-marker{display:none}
+.side-dd summary svg{flex:none;color:var(--violet)}
+.side-dd summary:hover{background:color-mix(in srgb,var(--violet) 7%,transparent)}
+.side-dd summary .sdd-count{margin-left:auto;font-size:10px;font-weight:800;color:var(--muted);background:color-mix(in srgb,var(--violet) 12%,transparent);border:1px solid color-mix(in srgb,var(--violet) 25%,transparent);border-radius:999px;padding:2px 8px}
+.side-dd summary .sdd-chev{color:var(--muted);transition:transform .22s}
+.side-dd[open] summary .sdd-chev{transform:rotate(180deg)}
+.side-dd[open] summary{border-bottom:1px solid var(--hairline)}
+.sdd-tier{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:10px 14px 4px}
+.sdd-link{display:flex;align-items:center;gap:8px;padding:7px 14px 7px 18px;font-size:12.5px;color:var(--ink-soft);text-decoration:none;transition:background .15s,color .15s}
+.sdd-link:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--violet);opacity:.55;flex:none}
+.sdd-link:hover{background:color-mix(in srgb,var(--violet) 7%,transparent);color:var(--violet)}
+.sdd-link:last-child{margin-bottom:8px}
+
+/* ============================================================
+   MOBILE & TOUCH — 2026 best practices
+   (16px inputs, 44–48px tap targets, safe areas, dvh, no zoom flash)
+=========================================================== */
+html{-webkit-text-size-adjust:100%}
+body{overflow-x:hidden}
+*{-webkit-tap-highlight-color:transparent}
+button,a,input,select,textarea{touch-action:manipulation}
+
+/* iOS Safari zooms into any input <16px — search must stay 16px */
+.search-box input{font-size:16px}
+
+/* notched phones: keep chrome out of the home indicator / Dynamic Island */
+nav{padding-left:max(28px,env(safe-area-inset-left));padding-right:max(28px,env(safe-area-inset-right))}
+footer{padding-bottom:max(26px,env(safe-area-inset-bottom))}
+.lesson-drawer{padding-left:env(safe-area-inset-left)}
+.drawer-head{padding-right:max(18px,env(safe-area-inset-right))}
+.drawer-body{padding-bottom:max(20px,env(safe-area-inset-bottom))}
+
+/* sidebar height on mobile browser chrome — dvh fallback pair */
+.sidebar{max-height:calc(100vh - 104px);max-height:calc(100dvh - 104px)}
+
+@media(max-width:640px){
+  nav{gap:10px;padding:10px max(14px,env(safe-area-inset-left)) 10px max(14px,env(safe-area-inset-right))}
+  .progress-pct{display:none}
+  .theme-btn,.drawer-close{width:40px;height:40px}
+  .track-btn{min-height:44px;padding:10px 14px}
+  .lesson-menu-btn{min-height:44px}
+  .copy-btn{min-height:40px}
+  .done-btn{min-height:48px}
+  .quiz-opt{min-height:48px;padding:12px 16px}
+  .road-btn{min-height:44px}
+  .btn{min-height:46px;padding:12px 22px}
+  .hero-cta{flex-direction:column}
+  .hero-cta .btn{width:100%;justify-content:center}
+  .sr-item{padding:14px 16px}
+  .home-features .hf{padding:14px 12px}
+}
+@media(max-width:380px){
+  .brand span{font-size:13.5px}
+  .track-btn .t-ic{display:none}
+}
+@media(max-width:560px){
+  .brand span{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .pj-card.in,.pj-step.in,.pj-use-row.in,.pj-pre-chip.in{transition-delay:0ms}
+  .pj-card:hover{transform:none}
+  .pj-step:hover{transform:none}
+  .pj-arr,.btn-arr{transition:none}
+}
+
+/* ============================================================
+   SECURITY — guard UI: toast, devtools overlay, selection lock
+=========================================================== */
+.sec-toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(16px);z-index:9999;max-width:90vw;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid color-mix(in srgb,var(--terracotta) 45%,var(--hairline));color:var(--ink);font-size:13px;font-weight:600;padding:12px 20px;border-radius:999px;box-shadow:0 18px 44px -14px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .22s,transform .22s}
+.sec-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.sec-overlay{position:fixed;inset:0;z-index:9998;display:grid;place-items:center;background:color-mix(in srgb,var(--bg) 68%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .25s}
+.sec-overlay.on{opacity:1;pointer-events:auto}
+.sec-overlay-card{max-width:400px;text-align:center;background:var(--card);border:1px solid var(--line-strong);border-radius:24px;padding:34px 30px;box-shadow:var(--shadow-lg)}
+.sec-overlay-card b{font-family:var(--serif);font-size:22px;display:block;margin-bottom:10px}
+.sec-overlay-card p{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
+.sec-overlay-close{position:absolute;top:10px;right:12px;width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:20px;line-height:1;cursor:pointer}
+.sec-overlay-close:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.sec-overlay-card{position:relative}
+/* selection lock — anti-cheat: ONLY code and form inputs are selectable.
+   Every paragraph, title, tip, hint, quiz and answer is locked. */
+body{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+pre,code,.code-body,.code-text,.w-input,.term-input,input,textarea,select{user-select:text;-webkit-user-select:text}
+.lesson .copy-btn,.lesson .done-btn,.lesson button,.widget button,.pj-body a,.pj-body button,.quiz-opt{user-select:none;-webkit-user-select:none}
+/* anti-screenshot AutoBlur: the instant the window loses focus (alt-tab,
+   snipping overlay, tab switch) the whole page blurs; restored on focus */
+body.snap-guard>*:not(.sec-toast):not(.sec-overlay){filter:blur(16px) saturate(.55);opacity:.45;pointer-events:none;transition:opacity .14s ease}
+@media(prefers-reduced-motion:reduce){body.snap-guard>*:not(.sec-toast):not(.sec-overlay){filter:none;opacity:.2;transition:none}}
+/* print / save-as-PDF is a capture vector: blank it */
+@media print{html,body{display:none!important}}
+
+/* ============================================================
+   PREMIUM 2026 — native View Transitions, kinetic type,
+   a11y focus rings, typography balance, paint containment,
+   themed scrollbars, tactile micro-interactions
+   ============================================================ */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ============================================================
+   VIEW TRANSITIONS — one separate block per moving part.
+   Structure:
+     1. root (chrome)  — frozen, old page hidden: nothing can flash
+     2. content group  — pinned box; the height morph (the vertical
+        "squeeze") is killed because transRender re-writes this group's
+        box with !important px every navigation (vtShim style tag)
+     3. content out    — vtOut: old page leaves fast (120ms)
+     4. content in     — vtIn: new page rises in, springy 280ms
+     5. back direction — vtBackIn slides from the left (lesson prev / back)
+     6. interactivity  — overlay never blocks clicks
+   ============================================================ */
+
+/* 1. ROOT / CHROME — the header, sidebar and footer never move. The
+   outgoing root snapshot is hidden outright (visibility:hidden) so even a
+   browser that ignores the animation freeze can never flash the old page. */
+::view-transition-group(root),::view-transition-image-pair(root){animation:none}
+::view-transition-old(root){animation:none;visibility:hidden}
+::view-transition-new(root){animation:none}
+
+/* 2. CONTENT GROUP — main is the named content area (its own
+   view-transition-name lives at the top of this file). The UA pins this
+   group's width/height/transform inline and morphs height old→new, which
+   is the squash. transRender measures main on both sides of the swap and
+   re-pins this box (plus both snapshot sizes) with !important px in the
+   #vt-shim style tag, so the morph can never run. These base rules only
+   cover the pre-first-navigation edge (no JS shim yet). */
+::view-transition-group(page-content){animation:none}
+::view-transition-old(page-content),::view-transition-new(page-content){inline-size:auto;block-size:auto}
+
+/* 3. CONTENT OUT — the outgoing page leaves in 120ms; with the chrome
+   frozen there is no "blink", just the panel clearing for the arrival. */
+::view-transition-old(page-content){animation:vtOut .12s ease both}
+@keyframes vtOut{from{opacity:1}to{opacity:0}}
+
+/* 4. CONTENT IN — the new page rises 14px while fading in over 280ms with
+   the springy decelerate (cubic-bezier(.22,.9,.3,1)) used across 2026
+   native-feel products. On cross-shell routes the #vt-shim replaces this
+   with vtShimIn, identical motion plus the position delta baked in. */
+::view-transition-new(page-content){animation:vtIn .28s cubic-bezier(.22,.9,.3,1) both}
+@keyframes vtIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* 5. BACK DIRECTION — previous-lesson nav and browser back slide in from
+   the left instead of rising (types arrive via transRender's lessonDir). */
+:root:active-view-transition-type(back)::view-transition-new(page-content){animation:vtBackIn .28s cubic-bezier(.22,.9,.3,1) both}
+@keyframes vtBackIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+
+/* 6. INTERACTIVITY — the 280ms overlay never swallows clicks: everything
+   passes through to the live page (2026 best practice). */
+::view-transition{pointer-events:none}
+
+/* reveal elements start opacity:0 and translateY(20px) until .in lands.
+   When a view transition runs, those reveals must be captured in their
+   final state or the new page crossfades in blank and then the 600ms
+   stagger visibly pops on top of the fade — that double-animation reads
+   as a content glitch on every navigation. While html.vt-anim is set
+   (the lifetime of the transition) every reveal is pinned visible and
+   transition-free; below-fold does stay-animated because their .in arrives
+   later via the scroll observer, and the vt unlocks instantly afterwards. */
+html.vt-anim .reveal{opacity:1;transform:none;transition:none}
+
+/* content-visibility:auto pages (lessons, syllabus, project ladder) skip
+   offscreen layout, so during the VT update main measures a stub-short box
+   and the new snapshot would capture a stub that visibly grows ~600px when
+   the transition ends (reads as a content stretch on every navigation).
+   Force full layout while html.vt-anim is set so the measured box, the shim
+   and the captured snapshot all match the real page height. */
+html.vt-anim .lesson,html.vt-anim .syl-rows,html.vt-anim .pj-grid{content-visibility:visible}
+
+/* kinetic gradient headline — slow background sweep (2026 kinetic type) */
+.hero h1 .grad,.track-head h1 .grad{background-size:200% 100%;animation:gradSweep 9s ease-in-out infinite}
+@keyframes gradSweep{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* 2026 typography: balanced headlines, pretty paragraphs */
+h1,h2,h3,h4{text-wrap:balance}
+p{text-wrap:pretty}
+
+/* 33-lesson pages: skip layout/paint for offscreen sections */
+.lesson{content-visibility:auto;contain-intrinsic-size:auto 520px}
+
+/* accessibility-first (EAA 2025+): visible keyboard focus everywhere,
+   but a ring must never flash on a mouse click. Browser heuristics
+   (:focus-visible) already separate the two; pointer-mode tracks the
+   remaining case (Firefox shows rings on button clicks) — any Tab press
+   restores rings, so keyboard users always get WCAG 2.4.7 focus. */
+:focus:not(:focus-visible){outline:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:6px}
+html.pointer-mode a:focus-visible,html.pointer-mode button:focus-visible,
+html.pointer-mode summary:focus-visible,html.pointer-mode [tabindex]:focus-visible{outline:none}
+
+/* native form controls match the theme; themed selection */
+::selection{background:var(--selection);color:var(--ink)}
+
+/* themed scrollbars (Firefox + WebKit); reserve the gutter on every page so
+   routes that never scroll (home) and 5000px lesson pages share the same
+   content width — otherwise the viewport re-centers mid-view-transition and
+   the whole content area visibly jumps sideways */
+html{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--muted) 42%,transparent) transparent;scrollbar-gutter:stable}
+html::-webkit-scrollbar{width:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--muted) 42%,transparent);border-radius:99px;border:2px solid transparent;background-clip:padding-box}
+html::-webkit-scrollbar-thumb:hover{background-color:color-mix(in srgb,var(--muted) 65%,transparent)}
+
+/* tactile micro-interaction: nav pills lift (150ms feels instant) */
+.nav-links a:hover{transform:translateY(-1px)}
+
+/* hero CTA sheen sweep on hover (transform/opacity only) */
+.btn-primary{position:relative;overflow:hidden}
+.btn-primary::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.32),transparent);transform:skewX(-20deg);opacity:0;transition:opacity .18s;pointer-events:none}
+.btn-primary:hover::after{animation:btnSheen .7s ease forwards}
+@keyframes btnSheen{0%{left:-60%;opacity:0}30%{opacity:1}100%{left:120%;opacity:0}}
+
+@media (prefers-reduced-motion:reduce){
+  /* 2026 universal motion contract — ~35% of users opt out of motion, and
+     every animation/transition must have a reduce variant. One catch-all
+     collapses all of them to an instant state change: entrance staggers
+     (rowIn/popIn/cascade delays), infinite decorations (drift/pulse/grad/
+     sheen) and hover transforms all stop dead. The VT rules below keep
+     their own .01ms so route swaps still register in reduced mode. */
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0ms!important}
+  html{scroll-behavior:auto!important}
+  ::view-transition-old(page-content),::view-transition-new(page-content){animation-duration:.01ms}
+  :root:active-view-transition-type(back)::view-transition-new(page-content){animation-duration:.01ms}
+  .hero h1 .grad,.track-head h1 .grad{animation:none;background-size:100% 100%}
+  .btn-primary:hover::after{animation:none}
+  .nav-links a:hover{transform:none}
+  .btn-primary:hover{transform:none}
+}
+
+/* ============================================================
+   LESSON PAGES + COURSE MAP — one topic per page with
+   Prev / "Mark done & continue" / Next (2026 e-learning pattern)
+   ============================================================ */
+.lesson-page{max-width:760px;margin:0 auto;padding:36px 0 8px}
+.lesson-page .crumbs{margin-bottom:22px}
+.lp-bar-row{display:flex;align-items:center;gap:14px;margin:2px 0 8px}
+.lp-count{font-size:11.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lp-bar{flex:1;height:6px;border-radius:999px;background:color-mix(in srgb,var(--ink) 7%,transparent);overflow:hidden}
+.lp-fill{display:block;height:100%;width:0;border-radius:999px;background:var(--grad-hero);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.lp-pct{font-family:var(--mono);font-size:11.5px;color:var(--muted);min-width:34px;text-align:right}
+.lesson-page .lesson{margin-top:22px}
+
+/* syllabus rows — the course map */
+.syl-list{max-width:760px;margin:0 auto;padding:8px 0 30px}
+.syl-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:16px;text-align:left}
+.syl-count{font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;padding-bottom:6px}
+.syl-rows{display:flex;flex-direction:column;gap:8px}
+.syl-row{display:flex;align-items:center;gap:16px;text-align:left;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;box-shadow:var(--shadow-sm);transition:transform .2s,border-color .2s,box-shadow .2s;position:relative}
+.syl-row:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--violet) 45%,var(--line-strong));box-shadow:var(--shadow-md)}
+.syl-row.done{opacity:.72}
+.syl-num{flex:none;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-family:var(--serif);font-size:16px;font-weight:600;color:#fff;background:var(--grad-hero)}
+.syl-row.done .syl-num{background:color-mix(in srgb,var(--success) 18%,transparent);color:var(--success);font-family:var(--sans);font-weight:800}
+.syl-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.syl-title{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.syl-lead{font-size:12.5px;color:var(--muted);line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.syl-badges{display:flex;align-items:center;gap:8px;flex:none}
+.syl-chip{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--bg-soft);border:1px solid var(--line);padding:4px 9px;border-radius:999px}
+.syl-chip.w{color:var(--violet);background:color-mix(in srgb,var(--violet) 9%,transparent);border-color:color-mix(in srgb,var(--violet) 22%,transparent)}
+.syl-chip.ph{color:var(--violet);background:color-mix(in srgb,var(--violet) 8%,transparent);border-color:color-mix(in srgb,var(--violet) 18%,transparent);letter-spacing:.05em;text-transform:none;font-weight:700}
+.syl-row.done .syl-chip{color:var(--success)}
+.syl-row.done .syl-chip.ph{color:var(--violet)}
+/* phase chapters — the map reads as five growth chapters */
+.syl-phase{display:flex;flex-direction:column;gap:8px;margin:26px 2px 10px;padding:18px 20px;border-radius:16px;background:linear-gradient(120deg,color-mix(in srgb,var(--violet) 11%,var(--card)),var(--card) 55%);border:1px solid color-mix(in srgb,var(--violet) 22%,var(--line));box-shadow:var(--shadow-sm)}
+.syl-phase:first-child{margin-top:4px}
+.sp-rail{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sp-num{font-family:var(--serif);font-size:20px;font-weight:600;color:#fff;background:var(--grad-t1);border-radius:10px;width:38px;height:38px;display:grid;place-items:center;flex:none}
+.sp-ic{font-size:20px;flex:none}
+.sp-name{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.01em;font-family:var(--serif)}
+.sp-dots{display:flex;gap:5px;margin-left:8px;flex-wrap:wrap;align-items:center}
+.sp-dots i{width:13px;height:13px;border-radius:50%;background:color-mix(in srgb,var(--muted) 28%,transparent);border:1px solid var(--line-strong);transition:all .25s}
+.sp-dots i.on{background:var(--success);border-color:var(--success);box-shadow:0 0 0 3px color-mix(in srgb,var(--success) 22%,transparent)}
+.sp-meta{font-size:12.5px;color:var(--muted);line-height:1.5;max-width:680px}
+.syl-row.in,.lesson-end.in{transition-delay:calc(min(var(--ri,0),6)*40ms)}
+@media(max-width:640px){
+  .syl-row{gap:12px;padding:13px 14px}
+  .syl-lead{display:none}
+  .syl-chip.ph{display:none}
+  .syl-phase{padding:14px 16px}
+  .sp-dots{display:none}
+}
+
+/* lesson-end nav — prev / mark-done-and-continue / next */
+.lesson-end{max-width:760px;margin:0 auto;padding:10px 0 40px}
+.le-rule{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);margin:26px 0 22px}
+.le-nav{display:flex;align-items:stretch;gap:12px}
+.le-prev,.le-after{display:flex;align-items:center;gap:10px;flex:1;justify-content:center;text-align:left}
+.le-prev b,.le-after b{display:block;font-size:13px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.le-prev small,.le-after small{display:block;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.le-dir{color:var(--violet);font-weight:800;font-size:16px}
+.le-next{flex:1.2;justify-content:center;min-width:0}
+.le-next .le-arr{font-size:16px}
+@media(max-width:640px){
+  .le-nav{flex-direction:column}
+  .le-prev,.le-after{justify-content:center}
+  .le-next{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .syl-row.in,.lesson-end.in{transition-delay:0ms}
+  .syl-row:hover{transform:none}
+}
+
+/* off-screen rows skip paint entirely — the browser keeps their size via
+   the intrinsic shim, so scroll position stays stable while scrolling the
+   33-row syllabus or the project ladder */
+.syl-rows,.pj-grid{content-visibility:auto;contain-intrinsic-size:auto 56px}
+.pj-grid{contain-intrinsic-size:auto 340px}
+
+/* LOW-END DEVICES — html[data-perf="low"] is set at boot by the capability
+   probe (<=4 cores or <=4GB). The design stays identical; only the
+   per-frame cost drops: smaller blur radii (still glass, still frosted),
+   paused decorative infinite animations (blobs/pulse/sweep stay where they
+   are, just static), GPU layer for the sticky glass, instant reveals. */
+html[data-perf="low"] nav{transform:translateZ(0)}
+html[data-perf="low"] nav,html[data-perf="low"] .lesson-drawer,
+html[data-perf="low"] .drawer-backdrop{backdrop-filter:blur(10px) saturate(1.4);-webkit-backdrop-filter:blur(10px) saturate(1.4)}
+html[data-perf="low"] .hero-panel,html[data-perf="low"] .crumbs,
+html[data-perf="low"] .mini-chip,html[data-perf="low"] .stat-chip,
+html[data-perf="low"] .track-switch,html[data-perf="low"] .sec-toast{backdrop-filter:blur(8px) saturate(1.3);-webkit-backdrop-filter:blur(8px) saturate(1.3)}
+html[data-perf="low"] .blob{animation:none;opacity:.55}
+html[data-perf="low"] .ambient::before,html[data-perf="low"] .ambient::after{animation:none}
+html[data-perf="low"] .hero h1 .grad,html[data-perf="low"] .track-head h1 .grad{animation:none}
+html[data-perf="low"] .hero-pill .dot{animation:none}
+html[data-perf="low"] .reveal{transition-duration:.28s}
+html[data-perf="low"] .syl-row.in,html[data-perf="low"] .lesson-end.in,
+html[data-perf="low"] .pj-card.in,html[data-perf="low"] .pj-step.in,
+html[data-perf="low"] .pj-use-row.in,html[data-perf="low"] .pj-pre-chip.in{transition-delay:0ms}
+
+/* ════════════════════════════════════════════════════════════
+   CALM MODE — html[data-calm]: one switch drops every ambient and
+   compositor cost (blobs, glow disc, grain, vignette, decorative
+   motion) while keeping 100% of content and readability. This is
+   the single biggest runtime-memory lever on the site: with calm
+   on, the page is flat layers + text. Wired to the Aa panel.
+   ════════════════════════════════════════════════════════════ */
+html[data-calm] .ambient,
+html[data-calm] .rz-glow,
+html[data-calm] body::after{display:none !important}
+html[data-calm] body::before{background:none !important}
+html[data-calm] .hero h1 .grad,
+html[data-calm] .track-head h1 .grad,
+html[data-calm] .hero-pill .dot,
+html[data-calm] .tm-bar,
+html[data-calm] .term-body .cursor,
+html[data-calm] .term-body .term-thinking .tk-dot{animation:none !important}
+html[data-calm] .btn-primary::after,
+html[data-calm] .w-btn::after,
+html[data-calm] .ts-opt::after{display:none !important}
+
+/* ════════════════════════════════════════════════════════════
+   HIDDEN TAB — html[data-tabhidden] is set by app.js on
+   visibilitychange. Browsers already throttle hidden tabs, but
+   pausing the decorative layer explicitly also releases the
+   compositor from re-rastering ambient gradients on wake.
+   ════════════════════════════════════════════════════════════ */
+html[data-tabhidden] *,
+html[data-tabhidden] *::before,
+html[data-tabhidden] *::after{animation-play-state:paused !important}
+
+/* SCROLL-MOTION BUDGET — while the user is actively scrolling, the only
+   main-thread repaint animations (the 9s headline gradient sweep and the
+   small box-shadow pulses) freeze; they resume 120ms after the gesture ends
+   (html.scrolling toggled by app.js). Composite-only decoration (blob
+   drifts, comet orbits, shimmer, progress bar) keeps running — it never
+   competes with scroll on the main thread. Invisible by design: you cannot
+   perceive a 9s sweep or an 8px pulse while the page is moving. */
+html.scrolling .hero h1 .grad,html.scrolling .track-head h1 .grad,
+html.scrolling .hero-pill .dot,html.scrolling .v-seal .dot{animation-play-state:paused}
+
+/* ============================================================
+   READING SYSTEM — the Aa panel (Readwise/Kindle pattern).
+   Four independent axes, all Combinable, all persisted:
+     size    — html[data-rz-size]   → --rz-fs multiplier
+     measure — html[data-rz-measure]→ --rz-measure (ch-based so it
+               tracks the font size, like real readers)
+     spacing — html[data-rz-spacing]→ --rz-lh / --rz-psp
+     font    — html[data-rz-font]   → serif body vs sans body
+   Plus three reading aids: easy spacing (WCAG 1.4.12 numbers:
+   line-height 2, word-spacing .16em), focus mode (chrome fades,
+   column centers), calm mode (ambient FX off — also the biggest
+   runtime-memory lever). Motion toggle mirrors the OS contract
+   for users who can't set prefers-reduced-motion.
+   ============================================================ */
+html{
+  --rz-fs:1;
+  --rz-lh:1.65;
+  --rz-psp:12px;
+  --rz-measure:700px;
+}
+html[data-rz-size="s"]{--rz-fs:.92}
+html[data-rz-size="m"]{--rz-fs:1}
+html[data-rz-size="l"]{--rz-fs:1.1}
+html[data-rz-size="xl"]{--rz-fs:1.22}
+html[data-rz-measure="narrow"]{--rz-measure:62ch}
+html[data-rz-measure="regular"]{--rz-measure:75ch}
+html[data-rz-measure="wide"]{--rz-measure:92ch}
+html[data-rz-spacing="cozy"]{--rz-lh:1.65;--rz-psp:12px}
+html[data-rz-spacing="roomy"]{--rz-lh:1.95;--rz-psp:20px}
+
+/* measure follows the panel (was a fixed 700px) */
+.lesson-head,.plain-card,.coach-card,.why-card,.tip,.warn,.quiz-card{max-width:var(--rz-measure)}
+
+/* prose type scales + breathes with the panel */
+.plain-card p{font-size:calc(15px * var(--rz-fs));line-height:var(--rz-lh);margin-bottom:var(--rz-psp)}
+.coach-card p{font-size:calc(17px * var(--rz-fs));line-height:var(--rz-lh)}
+.why-card p{font-size:calc(15px * var(--rz-fs));line-height:var(--rz-lh)}
+.why-card ul li{font-size:calc(14.5px * var(--rz-fs));line-height:var(--rz-lh)}
+.tip p,.warn p{font-size:calc(14px * var(--rz-fs));line-height:var(--rz-lh)}
+.lead{font-size:calc(15.5px * var(--rz-fs));line-height:var(--rz-lh)}
+.map-side .m-value{line-height:var(--rz-lh)}
+.quiz-q{font-size:calc(16px * var(--rz-fs));line-height:var(--rz-lh)}
+.gym-q{font-size:calc(15px * var(--rz-fs))}
+.gym-a,.gym-why{line-height:var(--rz-lh)}
+.sp-meta,.pj-note p,.pj-step p{line-height:var(--rz-lh)}
+
+/* serif body vs sans body (headings always stay serif — brand voice) */
+html[data-rz-font="serif"] .plain-card p,
+html[data-rz-font="serif"] .why-card p,
+html[data-rz-font="serif"] .why-card ul li,
+html[data-rz-font="serif"] .tip p,
+html[data-rz-font="serif"] .warn p,
+html[data-rz-font="serif"] .lead,
+html[data-rz-font="serif"] .quiz-q,
+html[data-rz-font="serif"] .gym-q,
+html[data-rz-font="serif"] .sp-meta{font-family:var(--serif)}
+
+/* easy spacing — dyslexia/low-vision friendly (WCAG 1.4.12 values) */
+html[data-rz-easy] .lesson-page p,
+html[data-rz-easy] .lesson-page li{
+  word-spacing:.16em;
+  line-height:2;
+}
+html[data-rz-easy] .lesson-page p{margin-bottom:calc(var(--rz-psp) * 1.6)}
+
+/* focus mode — long-form reading view: chrome fades, column centers */
+html[data-focus] .sidebar{display:none}
+html[data-focus] .layout{grid-template-columns:1fr}
+html[data-focus] footer{opacity:.4}
+html[data-focus] .track-switch,
+html[data-focus] .nav-links,
+html[data-focus] .progress-pct{opacity:.35}
+html[data-focus] .track-switch:hover,
+html[data-focus] .nav-links:hover,
+html[data-focus] .progress-pct:hover{opacity:1}
+
+/* manual motion kill (mirrors the OS reduced-motion contract) */
+html[data-rmotion] *,
+html[data-rmotion] *::before,
+html[data-rmotion] *::after{animation:none !important;transition:none !important}
+html[data-rmotion]{scroll-behavior:auto !important}
+
+/* ── Aa button + panel (same glass popover language as themes) ── */
+.read-btn{border:1px solid var(--hairline);background:linear-gradient(180deg,var(--card),color-mix(in srgb,var(--card) 86%,var(--bg-soft)));color:var(--ink);min-width:34px;height:34px;border-radius:10px;cursor:pointer;display:grid;place-items:center;font-size:15px;font-weight:800;transition:transform .2s,box-shadow .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.read-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm),inset 0 1px 0 rgba(255,255,255,.06)}
+.read-menu{
+  position:absolute;top:calc(100% + 10px);right:0;
+  width:min(300px,calc(100vw - 24px));z-index:70;
+  padding:16px;border-radius:20px;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--card) 92%,transparent),
+    color-mix(in srgb,var(--card) 72%,transparent));
+  backdrop-filter:blur(24px) saturate(1.6);
+  -webkit-backdrop-filter:blur(24px) saturate(1.6);
+  border:1px solid var(--hairline);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),
+    0 24px 64px -12px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.03);
+}
+.read-menu[hidden]{display:none}
+@media(max-width:640px){
+  .read-menu{position:fixed;top:64px;right:12px}
+  .read-btn{min-width:40px;height:40px}
+}
+.rm-sec{margin-bottom:14px}
+.rm-sec:last-child{margin-bottom:2px}
+.rm-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.rm-seg{display:flex;gap:6px}
+.rm-seg button{
+  flex:1;padding:8px 4px;border-radius:10px;border:1px solid var(--hairline);
+  background:color-mix(in srgb,var(--bg-soft) 50%,transparent);
+  color:var(--muted);font:inherit;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .2s;min-height:36px;
+}
+.rm-seg button:hover{color:var(--ink-soft)}
+.rm-seg button[aria-pressed="true"]{
+  color:var(--ink);background:var(--card);
+  box-shadow:inset 0 0 0 1px var(--hairline),var(--shadow-sm);
+}
+.rm-seg button .aa-big{font-size:15px}
+.rm-seg button .aa-small{font-size:10px}
+.rm-toggles{display:flex;flex-direction:column;gap:6px}
+.rm-toggle{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:9px 12px;border-radius:12px;border:1px solid var(--hairline);
+  background:color-mix(in srgb,var(--bg-soft) 50%,transparent);
+  color:var(--ink-soft);font:inherit;font-size:12.5px;font-weight:700;
+  cursor:pointer;transition:all .2s;text-align:left;min-height:40px;
+}
+.rm-toggle:hover{color:var(--ink)}
+.rm-toggle[aria-pressed="true"]{
+  color:var(--ink);background:var(--card);
+  box-shadow:inset 0 0 0 1px var(--hairline),var(--shadow-sm);
+}
+.rm-toggle .rm-sw{
+  margin-left:auto;flex:none;width:34px;height:20px;border-radius:999px;
+  background:color-mix(in srgb,var(--muted) 30%,transparent);
+  position:relative;transition:background .2s;
+}
+.rm-toggle .rm-sw::after{
+  content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s;
+}
+.rm-toggle[aria-pressed="true"] .rm-sw{background:var(--success)}
+.rm-toggle[aria-pressed="true"] .rm-sw::after{left:16px}
+.rm-note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}
+@media(prefers-reduced-motion:reduce){
+  .read-menu{animation:none}
+}
+html[data-perf="low"] .read-menu{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
