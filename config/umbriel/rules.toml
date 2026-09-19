@@ -88,10 +88,29 @@ blur_popups = false
 blur_ignore_alpha = 0.2
 opacity = 0.90
 
+# GTK4/libadwaita CSD padding: compositor blur renders inside the client's
+# transparent shadow padding as a visible box (#260). Disable blur for CSD apps.
+[[window_rule]]
+match.app_id = "org.gnome.TextEditor"
+blur = false
+opacity = 1.0
+
+# PR #264 (unmerged): per-window decorations for CSD apps.
+# Uncomment after rebuilding with the PR: strips Umbriel frame + shadow
+# off TextEditor only, everything else keeps global border/shadow.
+# [[window_rule]]
+# match.app_id = "org.gnome.TextEditor"
+# border_width = 0
+# shadow = false
+# blur = false
+
 # Floating
 [[window_rule]]
 match.app_id = "blender"
 default_floating = false
+opacity = 1.0
+blur = false
+blur_popups = false
 
 [[window_rule]]
 match.app_id = "org.gnome.Loupe"
