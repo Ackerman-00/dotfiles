@@ -1,17 +1,18 @@
 # Keybinds
 
 [keybinds]
-"Mod+T" = "spawn:kitty"
-"Ctrl+Alt+W" = "spawn:noctalia msg wallpaper-random"
-"Ctrl+Alt+Delete" = "spawn:noctalia msg panel-toggle session"
-"Mod+W" = "spawn:noctalia msg panel-toggle wallpaper"
-"Mod+A" = "spawn:noctalia msg panel-toggle launcher"
-"Mod+Z" = "spawn:noctalia msg panel-toggle launcher /emo"
-"Mod+V" = "spawn:noctalia msg panel-toggle clipboard"
-"Mod+X" = "spawn:noctalia msg bar-toggle"
-"Mod+P" = "spawn:noctalia msg panel-toggle control-center"
-"Mod+Shift+T" = "spawn:noctalia msg panel-toggle test"
-"Mod+Comma" = "spawn:noctalia msg settings-toggle"
+"Mod+T" = { action = "spawn:kitty", repeat = false }
+"Ctrl+Alt+W" = { action = "spawn:noctalia msg wallpaper-random", repeat = false }
+"Ctrl+Alt+Delete" = { action = "spawn:noctalia msg panel-toggle session", repeat = false }
+"Mod+W" = { action = "spawn:noctalia msg panel-toggle wallpaper", repeat = false }
+"Mod+A" = { action = "spawn:noctalia msg panel-toggle launcher", repeat = false }
+"Mod+Z" = { action = "spawn:noctalia msg panel-toggle launcher /emo", repeat = false }
+"Mod+V" = { action = "spawn:noctalia msg panel-toggle clipboard", repeat = false }
+"Mod+X" = { action = "spawn:noctalia msg bar-toggle", repeat = false }
+"Mod+P" = { action = "spawn:noctalia msg panel-toggle control-center", repeat = false }
+"Mod+Shift+T" = { action = "spawn:noctalia msg panel-toggle test", repeat = false }
+"Mod+Comma" = { action = "spawn:noctalia msg settings-toggle", repeat = false }
+# F5/F6 stay plain strings so held volume keys keep stepping (docs Repeat)
 "F5" = "spawn:noctalia msg volume-down"
 "F6" = "spawn:noctalia msg volume-up"
 "Mod+Q" = "window-close"
@@ -75,7 +76,7 @@
 "Mod+R" = "window-cycle-primary-extent"
 "Mod+Ctrl+R" = "window-toggle-maximize-to-edges"
 "Mod+F" = "window-toggle-maximize"
-"Mod+E" = "spawn:pcmanfm-qt"
+"Mod+E" = "spawn:nautilus"
 "Mod+N" = "workspace-set-layout:toggle"
 "Mod+O" = "overview-toggle"
 # Scratchpad (implicit `default` — no [[scratchpad]] defined)
@@ -86,8 +87,8 @@
 "Mod+Minus" = "window-modify-primary-extent:-0.1"
 "Mod+Equal" = "window-modify-primary-extent:0.1"
 "Mod+C" = "window-toggle-floating"
-"Mod+Shift+S" = "spawn:noctalia msg screenshot-region"
-"Print" = "spawn:noctalia msg screenshot-fullscreen"
+"Mod+Shift+S" = { action = "spawn:noctalia msg screenshot-region", repeat = false }
+"Print" = { action = "spawn:noctalia msg screenshot-fullscreen", repeat = false }
 "Alt+F" = "window-toggle-fullscreen"
 "Alt+Tab" = "spawn:noctalia msg window-switcher"
 "Mod+MouseMiddle" = "layout-scroll-drag"

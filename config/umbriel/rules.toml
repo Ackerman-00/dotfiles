@@ -11,12 +11,12 @@
 # Global blur
 [[window_rule]]
 blur = true
-blur_optimized = false
+blur_optimized = true
 blur_popups = true
-blur_ignore_alpha = 0.05
+blur_ignore_alpha = 0.1
 
 [[window_rule]]
-opacity = 0.80
+opacity = 1.0
 
 # Games
 [[window_rule]]
@@ -25,6 +25,7 @@ default_floating = true
 opacity          = 1.0
 blur             = false
 blur_popups      = false
+confine_pointer  = true
 
 [[window_rule]]
 match.xdg_tag    = "proton-game"
@@ -32,6 +33,7 @@ default_floating = true
 opacity          = 1.0
 blur             = false
 blur_popups      = false
+confine_pointer  = true
 
 [[window_rule]]
 match.content_type = "game"
@@ -39,6 +41,7 @@ default_floating   = true
 opacity            = 1.0
 blur               = false
 blur_popups        = false
+confine_pointer    = true
 
 [[window_rule]]
 match.content_type = "video"
@@ -66,43 +69,54 @@ blur = true
 blur_popups = true
 opacity = 1.0
 focus_on_activate = true
+default_scrolling_column = "browsers"
+default_scrolling_column_order = 10
+default_column_display = "tabbed"
 
 [[window_rule]]
 match.app_id = "^[Zz]en"
 blur = false
 opacity = 1.0
 focus_on_activate = true
+default_scrolling_column = "browsers"
+default_scrolling_column_order = 15
+default_column_display = "tabbed"
 
 # Helium / Brave / Chromium — open-ended to catch distro variants
 # (helium-dev, brave-browser-beta, Brave, etc.)
 [[window_rule]]
 match.app_id = "^([Hh]elium|[Bb]rave|[Cc]hromium)"
 focus_on_activate = true
+default_scrolling_column = "browsers"
+default_scrolling_column_order = 20
+default_column_display = "tabbed"
 
-# Nautilus stable
+# Nautilus stable — all three are libadwaita CSD: they draw their own
+# corners + shadow inside transparent padding, so strip Umbriel's frame
+# and keep them opaque with blur off.
 [[window_rule]]
 match.app_id = "org.gnome.Nautilus|org.gnome.Settings|org.gnome.Loupe"
-blur = true
-blur_optimized = true
+blur = false
 blur_popups = false
-blur_ignore_alpha = 0.2
-opacity = 0.90
+opacity = 1.0
+border_width = 0
+corner_radius = 10
+shadow = false
 
 # GTK4/libadwaita CSD padding: compositor blur renders inside the client's
-# transparent shadow padding as a visible box (#260). Disable blur for CSD apps.
+# transparent shadow padding as a visible box. Disable blur for CSD apps.
+# Per-window decorations trace back to me: #260 (feature request) ->
+# #264 (my impl, closed in favor of) -> #266 (merged Sep 25); the
+# outer_border_width idea from #264 followed onto main later.
+# Upstream has no appetite for GNOME-specific CSD handling (Discord
+# sentiment is... anti-GNOME), so strip the frame per app here.
 [[window_rule]]
-match.app_id = "org.gnome.TextEditor"
+match.app_id = "org.gnome.TextEditor|gnome-text-editor"
 blur = false
 opacity = 1.0
-
-# PR #264 (unmerged): per-window decorations for CSD apps.
-# Uncomment after rebuilding with the PR: strips Umbriel frame + shadow
-# off TextEditor only, everything else keeps global border/shadow.
-# [[window_rule]]
-# match.app_id = "org.gnome.TextEditor"
-# border_width = 0
-# shadow = false
-# blur = false
+border_width = 0
+corner_radius = 10
+shadow = false
 
 # Floating
 [[window_rule]]

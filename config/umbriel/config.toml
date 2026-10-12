@@ -10,3 +10,6 @@ xwayland = true
 show_cheatsheet = false
 focus_on_activate = false
 honor_restored_maximize = false
+
+[include.optional]
+files = ["noctalia.toml"]
