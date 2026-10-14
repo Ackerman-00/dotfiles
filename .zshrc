@@ -13,8 +13,10 @@ source "$ZSH/oh-my-zsh.sh"
 
 # --- ENVIRONMENT VARIABLES ---
 export EDITOR="code"
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 export PATH="$PATH:$HOME/.local/bin"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # --- HISTORY SETTINGS ---
 HISTFILE=~/.zsh_history
