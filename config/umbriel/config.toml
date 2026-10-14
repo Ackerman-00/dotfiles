@@ -1,2 +1,546 @@
+[animation]
+curve = "easeout"
+duration_ms = 200
+enabled = true
+
+[animation.border]
+curve = "easeout"
+duration_ms = 300
+enabled = true
+
+[animation.dim_unfocused]
+curve = "easeout"
+dim = 0.0
+duration_ms = 250
+enabled = false
+
+[animation.layers]
+curve = "easeout"
+duration_ms = 200
+enabled = true
+
+[animation.overview]
+curve = "easeout"
+duration_ms = 250
+enabled = true
+
+[animation.scratchpad]
+blur = true
+curve = "easeout"
+dim = 0.5
+duration_ms = 250
+enabled = true
+fullscreen = false
+maximize = false
+scale = 0.0
+
+[animation.windows_in]
+curve = "easeout"
+duration_ms = 250
+effect = "open"
+enabled = true
+style = "zoom"
+
+[animation.windows_move]
+curve = "easeout"
+duration_ms = 250
+enabled = true
+
+[animation.windows_out]
+curve = "easeout"
+duration_ms = 250
+effect = "close"
+enabled = true
+style = "slide"
+
+[animation.workspaces]
+curve = "ease"
+duration_ms = 300
+enabled = true
+
+[appearance]
+border_width = 2
+corner_radius = 1
+drag_opacity = 0.9
+outer_border_width = 0
+prefer_no_csd = true
+
+[appearance.blur]
+brightness = 0.9
+contrast = 0.9
+enabled = true
+noise = 0.02
+optimized = true
+passes = 2
+radius = 5
+saturation = 1.1
+
+[appearance.shadow]
+enabled = true
+offset_x = 2
+offset_y = 2
+softness = 10
+
+[effects.preset.close]
+kind = "animation"
+shader = "shaders/close.glsl"
+
+[effects.preset.open]
+kind = "animation"
+shader = "shaders/open.glsl"
+
+[environment]
+EGL_PLATFORM = "wayland"
+ELECTRON_OZONE_PLATFORM_HINT = "auto"
+GTK_IM_MODULE = "simple"
+MOZ_DBUS_REMOTE = "1"
+MOZ_ENABLE_WAYLAND = "1"
+QT_AUTO_SCREEN_SCALE_FACTOR = "1"
+QT_QPA_PLATFORMTHEME = "qt6ct"
+TERM = "kitty"
+TERMINAL = "kitty"
+_JAVA_AWT_WM_NONREPARENTING = "1"
+
+[general]
+autostart = ["noctalia"]
+focus_on_activate = false
+honor_restored_maximize = false
+mod_key = "Super"
+show_cheatsheet = false
+xwayland = true
+
+[hot_corners.bottom_left]
+action = "overview-toggle"
+delay_ms = 500
+enabled = false
+
+[hot_corners.bottom_right]
+action = "spawn:notify-send 'Bottom right'"
+delay_ms = 500
+enabled = false
+
+[hot_corners.top_left]
+action = "overview-open"
+delay_ms = 500
+enabled = false
+
+[hot_corners.top_right]
+action = "overview-close"
+delay_ms = 500
+enabled = false
+
 [include.optional]
-files = []
+files = ["noctalia.toml"]
+
+[input]
+middle_click_paste = true
+window_drag_toggle = "none"
+
+[input.cursor]
+follows_focus = true
+hardware_cursor = true
+hide_timeout_ms = 0
+hide_when_typing = false
+size = 24
+theme = "Bibata-Modern-Classic"
+
+[input.focus]
+follows_mouse = false
+follows_mouse_max_scroll = 0.0
+
+[input.keyboard]
+layout = "us"
+numlock_toggle = true
+options = ""
+repeat_delay = 250
+repeat_rate = 45
+track_layout = "global"
+variant = ""
+
+[input.mouse]
+accel_profile = "flat"
+scroll_wheel_step = 60
+sensitivity = 0.0
+
+[input.tablet]
+enabled = true
+
+[input.touchpad]
+natural_scroll = true
+tap = true
+
+[keybinds]
+"Alt+F" = "window-toggle-fullscreen"
+"Alt+Tab" = "spawn:noctalia msg window-switcher"
+"Ctrl+Alt+Delete" = "spawn:noctalia msg panel-toggle session"
+"Ctrl+Alt+W" = "spawn:noctalia msg wallpaper-random"
+F5 = "spawn:noctalia msg volume-down"
+F6 = "spawn:noctalia msg volume-up"
+"Mod+1" = "workspace-switch:1"
+"Mod+2" = "workspace-switch:2"
+"Mod+3" = "workspace-switch:3"
+"Mod+4" = "workspace-switch:4"
+"Mod+5" = "workspace-switch:5"
+"Mod+6" = "workspace-switch:6"
+"Mod+7" = "workspace-switch:7"
+"Mod+8" = "workspace-switch:8"
+"Mod+9" = "workspace-switch:9"
+"Mod+A" = "spawn:noctalia msg panel-toggle launcher"
+"Mod+BracketLeft" = "window-consume-left"
+"Mod+BracketRight" = "window-consume-right"
+"Mod+C" = "window-toggle-floating"
+"Mod+Comma" = "spawn:noctalia msg settings-toggle"
+"Mod+Ctrl+Down" = "window-move-down"
+"Mod+Ctrl+Left" = "column-move-left"
+"Mod+Ctrl+Page_Down" = "window-move-to-workspace-next"
+"Mod+Ctrl+Page_Up" = "window-move-to-workspace-previous"
+"Mod+Ctrl+R" = "window-toggle-maximize-to-edges"
+"Mod+Ctrl+Right" = "column-move-right"
+"Mod+Ctrl+Space" = "window-restore-from-scratchpad"
+"Mod+Ctrl+Up" = "window-move-up"
+"Mod+Down" = "window-focus-down"
+"Mod+E" = "spawn:nautilus"
+"Mod+End" = "workspace-switch:9"
+"Mod+Equal" = "window-modify-primary-extent:0.1"
+"Mod+F" = "window-toggle-maximize"
+"Mod+Home" = "workspace-switch:1"
+"Mod+Left" = "window-focus-left"
+"Mod+Minus" = "window-modify-primary-extent:-0.1"
+"Mod+MouseMiddle" = "layout-scroll-drag"
+"Mod+N" = "workspace-set-layout:toggle"
+"Mod+O" = "overview-toggle"
+"Mod+P" = "spawn:noctalia msg panel-toggle control-center"
+"Mod+Page_Down" = "workspace-next"
+"Mod+Page_Up" = "workspace-previous"
+"Mod+Q" = "window-close"
+"Mod+R" = "window-cycle-primary-extent"
+"Mod+Right" = "window-focus-right"
+"Mod+Shift+1" = "window-move-to-workspace:1"
+"Mod+Shift+2" = "window-move-to-workspace:2"
+"Mod+Shift+3" = "window-move-to-workspace:3"
+"Mod+Shift+4" = "window-move-to-workspace:4"
+"Mod+Shift+5" = "window-move-to-workspace:5"
+"Mod+Shift+6" = "window-move-to-workspace:6"
+"Mod+Shift+7" = "window-move-to-workspace:7"
+"Mod+Shift+8" = "window-move-to-workspace:8"
+"Mod+Shift+9" = "window-move-to-workspace:9"
+"Mod+Shift+Ctrl+Down" = "column-move-to-output-down"
+"Mod+Shift+Ctrl+Left" = "column-move-to-output-left"
+"Mod+Shift+Ctrl+Right" = "column-move-to-output-right"
+"Mod+Shift+Ctrl+Up" = "column-move-to-output-up"
+"Mod+Shift+Down" = "output-focus-down"
+"Mod+Shift+Left" = "output-focus-left"
+"Mod+Shift+Right" = "output-focus-right"
+"Mod+Shift+S" = "spawn:noctalia msg screenshot-region"
+"Mod+Shift+Space" = "window-move-to-scratchpad"
+"Mod+Shift+Up" = "output-focus-up"
+"Mod+Shift+W" = "column-toggle-tabbed"
+"Mod+Space" = "scratchpad-toggle"
+"Mod+T" = "spawn:kitty"
+"Mod+Tab" = "scratchpad-focus-next"
+"Mod+Up" = "window-focus-up"
+"Mod+V" = "spawn:noctalia msg panel-toggle clipboard"
+"Mod+W" = "spawn:noctalia msg panel-toggle wallpaper"
+"Mod+X" = "spawn:noctalia msg bar-toggle"
+"Mod+Z" = "spawn:noctalia msg panel-toggle launcher /emo"
+Print = "spawn:noctalia msg screenshot-fullscreen"
+
+[keybinds."Alt+WheelDown"]
+action = "workspace-next"
+cooldown_ms = 150
+
+[keybinds."Alt+WheelUp"]
+action = "workspace-previous"
+cooldown_ms = 150
+
+[keybinds."Mod+Ctrl+WheelDown"]
+action = "window-move-to-workspace-next"
+cooldown_ms = 150
+
+[keybinds."Mod+Ctrl+WheelUp"]
+action = "window-move-to-workspace-previous"
+cooldown_ms = 150
+
+[keybinds."Mod+Shift+Escape"]
+action = "shortcuts-inhibit-toggle"
+allow_when_inhibited = true
+repeat = false
+
+[keybinds."Mod+Shift+WheelDown"]
+action = "column-move-right"
+cooldown_ms = 150
+
+[keybinds."Mod+Shift+WheelUp"]
+action = "column-move-left"
+cooldown_ms = 150
+
+[keybinds."Mod+WheelDown"]
+action = "window-focus-right"
+cooldown_ms = 150
+
+[keybinds."Mod+WheelLeft"]
+action = "window-focus-left"
+cooldown_ms = 150
+
+[keybinds."Mod+WheelRight"]
+action = "window-focus-right"
+cooldown_ms = 150
+
+[keybinds."Mod+WheelUp"]
+action = "window-focus-left"
+cooldown_ms = 150
+
+[[layer_rule]]
+blur = true
+blur_ignore_alpha = 0.5
+blur_optimized = false
+blur_popups = true
+
+[layer_rule.match]
+namespace = '^noctalia-(bar-[^"]+|notification|dock|panel|attached-panel|osd|desktop-widget-[^"]*)$'
+
+[layout]
+extent_presets = [0.33333, 0.5, 0.66667, 1.0]
+gap = 5
+mode = "scrolling"
+
+[layout.dwindle]
+
+[layout.master]
+default_width_fraction = 0.55
+new_on_top = true
+position = "left"
+
+[layout.scrolling]
+center_focused = "never"
+center_underfull_strip = false
+default_extent_fraction = 0.66667
+
+[layout.struts]
+bottom = 0
+left = 0
+right = 0
+top = 0
+
+[output."Samsung Electric Company S19C170 HYCFB02483"]
+direct_scanout = true
+enabled = true
+hdr = "off"
+mode = "1366x768@59.79"
+position = [0, 0]
+scale = 1
+sdr_white = 203
+tearing = false
+transform = "normal"
+vrr = "disabled"
+
+[overview]
+zoom = 0.5
+
+[[window_rule]]
+blur = true
+blur_ignore_alpha = 0.05
+blur_optimized = false
+blur_popups = true
+
+[[window_rule]]
+opacity = 0.8
+
+[[window_rule]]
+blur = false
+blur_popups = false
+default_floating = true
+opacity = 1.0
+
+[window_rule.match]
+app_id = "steam_app.*|ffxiv.*"
+
+[[window_rule]]
+blur = false
+blur_popups = false
+default_floating = true
+opacity = 1.0
+
+[window_rule.match]
+xdg_tag = "^proton-game$"
+
+[[window_rule]]
+blur = false
+blur_popups = false
+default_floating = true
+opacity = 1.0
+
+[window_rule.match]
+content_type = "game"
+
+[[window_rule]]
+blur = false
+opacity = 1.0
+
+[window_rule.match]
+content_type = "video"
+
+[[window_rule]]
+blur = false
+opacity = 1.0
+
+[window_rule.match]
+content_type = "photo"
+
+[[window_rule]]
+match.title = "^Concat$|[Pp]hoton[ -]?[Ss]tudio|[Oo]pen[Cc]hamber|[Oo]pen[Cc]ode"
+blur = false
+blur_popups = false
+opacity = 1.0
+
+[[window_rule]]
+opacity = 0.9
+
+[window_rule.match]
+app_id = "^(Alacritty|kitty|ghostty|foot)$"
+
+[[window_rule]]
+opacity = 0.93
+
+[window_rule.match]
+app_id = "[Vv]esktop|[Dd]iscord|brave-browser|chromium|helium"
+
+[[window_rule]]
+match.app_id = "^([Hh]elium|[Bb]rave|[Cc]hromium)$|^org.mozilla.firefox$|[Ff]irefox|^[Zz]en"
+default_scrolling_extent = 0.8
+focus_on_activate = true
+
+[[window_rule]]
+match.app_id = "^([Hh]elium|[Bb]rave|[Cc]hromium)$|^org.mozilla.firefox$|[Ff]irefox|^[Zz]en"
+match.title = "[Ss]ign [Ii]n|[Ll]og [Ii]n|[Oo][Aa]uth|[Aa]uthenticate"
+default_floating = true
+default_floating_size_px = { width = 737, height = 491 }
+default_position = { x = 0, y = 0, anchor = "center" }
+
+[[window_rule]]
+blur = true
+blur_ignore_alpha = 0.05
+blur_optimized = false
+blur_popups = true
+focus_on_activate = true
+opacity = 0.95
+
+[window_rule.match]
+app_id = "^org.mozilla.firefox$|[Ff]irefox"
+
+[[window_rule]]
+blur = false
+focus_on_activate = true
+opacity = 1.0
+
+[window_rule.match]
+app_id = "^[Zz]en"
+
+[[window_rule]]
+focus_on_activate = true
+
+[window_rule.match]
+app_id = "^([Hh]elium|[Bb]rave|[Cc]hromium)"
+
+[[window_rule]]
+blur = true
+blur_optimized = true
+blur_popups = false
+corner_radius = 0
+opacity = 0.9
+shadow = false
+
+[window_rule.match]
+app_id = "^(org[.]gnome[.]Nautilus|org[.]gnome[.]Settings|org[.]gnome[.]Loupe|org[.]gnome[.]TextEditor)$"
+
+[[window_rule]]
+blur = false
+blur_popups = false
+default_floating = false
+opacity = 1.0
+
+[window_rule.match]
+app_id = "blender"
+
+[[window_rule]]
+default_floating = true
+
+[window_rule.match]
+app_id = "[Kk]vantum|qt5ct|qt6ct|nwg-look|org.kde.ark|pavucontrol|blueman|[Qq]bittorrent"
+
+[[window_rule]]
+default_floating = true
+
+[window_rule.match]
+app_id = "gnome-text-editor|org[.]gnome[.]TextEditor"
+
+[[window_rule]]
+default_floating = true
+
+[window_rule.match]
+title = "[Kk]vantum"
+
+[[window_rule]]
+
+[window_rule.default_floating_size_px]
+height = 500
+width = 880
+
+[window_rule.match]
+app_id = "[Qq]bittorrent"
+
+[[window_rule]]
+default_floating = true
+
+[window_rule.match]
+title = "^Open$|^Save As$|^Choose Files$|^File Operation Progress$"
+
+[[window_rule]]
+default_floating = true
+
+[window_rule.default_floating_size_px]
+height = 600
+width = 800
+
+[window_rule.default_position]
+anchor = "bottom_right"
+x = 32
+y = 32
+
+[window_rule.match]
+app_id = "^dev.noctalia.UmbrielSharePicker$"
+
+[[window_rule]]
+blur = true
+blur_popups = false
+default_floating = false
+opacity = 1.0
+
+[window_rule.default_floating_size_px]
+height = 900
+width = 1020
+
+[window_rule.match]
+app_id = "^dev.noctalia.Noctalia$"
+
+[[window_rule]]
+default_output = "Samsung Electric Company S19C170 HYCFB02483"
+default_scratchpad = "default"
+
+[window_rule.match]
+app_id = "^scratchpad-terminal$"
+
+[workspaces]
+back_and_forth = false
+empty_above = false
+
+# Firefox-fork PiP windows are titled exactly "Picture-in-Picture".
+[[window_rule]]
+match.title = "^Picture-in-Picture$"
+default_floating = true
+
+# Chromium marks PiP surfaces with the video content type (wp_content_type_manager_v1).
+[[window_rule]]
+match.app_id = "^([Hh]elium|[Bb]rave|[Cc]hromium)$"
+match.content_type = "video"
+default_floating = true
